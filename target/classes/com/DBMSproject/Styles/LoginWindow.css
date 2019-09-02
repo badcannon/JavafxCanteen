@@ -1,0 +1,15 @@
+#logbtn{
+    -fx-text-fill: #fff;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+}
+
+#LoginLabel{
+    -fx-text-fill: #367ff5;
+    -fx-font-weight: bold;
+    -fx-font-size: 28px;
+    -fx-border-width: 5px;
+    -fx-border-color: #367ff5;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="548.0" prefWidth="713.0" style="-fx-background-color: #ffffff;" stylesheets="@../Styles/LoginWindow.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.DBMSproject.LoginController">
+   <children>
+      <HBox alignment="TOP_RIGHT" prefHeight="160.0" prefWidth="713.0" style="-fx-background-color: #367ff5;">
+         <children>
+            <HBox alignment="TOP_RIGHT" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="110.0">
+               <children>
+                  <JFXButton fx:id="minbtn" contentDisplay="CENTER" ellipsisString="" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="49.0" onAction="#Minimize" prefHeight="34.0" prefWidth="49.0" textOverrun="CLIP">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="21.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Assets/Minimize.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="clsbtn" contentDisplay="CENTER" ellipsisString="" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#close" prefHeight="34.0" prefWidth="44.0">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="21.0" fitWidth="19.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Assets/close.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+               </children>
+            </HBox>
+         </children></HBox>
+      <Pane layoutX="145.0" layoutY="80.0" prefHeight="424.0" prefWidth="410.0" style="-fx-background-color: #ffffff; -fx-background-radius: 20px;">
+         <effect>
+            <DropShadow blurType="GAUSSIAN" color="#8f8f8ffa" />
+         </effect>
+         <children>
+            <JFXTextField fx:id="Username" focusColor="#367ff5" labelFloat="true" layoutX="48.0" layoutY="227.0" prefHeight="26.0" prefWidth="313.0" promptText="Username" />
+            <ImageView fitHeight="124.0" fitWidth="130.0" layoutX="144.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Assets/GatLogo.png" />
+               </image>
+            </ImageView>
+            <JFXButton fx:id="logbtn" buttonType="RAISED" layoutX="153.0" layoutY="335.0" onAction="#login" prefHeight="50.0" prefWidth="106.0" ripplerFill="WHITE" style="-fx-background-color: #367ff5;" text="Login" />
+            <JFXPasswordField fx:id="Password" focusColor="#367ff5" labelFloat="true" layoutX="49.0" layoutY="287.0" prefHeight="26.0" prefWidth="313.0" promptText="Password" />
+            <Label fx:id="AlertLabel" alignment="CENTER" ellipsisString="" layoutX="46.0" layoutY="194.0" prefHeight="18.0" prefWidth="306.0" />
+            <Label fx:id="LoginLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="49.0" layoutY="148.0" prefHeight="54.0" prefWidth="313.0" text="Admin Login" textFill="#367ff5">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
