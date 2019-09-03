@@ -11,5 +11,11 @@
     -fx-border-width: 5px;
     -fx-border-color: #367ff5;
     -fx-border-radius: 5px;
-    -fx-padding: 5px;
+    -fx-padding: 5px; 
+}
+
+#Circle{
+    -fx-stroke-width: 3px;
+    -fx-stroke :#ffffff67;
+    /*-fx-stroke: blue;*/
 }

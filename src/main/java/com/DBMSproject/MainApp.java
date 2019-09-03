@@ -13,6 +13,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.concurrent.atomic.AtomicReference;
+import javafx.geometry.Rectangle2D;
+import javafx.stage.Screen;
 
 /**
  * JavaFX App and Mysql!
@@ -22,7 +24,12 @@ public class MainApp extends Application {
     private static Scene scene;
     static Connection Connect;
     static Stage PrimaryStage;
-
+//    To centre the window !
+    static Screen screen = Screen.getPrimary();
+    static Rectangle2D bounds = screen.getBounds();
+    
+   
+    
     @Override
     public void start(Stage stage) throws IOException {
         PrimaryStage = stage;
@@ -46,12 +53,14 @@ public class MainApp extends Application {
             String defaultStatement = "CREATE SCHEMA IF NOT exists `canteen` ;";
             Class.forName("com.mysql.cj.jdbc.Driver");
             //Defined Earlier !
-            Connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/canteen","root","shosperm");
+            Connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/","root","shosperm");
             Statement statement = Connect.createStatement();
             statement.execute(defaultStatement);
+            Connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/canteen","root","shosperm");
 
             }
         catch (Exception e){
+            System.out.println(e.getMessage());
             return false;
         }
         return true;
@@ -81,8 +90,7 @@ public class MainApp extends Application {
             PrimaryStage.setOpacity(1.0f);
         });
     }
-
-
-
-
+    
+   
+   
 }
