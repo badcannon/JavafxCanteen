@@ -6,9 +6,11 @@ import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
@@ -17,12 +19,21 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import java.util.*;
+import javafx.scene.layout.VBox;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.layout.Pane;
+
 
 public class MainWindowController implements Initializable{
     
     @FXML
     private AnchorPane root;
+    
+    
+    @FXML
+    private AnchorPane Displays;
+    
     
     @FXML
     private JFXButton signout;
@@ -59,18 +70,23 @@ public class MainWindowController implements Initializable{
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        Center();
-       MainApp.Dragable(root);
-       ConnectDb();
-       ToolTip();
-       transHam();
-       loignInfo();
+        try {
+            Center();
+            DrawerProps();
+            MainApp.Dragable(root);
+            ConnectDb();
+            ToolTip();
+            transHam();
+            loignInfo();
 //       Styles(); 
+        } catch (IOException ex) {
+            Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     
     public void transHam(){
-    
+            
         HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(Ham1);
         transition.setRate(-1);
         Ham1.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
@@ -128,5 +144,52 @@ public class MainWindowController implements Initializable{
     private void Styles() {
        logo.setCursor(Cursor.HAND);
         signout.setCursor(Cursor.HAND);
+    }
+
+    private void DrawerProps() throws IOException {
+        VBox pane = new VBox();
+        pane = new FXMLLoader(getClass().getResource("Views/DrawerContent.fxml")).load();
+        drawer.setSidePane(pane);
+        //Assigning fucntions to the buttons with a loop !
+        for (Node node : pane.getChildren()) {
+            //checking if its null !
+            if(node.getAccessibleText()!=null){
+            //Adding Event Handlers :
+            node.setOnMouseClicked(new EventHandler<MouseEvent>(){
+                @Override
+                public void handle(MouseEvent event){
+                    try {
+                        
+                        AnchorPane pane,pane1,pane2;
+                        switch(node.getAccessibleText()){
+                            case "Option1": pane = FXMLLoader.load(getClass().getResource("Views/Display1.fxml"));
+                                            Displays.getChildren().setAll(pane);
+                            break;
+                            case "Option2": pane1 = FXMLLoader.load(getClass().getResource("Views/Display2.fxml"));
+                                            Displays.getChildren().setAll(pane1);
+                            break;
+                            case "Option3": pane2 = FXMLLoader.load(getClass().getResource("Views/Display3.fxml"));
+                                            Displays.getChildren().setAll(pane2);
+                            break;
+                            case "Option4": MainApp.PrimaryStage.close();
+                            break;
+                            
+                            default : System.out.println("Wrong Option!");
+                            
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+            
+                    }
+            });
+            
+            
+            }
+            
+            
+            
+        }
+        
     }
 }
