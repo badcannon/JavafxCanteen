@@ -3,6 +3,10 @@
     
 }
 
-#Hbox{
+#Header{
     -fx-background-color: #367ff5;
+}
+
+#Footer{
+     -fx-background-color: #367ff5;
 }

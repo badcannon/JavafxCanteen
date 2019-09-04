@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="300.0" stylesheets="@../Styles/DrawerContent.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="Header" alignment="CENTER" prefHeight="78.0" prefWidth="300.0" text="Canteen Control Center " />
+      <ImageView fx:id="Image" fitHeight="148.0" fitWidth="300.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Assets/Global.jpg" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+         <VBox.margin>
+            <Insets left="5.0" />
+         </VBox.margin>
+      </ImageView>
+      <JFXButton prefHeight="100.0" prefWidth="300.0" text="Option 1" />
+      <JFXButton prefHeight="100.0" prefWidth="300.0" text="Option 2" />
+      <JFXButton prefHeight="100.0" prefWidth="300.0" text="Option 3" />
+      <Label alignment="BOTTOM_CENTER" prefHeight="127.0" prefWidth="300.0" text="All rights reserved © 2019" textAlignment="CENTER" />
+   </children>
+</VBox>

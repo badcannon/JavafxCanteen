@@ -15,6 +15,8 @@ import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -108,12 +110,10 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        MainApp.PrimaryStage.setHeight(548);
-        MainApp.PrimaryStage.setWidth(713);
-        MainApp.PrimaryStage.setX((MainApp.bounds.getWidth()-713)/2);
-       MainApp.PrimaryStage.setY((MainApp.bounds.getHeight()-548)/2);
+        Center();
         ConnectDbLogin();
         MainApp.Dragable(root);
+        Styles();
 
     }
 
@@ -130,17 +130,18 @@ public class LoginController implements Initializable {
         boolean Con = MainApp.Connect();
         if(Con){
             try {
-                String defaultStatement = "CREATE TABLE IF NOT EXISTS canteen.logindets(Username VARCHAR(20),Password VARCHAR(20)) ";
+                String LoginTableStatement = "CREATE TABLE IF NOT EXISTS canteen.logindets(Username VARCHAR(20) PRIMARY KEY,Password VARCHAR(20)) ";
                 Statement statement =MainApp.Connect.createStatement();
-                statement.execute(defaultStatement);
+                statement.execute(LoginTableStatement);
                 }
             catch (Exception e ){
                 System.out.println(e.getStackTrace());
             }
         }
         else{
-            System.out.println("Problems!");
-
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Database Error!");
+            a.showAndWait();
         }
     }
 
@@ -173,6 +174,22 @@ public class LoginController implements Initializable {
             AlertLabel.setStyle("-fx-text-fill: tomato;-fx-font-weight: bold;-fx-font-size: 14px;");
         }
 
+    }
+
+    private void Center() {
+         MainApp.PrimaryStage.setHeight(548);
+        MainApp.PrimaryStage.setWidth(713);
+        MainApp.PrimaryStage.setX((MainApp.bounds.getWidth()-713)/2);
+       MainApp.PrimaryStage.setY((MainApp.bounds.getHeight()-548)/2);
+    
+    }
+
+    private void Styles() {
+        logbtn.setCursor(Cursor.HAND);
+        Username.setCursor(Cursor.TEXT);
+        Password.setCursor(Cursor.TEXT);
+        clsbtn.setCursor(Cursor.HAND);
+        minbtn.setCursor(Cursor.HAND);
     }
 
 

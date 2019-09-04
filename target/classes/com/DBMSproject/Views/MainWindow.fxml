@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -11,14 +12,14 @@
 
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" stylesheets="@../Styles/MainWindow.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.DBMSproject.MainWindowController">
    <children>
-      <HBox fx:id="Hbox" alignment="TOP_RIGHT" layoutX="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="1200.0">
+      <HBox fx:id="Header" alignment="TOP_RIGHT" layoutX="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="39.0" prefWidth="1200.0">
          <children>
-            <Label prefHeight="42.0" prefWidth="232.0">
+            <Label fx:id="loginInfo" prefHeight="39.0" prefWidth="225.0" textAlignment="JUSTIFY" wrapText="true">
                <HBox.margin>
                   <Insets right="3.0" />
                </HBox.margin>
             </Label>
-            <JFXHamburger>
+            <JFXHamburger fx:id="Ham1">
                <HBox.margin>
                   <Insets right="3.0" />
                </HBox.margin>
@@ -39,5 +40,11 @@
             <Image url="@../Assets/GatLogoVanilla.png" />
          </image>
       </ImageView>
+      <HBox fx:id="Footer" alignment="TOP_RIGHT" layoutY="690.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="1200.0">
+         <children>
+            <Label prefHeight="30.0" prefWidth="342.0" text="SystemDateAndTime" />
+         </children>
+      </HBox>
+      <JFXDrawer fx:id="drawer" defaultDrawerSize="300.0" layoutY="39.0" prefHeight="650.0" prefWidth="300.0" resizableOnDrag="true" resizeContent="true" />
    </children>
 </AnchorPane>

@@ -1,0 +1,33 @@
+#Header{
+    -fx-text-fill : #367ff5;
+    -fx-font-size: 22px;
+        -fx-font-weight:bold;
+        -fx-border-width:3px;
+        -fx-border-color:#367ff5;
+   
+}
+
+#Header:hover{
+    -fx-background-color: #367ff5;
+    -fx-text-fill:black;
+}
+.jfx-button{
+    -fx-background-color:aliceblue;
+    -fx-text-fill:#367ff5;
+    -fx-font-weight:bold;
+    -fx-font-size:20px;
+}
+
+.jfx-button:hover{
+        -fx-background-color:#367ff5;
+        -fx-text-fill:black;
+
+}
+
+.label{
+    -fx-font-weight:bold;
+  -fx-background-color:aliceblue;
+            -fx-text-fill:#367ff5;
+
+    
+}
