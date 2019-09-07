@@ -1,5 +1,5 @@
 package com.DBMSproject;
 
-public class Display1{
+public class Orders{
 
 }

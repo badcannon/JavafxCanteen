@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="Display1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" stylesheets="@../Styles/Displays.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.DBMSproject.Orders">
+   <children>
+      <JFXButton layoutY="1.0" prefHeight="40.0" prefWidth="400.0" />
+      <JFXButton layoutX="400.0" layoutY="1.0" prefHeight="40.0" prefWidth="400.0" />
+      <JFXButton layoutX="800.0" layoutY="1.0" prefHeight="40.0" prefWidth="400.0" />
+   </children>
+</AnchorPane>

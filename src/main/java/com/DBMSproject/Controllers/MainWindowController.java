@@ -162,7 +162,7 @@ public class MainWindowController implements Initializable{
                         
                         AnchorPane pane,pane1,pane2;
                         switch(node.getAccessibleText()){
-                            case "Option1": pane = FXMLLoader.load(getClass().getResource("Views/Display1.fxml"));
+                            case "Orders": pane = FXMLLoader.load(getClass().getResource("Views/Orders.fxml"));
                                             Displays.getChildren().setAll(pane);
                             break;
                             case "Option2": pane1 = FXMLLoader.load(getClass().getResource("Views/Display2.fxml"));

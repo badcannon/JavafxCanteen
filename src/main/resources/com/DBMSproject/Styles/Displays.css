@@ -1,12 +1,9 @@
-#sign{
-    -fx-background-color: #ffffff67;
+.jfx-button{
+    -fx-background-color : aliceblue;
+    -fx-text-fill:#367ff5;
     
 }
-
-#Header{
-    -fx-background-color: #367ff5;
-}
-
-#Footer{
-     -fx-background-color: #367ff5;
-}
+.jfx-button:hover{  
+    -fx-background-color : #367ff5;
+    -fx-text-fill:aliceblue;
+    }

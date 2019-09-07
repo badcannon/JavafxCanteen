@@ -1,7 +1,7 @@
-D:\Canteen\src\main\java\com\DBMSproject\Display1.java
 D:\Canteen\src\main\java\com\DBMSproject\MainApp.java
 D:\Canteen\src\main\java\module-info.java
-D:\Canteen\src\main\java\com\DBMSproject\MainWindowController.java
-D:\Canteen\src\main\java\com\DBMSproject\Display3.java
-D:\Canteen\src\main\java\com\DBMSproject\LoginController.java
-D:\Canteen\src\main\java\com\DBMSproject\Display2.java
+D:\Canteen\src\main\java\com\DBMSproject\Controllers\Display2.java
+D:\Canteen\src\main\java\com\DBMSproject\Controllers\LoginController.java
+D:\Canteen\src\main\java\com\DBMSproject\Controllers\Orders.java
+D:\Canteen\src\main\java\com\DBMSproject\Controllers\MainWindowController.java
+D:\Canteen\src\main\java\com\DBMSproject\Controllers\Display3.java
