@@ -1,5 +1,6 @@
 package com.DBMSproject;
 
+import com.DBMSproject.Enums.StageManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
@@ -50,6 +51,9 @@ public class MainWindowController implements Initializable{
     @FXML
     private JFXDrawer drawer;
     
+//    This must be accessed by orders.java
+
+    
     @FXML
     void Minimize(MouseEvent event) {
         if(event.getSource() == logo){
@@ -64,7 +68,7 @@ public class MainWindowController implements Initializable{
 
     @FXML
     private void handelSignout() throws IOException {
-        MainApp.setRoot("Views/LoginWindow");
+        MainApp.setRoot(StageManager.Change("LOGIN") );
         System.out.println("Done!");
     }
 
@@ -77,6 +81,7 @@ public class MainWindowController implements Initializable{
             ConnectDb();
             ToolTip();
             transHam();
+            CloseDrawer();
             loignInfo();
 //       Styles(); 
         } catch (IOException ex) {
@@ -84,10 +89,11 @@ public class MainWindowController implements Initializable{
         }
         
     }
-    
+    private HamburgerSlideCloseTransition transition;
     public void transHam(){
             
         HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(Ham1);
+        this.transition = transition;
         transition.setRate(-1);
         Ham1.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
                 //if its open close if its closed open :D
@@ -96,7 +102,21 @@ public class MainWindowController implements Initializable{
                 //if its open close if not open :D 
                 drawer.toggle();
         });
+      
     
+    }
+    public void CloseDrawer(){
+          root.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
+              
+             {  
+                    if(drawer.isOpened()){
+                       transition.setRate(transition.getRate()*-1);
+                       transition.play();
+                        drawer.close();
+                    }
+             }
+        
+        });
     }
 
     public void ToolTip() {
@@ -114,9 +134,7 @@ public class MainWindowController implements Initializable{
 }
 
     private void loignInfo() {
-            
-  
-        
+    
            loginInfo.setText("Welcome "
            +"Global " + "You have logged in at \n" + new java.util.Date().toString());
 
@@ -148,7 +166,7 @@ public class MainWindowController implements Initializable{
 
     private void DrawerProps() throws IOException {
         VBox pane = new VBox();
-        pane = new FXMLLoader(getClass().getResource("Views/DrawerContent.fxml")).load();
+        pane = new FXMLLoader(getClass().getResource(StageManager.Change("DRAWER"))).load();
         drawer.setSidePane(pane);
         //Assigning fucntions to the buttons with a loop !
         for (Node node : pane.getChildren()) {
@@ -159,16 +177,17 @@ public class MainWindowController implements Initializable{
                 @Override
                 public void handle(MouseEvent event){
                     try {
-                        
                         AnchorPane pane,pane1,pane2;
+
                         switch(node.getAccessibleText()){
-                            case "Orders": pane = FXMLLoader.load(getClass().getResource("Views/Orders.fxml"));
+                            
+                            case "Orders":  pane = FXMLLoader.load(getClass().getResource(StageManager.Change("ORDERS")));
                                             Displays.getChildren().setAll(pane);
                             break;
-                            case "Option2": pane1 = FXMLLoader.load(getClass().getResource("Views/Display2.fxml"));
+                            case "Option2": pane1 = FXMLLoader.load(getClass().getResource(StageManager.Change("STATS")));
                                             Displays.getChildren().setAll(pane1);
                             break;
-                            case "Option3": pane2 = FXMLLoader.load(getClass().getResource("Views/Display3.fxml"));
+                            case "Option3": pane2 = FXMLLoader.load(getClass().getResource(StageManager.Change("SETTINGS")));
                                             Displays.getChildren().setAll(pane2);
                             break;
                             case "Option4": MainApp.PrimaryStage.close();

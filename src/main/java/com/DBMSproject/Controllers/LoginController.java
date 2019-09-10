@@ -25,6 +25,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
+import com.DBMSproject.Enums.StageManager;
 
 public class LoginController implements Initializable {
 
@@ -120,7 +121,7 @@ public class LoginController implements Initializable {
     private void handelLogin() throws IOException {
        try
         {
-        MainApp.setRoot("Views/MainWindow");
+        MainApp.setRoot(StageManager.Change("MAINWINDOW") );
        }catch (Exception e ){
            System.out.println(e.getStackTrace());
        }

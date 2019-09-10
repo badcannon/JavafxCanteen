@@ -1,12 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="Display1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" stylesheets="@../Styles/Displays.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.DBMSproject.Orders">
+<AnchorPane fx:id="OrderCreate" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" stylesheets="@../Styles/Displays.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.DBMSproject.Orders">
    <children>
-      <JFXButton layoutY="1.0" prefHeight="40.0" prefWidth="400.0" />
-      <JFXButton layoutX="400.0" layoutY="1.0" prefHeight="40.0" prefWidth="400.0" />
-      <JFXButton layoutX="800.0" layoutY="1.0" prefHeight="40.0" prefWidth="400.0" />
+      <JFXTabPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="650.0" prefWidth="1200.0" style="-fx-border-width: 1px;" tabDragPolicy="REORDER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <tabs>
+            <Tab text="Place Orders">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" mouseTransparent="true" prefHeight="600.0" prefWidth="1200.0" />
+              </content>
+            </Tab>
+            <Tab text="Create Orders">
+              <content>
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="1200.0" />
+              </content>
+            </Tab>
+            <Tab text="Update Orders">
+              <content>
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="1148.0" />
+              </content>
+            </Tab>
+         </tabs>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </JFXTabPane>
    </children>
 </AnchorPane>

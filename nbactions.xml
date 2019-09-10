@@ -11,6 +11,7 @@
             </goals>
             <properties>
                 <exec.args>-classpath %classpath ${packageClassName}</exec.args>
+                
                 <exec.executable>java</exec.executable>
             </properties>
         </action>

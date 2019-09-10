@@ -29,8 +29,8 @@
                </image>
             </ImageView>
          </graphic></JFXButton>
-      <JFXButton accessibleText="Option2" prefHeight="100.0" prefWidth="300.0" text="Option 2" />
-      <JFXButton accessibleText="Option3" prefHeight="100.0" prefWidth="300.0" text="Option 3" />
+      <JFXButton accessibleText="Option2" prefHeight="100.0" prefWidth="300.0" text="Statistics" />
+      <JFXButton accessibleText="Option3" prefHeight="100.0" prefWidth="300.0" text="Settings" />
       <JFXButton prefHeight="97.0" prefWidth="323.0" text="Option 4 " />
       <JFXButton accessibleText="Option4" prefHeight="100.0" prefWidth="300.0" text="Exit" />
       <Label alignment="BOTTOM_CENTER" prefHeight="23.0" prefWidth="300.0" text="Project I guess ! :D " textAlignment="CENTER" />

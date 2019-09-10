@@ -1,5 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    
+    
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.DBMSproject</groupId>
     <artifactId>canteen</artifactId>
@@ -8,6 +10,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+
     </properties>
     <dependencies>
         <dependency>
@@ -35,8 +38,9 @@
         </dependency>
 
 
-
     </dependencies>
+
+    
     <build>
         <plugins>
             <plugin>
@@ -45,6 +49,9 @@
                 <version>3.8.0</version>
                 <configuration>
                     <release>11</release>
+
+                  
+                    
                 </configuration>
             </plugin>
             <plugin>
@@ -54,7 +61,16 @@
                 <configuration>
                     <mainClass>com.DBMSproject.MainApp</mainClass>
                     <executable>C:\Program Files\Java\Java Jdk's\jdk-11.0.4\bin\java.exe</executable>
+                    <options>
+                        <option>--add-opens</option>
+                        <option>javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix</option>
+                        <option>--add-opens</option>
+                        <option>javafx.controls/com.sun.javafx.scene.control=com.jfoenix</option>
+                        <!--<option>-Dprism.allowhidpi=false</option>-->
+                    </options>
+
                 </configuration>
+                
             </plugin>
         </plugins>
     </build>

@@ -1,5 +1,6 @@
 package com.DBMSproject;
 
+import com.DBMSproject.Enums.StageManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -33,7 +34,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         PrimaryStage = stage;
-        scene = new Scene(loadFXML("Views/LoginWindow"));
+        scene = new Scene(loadFXML(StageManager.Change("LOGIN")));
         stage.setScene(scene);
         stage.initStyle(StageStyle.UNDECORATED);
         stage.show();

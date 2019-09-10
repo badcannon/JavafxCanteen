@@ -9,3 +9,4 @@ module com.DBMSproject {
     requires javafx.graphics;
     requires com.jfoenix;
 }
+
