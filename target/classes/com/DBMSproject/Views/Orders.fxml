@@ -1,33 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTabPane?>
-<?import javafx.scene.Cursor?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="OrderCreate" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" stylesheets="@../Styles/Displays.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.DBMSproject.Orders">
    <children>
       <JFXTabPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="650.0" prefWidth="1200.0" style="-fx-border-width: 1px;" tabDragPolicy="REORDER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
             <Tab text="Place Orders">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" mouseTransparent="true" prefHeight="600.0" prefWidth="1200.0" />
-              </content>
+               <content>
+                  <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="597.0" prefWidth="1200.0" stylesheets="@../Styles/PlaceOrders.css">
+                     <children>
+                        <JFXTreeTableView fx:id="table" prefHeight="561.0" prefWidth="703.0" />
+                        <JFXTextField focusColor="#405aa800" layoutY="562.0" prefHeight="38.0" prefWidth="363.0" promptText="Filter" style="-fx-background-radius: 15px;" unFocusColor="#4d4d4d00">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </JFXTextField>
+                        <JFXButton fx:id="refresh" layoutX="366.0" layoutY="559.0" onAction="#refresh" prefHeight="41.0" prefWidth="338.0" style="-fx-background-color: #367ff5; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 15; -fx-background-radius: 5px;" text="Refresh" />
+                        <ImageView fitHeight="32.0" fitWidth="34.0" layoutX="471.0" layoutY="565.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Assets/Refresh.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+               </content>
             </Tab>
             <Tab text="Create Orders">
               <content>
-                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="1200.0" />
+                <AnchorPane fx:id="CrOrders" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="1200.0" stylesheets="@../Styles/CreateOrder.css">
+                     <children>
+                        <ImageView fx:id="MainImage" fitHeight="208.0" fitWidth="281.0" layoutX="905.0" layoutY="14.0" onMouseClicked="#EditImage" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Assets/image-placeholder-1200x800.jpg" />
+                           </image>
+                        </ImageView>
+                        <JFXTextField fx:id="ItemName" focusColor="#405aa800" layoutX="222.0" layoutY="193.0" prefHeight="26.0" prefWidth="590.0" promptText="Item Name" unFocusColor="#4d4d4d00" />
+                        <JFXTextArea fx:id="description" focusColor="#38497a00" layoutX="222.0" layoutY="300.0" prefHeight="103.0" prefWidth="590.0" promptText="Short Description" unFocusColor="#4d4d4d00" />
+                        <JFXTextField fx:id="ItemPrice" focusColor="#405aa800" layoutX="222.0" layoutY="246.0" prefHeight="34.0" prefWidth="590.0" promptText="Item Price " unFocusColor="#4d4d4d00" />
+                        <Label fx:id="MainLabel" layoutX="117.0" layoutY="14.0" prefHeight="73.0" prefWidth="325.0" text="Add a new item " />
+                        <JFXButton fx:id="Create" layoutX="392.0" layoutY="460.0" onAction="#CreateDets" prefHeight="73.0" prefWidth="242.0" text="Create" />
+                        <ImageView fitHeight="90.0" fitWidth="92.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Assets/Bulb.png" />
+                           </image>
+                        </ImageView>
+                     </children></AnchorPane>
               </content>
             </Tab>
             <Tab text="Update Orders">
               <content>
-                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="1148.0" />
+                <AnchorPane fx:id="UpOrders" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" />
               </content>
             </Tab>
          </tabs>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
       </JFXTabPane>
    </children>
 </AnchorPane>

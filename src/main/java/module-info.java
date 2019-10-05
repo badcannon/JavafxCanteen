@@ -8,5 +8,7 @@ module com.DBMSproject {
     requires javafx.base;
     requires javafx.graphics;
     requires com.jfoenix;
+    requires java.desktop;
+    requires javafx.swing;
 }
 

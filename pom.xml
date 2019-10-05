@@ -36,6 +36,26 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.17</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.levigo/gwt-awt -->
+<dependency>
+    <groupId>com.levigo</groupId>
+    <artifactId>gwt-awt</artifactId>
+    <version>1.0.1</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/com.github.jai-imageio/jai-imageio-core -->
+<dependency>
+    <groupId>com.github.jai-imageio</groupId>
+    <artifactId>jai-imageio-core</artifactId>
+    <version>1.4.0</version>
+</dependency>
+ 
+<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-swing -->
+<dependency>
+    <groupId>org.openjfx</groupId>
+    <artifactId>javafx-swing</artifactId>
+    <version>12.0.2</version>
+</dependency>
+
 
 
     </dependencies>

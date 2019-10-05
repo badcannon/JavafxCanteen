@@ -1,0 +1,48 @@
+ 
+    #MainLabel{
+        -fx-font-size:40px;
+        -fx-text-fill:#6600cc;
+        -fx-font-weight:bold;
+    }
+    
+    .jfx-text-field{
+        -fx-border-color: #4059a9;
+        -fx-border-radius:5px;
+        -fx-border-width:3px;
+        -fx-padding: 5px; 
+    }
+    
+    .jfx-text-area{
+        -fx-border-color: #4059a9;
+        -fx-border-radius:5px;
+        -fx-border-width:3px;
+        -fx-padding: 5px; 
+    }
+      .jfx-text-area:focused{
+        -fx-border-color: #367ff5;
+    }
+    
+    .jfx-text-field:focused{
+        -fx-border-color:#367ff5;
+    }
+ 
+    
+   #Create{
+        -fx-background-color:#367ff5;
+        -fx-text-fill:whitesmoke;
+        -fx-font-weight:bold;
+        
+    }
+    
+    #Create{
+        -fx-font-size:20px;
+    }
+    
+    #Create:hover{
+        -fx-background-color:#6600cc;
+        -fx-text-fill:#367ff5;
+   
+    }
+    
+
+    

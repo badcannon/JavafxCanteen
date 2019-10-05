@@ -73,7 +73,7 @@ public class MainApp extends Application {
 
 
     static void Dragable(AnchorPane root) {
-         AtomicReference<Double> XOffset = new AtomicReference<>((double) 0);
+        AtomicReference<Double> XOffset = new AtomicReference<>((double) 0);
         AtomicReference<Double> YOffset = new AtomicReference<>((double) 0);
         root.setOnMousePressed(mouseEvent -> {
             XOffset.set(mouseEvent.getSceneX());

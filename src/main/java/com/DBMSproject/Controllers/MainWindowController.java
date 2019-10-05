@@ -8,8 +8,6 @@ import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -51,9 +49,11 @@ public class MainWindowController implements Initializable{
     @FXML
     private JFXDrawer drawer;
     
-//    This must be accessed by orders.java
 
     
+//    This must be accessed by orders.java
+
+   
     @FXML
     void Minimize(MouseEvent event) {
         if(event.getSource() == logo){
@@ -85,7 +85,7 @@ public class MainWindowController implements Initializable{
             loignInfo();
 //       Styles(); 
         } catch (IOException ex) {
-            Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                        System.out.println("Io first!");
         }
         
     }
@@ -97,22 +97,34 @@ public class MainWindowController implements Initializable{
         transition.setRate(-1);
         Ham1.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
                 //if its open close if its closed open :D
-                transition.setRate(transition.getRate()*-1);
-                transition.play();
-                //if its open close if not open :D 
-                drawer.toggle();
+               if(drawer.isOpened()){
+                       transition.setRate(-1);
+                       transition.play();
+                       drawer.close();
+                       drawer.toBack();
+                    }
+               if(drawer.isClosed()){
+                   transition.setRate(1);
+                   transition.play();
+                   drawer.open();
+                   drawer.toFront();
+               }
         });
       
+        
+    
     
     }
+  
+      
     public void CloseDrawer(){
-          root.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
+       root.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
               
              {  
                     if(drawer.isOpened()){
-                       transition.setRate(transition.getRate()*-1);
+                       transition.setRate(-1);
                        transition.play();
-                        drawer.close();
+                       drawer.close();      
                     }
              }
         
@@ -129,7 +141,7 @@ public class MainWindowController implements Initializable{
         signout.setTooltip(tt);
     }
        catch(Exception e){
-            System.out.println(e.getMessage());
+                        System.out.println(e.getMessage());
     }
 }
 
@@ -182,6 +194,7 @@ public class MainWindowController implements Initializable{
                         switch(node.getAccessibleText()){
                             
                             case "Orders":  pane = FXMLLoader.load(getClass().getResource(StageManager.Change("ORDERS")));
+                                            Displays.getChildren().removeAll();
                                             Displays.getChildren().setAll(pane);
                             break;
                             case "Option2": pane1 = FXMLLoader.load(getClass().getResource(StageManager.Change("STATS")));
@@ -197,7 +210,7 @@ public class MainWindowController implements Initializable{
                             
                         }
                     } catch (IOException ex) {
-                        Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                            ex.printStackTrace();
                     }
             
                     }
@@ -211,4 +224,13 @@ public class MainWindowController implements Initializable{
         }
         
     }
+
+   public JFXDrawer getdrawer() {
+       return drawer;
+    }
+
+    public HamburgerSlideCloseTransition gettransition() {
+        return transition;
+    }
+
 }

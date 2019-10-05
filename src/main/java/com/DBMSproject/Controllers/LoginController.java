@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
@@ -19,13 +18,12 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import com.DBMSproject.Enums.StageManager;
+import java.io.PrintStream;
+import java.util.Arrays;
 
 public class LoginController implements Initializable {
 
@@ -55,7 +53,6 @@ public class LoginController implements Initializable {
 
     @FXML
     private Circle Circle;
-
 
 
     @FXML
@@ -123,7 +120,7 @@ public class LoginController implements Initializable {
         {
         MainApp.setRoot(StageManager.Change("MAINWINDOW") );
        }catch (Exception e ){
-           System.out.println(e.getStackTrace());
+           System.out.println(e.getStackTrace().getClass().getMethods());
        }
     }
 
@@ -135,8 +132,8 @@ public class LoginController implements Initializable {
                 Statement statement =MainApp.Connect.createStatement();
                 statement.execute(LoginTableStatement);
                 }
-            catch (Exception e ){
-                System.out.println(e.getStackTrace());
+            catch (SQLException e ){
+                System.out.println("Sql Error");
             }
         }
         else{
