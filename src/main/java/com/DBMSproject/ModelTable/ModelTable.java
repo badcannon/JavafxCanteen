@@ -6,9 +6,6 @@
 package com.DBMSproject;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
@@ -16,47 +13,58 @@ import javafx.scene.image.ImageView;
  * @author shree
  */
 public class ModelTable extends RecursiveTreeObject<ModelTable> {
-    StringProperty ItemName,Description, Price;
-    Image file;
-    
-    public ModelTable(String ItemName,String Description,String Price,Image file){
-        this.ItemName = new SimpleStringProperty(ItemName);
-        this.Description = new SimpleStringProperty(Description);
-        this.Price = new SimpleStringProperty(Price);
+    String ItemName,Description, Price,Quantity;
+    ImageView file;
+
+    public ModelTable(String ItemName,String Description,String Price,ImageView file,String Quantity){
+        this.ItemName =  ItemName ;
+        this.Description =  Description ;
+        this.Price =  Price ;
         this.file = file;
+        this.Quantity = Quantity  ;
     } 
 
-    public StringProperty getItemName() {
+    public String getItemName() {
         return ItemName;
     }
 
-    public void setItemName(StringProperty ItemName) {
+    public void setItemName(String ItemName) {
         this.ItemName = ItemName;
     }
 
-    public StringProperty getDescription() {
+    public String getDescription() {
         return Description;
     }
 
-    public void setDescription(StringProperty Description) {
+    public void setDescription(String Description) {
         this.Description = Description;
     }
 
-    public StringProperty getPrice() {
+    public String getPrice() {
         return Price;
     }
 
-    public void setPrice(StringProperty Price) {
+    public void setPrice(String Price) {
         this.Price = Price;
     }
 
-    public Image getFile() {
+    public String getQuantity() {
+        return Quantity;
+    }
+
+    public void setQuantity(String Quantity) {
+        this.Quantity = Quantity;
+    }
+
+    public ImageView getFile() {
         return file;
     }
 
-    public void setFile(Image file) {
+    public void setFile(ImageView file) {
         this.file = file;
     }
+
+  
     
     
     

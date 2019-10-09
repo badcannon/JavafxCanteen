@@ -3,46 +3,44 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXTreeTableColumn;
-import com.jfoenix.controls.JFXTreeTableView;
-import com.jfoenix.controls.RecursiveTreeItem;
-import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableObjectValue;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.util.Callback;
-import javax.imageio.ImageIO;
+import javafx.stage.StageStyle;
 
 
 
@@ -63,7 +61,26 @@ public class Orders implements Initializable {
     private AnchorPane OrderCreate;
     
     @FXML
-    private JFXTreeTableView<ModelTable> table;
+    private TableView<ModelTable> table;
+
+    @FXML
+    private TableColumn<ModelTable, ImageView> Col_image;
+
+    @FXML
+    private TableColumn<ModelTable, String> Col_ItemName;
+
+    @FXML
+    private TableColumn<ModelTable, String> Col_ItemPrice;
+
+    @FXML
+    private TableColumn<ModelTable, String> Col_ItemDescription;
+
+    @FXML
+    private TableColumn<ModelTable, String> Col_Quantity;
+
+    @FXML
+    private TableColumn<ModelTable, JFXButton> Col_Add;
+
 
     @FXML
     private JFXButton refresh;
@@ -93,39 +110,54 @@ public class Orders implements Initializable {
     private JFXTextField ItemPrice;
     
     @FXML
+    private JFXTextField Quantity;
+    
+    @FXML
     private JFXButton Create;
+    
+    @FXML
+    private Label LabelRemove;
     
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
        
+        try {
             ConnectDbOrders();
-           
-     
-            
+            CreateTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 
      @FXML
     void CreateDets(ActionEvent event) throws FileNotFoundException, URISyntaxException {
+       //Restriction ! Can be made
         if(event.getSource() == Create)
         {
             
             try {
-            String Query = "INSERT INTO `canteen`.`menu` (Itemname,price,Image,description) VALUES(?,?,?,?);";
+            String Query = "INSERT INTO `canteen`.`menu` (Itemname,price,Image,description,Itemquantity,createdDateTime,creator) VALUES(?,?,?,?,?,?,?);";
             pst = MainApp.Connect.prepareStatement(Query);
             pst.setString(1,getItemName());
             pst.setString(2, getPrice());
             try{
-            pst.setBinaryStream(3,(InputStream)Fis,(int)file.length());
+            pst.setString(3,file.toURI().toString());
             }catch(Exception e){
-                pst.setBinaryStream(3, null,0);
+             pst.setString(3,getClass().getResource("Assets/image-placeholder-1200x800.jpg").toString());
             }
             pst.setString(4, getDescription());
+            pst.setString(5, getQuantity());
+            pst.setString(6, getCreationtime());
+            pst.setString(7, getCreateBy());
             pst.execute();
             pst.close();
-                System.out.println("Done!");
+            popupAlert(true);
+            clearCreate();
         } catch (SQLException ex) {
-                System.out.println("Error!");
+                popupAlert(false,ex);
         }
         
         }
@@ -137,7 +169,7 @@ public class Orders implements Initializable {
       @FXML
     void EditImage(MouseEvent event) {
         
-        if (event.getSource() == MainImage){
+        if (event.getSource() == MainImage || event.getSource() == LabelRemove){
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(new  ExtensionFilter("Image Files","*.png","*.jpeg","*.jpg"));
         file = fileChooser.showOpenDialog(MainApp.PrimaryStage);
@@ -146,6 +178,7 @@ public class Orders implements Initializable {
             try {
                 Image image = new Image(file.toURI().toString(),281,208,true,true); //location,prefwidth,prefheight,preserver ratio
                 MainImage.setImage(image);
+                CrOrders.getChildren().remove(LabelRemove);
                 Fis = new FileInputStream(file);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
@@ -159,9 +192,10 @@ public class Orders implements Initializable {
     
     
        @FXML
-    void refresh(ActionEvent event) {
+    void refresh(ActionEvent event) throws SQLException, IOException {
         if(event.getSource() == refresh){
-            System.out.println("Clicked !");
+            oblist.clear();
+            CreateTable();
         }
 
     }
@@ -172,12 +206,17 @@ public class Orders implements Initializable {
         if(con){
             try {
                 Statement smt = MainApp.Connect.createStatement();
-                smt.execute("CREATE TABLE IF NOT EXISTS `canteen`.`menu` (\n" +
-                        "  `Itemname` VARCHAR(100) NOT NULL,\n" +
-                        "  `price` FLOAT NULL,\n" +
-                        "  `Image` BLOB NULL,\n" +
-                        "  `description` VARCHAR(200) NULL DEFAULT 'None',\n" +
-                        "  PRIMARY KEY (`Itemname`));");
+                        smt.execute("CREATE TABLE IF NOT EXISTS`canteen`.`menu` (\n" +
+                        "  `Itemname` varchar(100) NOT NULL,\n" +
+                        "  `price` float DEFAULT NULL,\n" +
+                        "  `Image` varchar(400) DEFAULT NULL,\n" +
+                        "  `description` varchar(200) DEFAULT 'None',\n" +
+                        "  `Itemquantity` int(11) DEFAULT NULL,\n" +
+                        "  `createdDateTime` datetime DEFAULT NULL,\n" +
+                        "  `creator` varchar(100) DEFAULT NULL,\n"+ 
+                        "  PRIMARY KEY (`Itemname`)\n" +
+                                
+                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;");
 
                         } catch (SQLException ex) {
                 Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
@@ -191,105 +230,143 @@ public class Orders implements Initializable {
     }
     
     String getDescription(){
+        if("".equals(description.getText()) || " ".equals(description.getText())){
+            return "Not Entered!";
+        }
         return description.getText();
     }
     
     String getPrice(){
         return ItemPrice.getText();
     }    
-
-    private void CreateTable() throws SQLException, IOException {
-       try{
-        JFXTreeTableColumn<ModelTable,ImageView> Images = new JFXTreeTableColumn<>("Image");
-        Images.setPrefWidth(75);
-        //To show what kind of data is to be shown !
-        Images.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ModelTable, ImageView>, ObservableValue<ImageView>>() {
-            @Override
-            public ObservableValue<ImageView> call(TreeTableColumn.CellDataFeatures<ModelTable, ImageView> param) {
-                //Treeitem , user object and then the parameter! 
-                return (ObservableObjectValue<ImageView>)new ImageView(param.getValue().getValue().file);
-            }
+    
+    String getQuantity(){
+        if("".equals(Quantity.getText()) || " ".equals(Quantity.getText())){
+            return null;   
         }
-        
-                
-        );
-        
-        
-        JFXTreeTableColumn<ModelTable,String> ItemNames = new JFXTreeTableColumn<>("Item Name");
-        ItemNames.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ModelTable, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ModelTable, String> param) {
-                return param.getValue().getValue().ItemName;
-            }
-        });
-        
-        JFXTreeTableColumn<ModelTable,String> ItemPrice = new JFXTreeTableColumn<>("Item Price");
-        ItemPrice.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ModelTable, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ModelTable, String> param) {
-                return param.getValue().getValue().Price;
-            }
-        });
-        JFXTreeTableColumn<ModelTable,String> ItemDescription = new JFXTreeTableColumn<>("Description");
-        ItemDescription.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<ModelTable, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<ModelTable, String> param) {
-                return param.getValue().getValue().Description;
-            }
-        });
-        
-        
-        ObservableList<ModelTable> oblist = FXCollections.observableArrayList();
+        return Quantity.getText();
+    }
+    String getCreationtime(){
+        DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        return df.format(new Date());
+    }
+    
+    String getCreateBy(){
+        return LoginController.getCurrentUser();
+    }
+
+    private void CreateTable() throws SQLException, IOException  {
+      
+        PropertyValueFactory<ModelTable,ImageView> img = new PropertyValueFactory<>("file");
+        Col_image.setCellValueFactory(img);        
+        Col_ItemName.setCellValueFactory(new PropertyValueFactory<>("ItemName"));
+        Col_ItemPrice.setCellValueFactory(new PropertyValueFactory<>("Price"));
+        Col_ItemDescription.setCellValueFactory(new PropertyValueFactory<>("Description"));
+        Col_Quantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
         oblist = returnList();
-        
-        final TreeItem<ModelTable> root = new RecursiveTreeItem<>(oblist, RecursiveTreeObject::getChildren);
-        table.getColumns().setAll(Images,ItemNames,ItemPrice,ItemDescription);
-        table.setRoot(root);
-        table.setShowRoot(false);
+        table.setItems(oblist);
         
         
-       }
-       catch(Exception ex){
-           System.out.println("Errors ! ");
-       }
+     
     }
 
     private ObservableList<ModelTable> returnList() throws SQLException, IOException {
         ObservableList<ModelTable> oblist = FXCollections.observableArrayList();
-        String name,description,price;
-        Blob image;
+        String name,description,price,quantity;
+        String image;
         ImageView FinalImage;
         String Query = "SELECT * FROM `canteen`.`menu`;";
         Statement smt = MainApp.Connect.createStatement();
         ResultSet rs =  smt.executeQuery(Query);
         while(rs.next())
         {
+            Image imgs;
             name = rs.getString("Itemname");
             description = rs.getString("description");
+            quantity = rs.getString("Itemquantity");
             price = rs.getString("price");
-            image = rs.getBlob("Image");
-            Image imgs;
-            if (image == null){
-               imgs = new Image(getClass().getResourceAsStream("Assets/image-placeholder-1200x800.jpg"));
-            }
-            else{
-               InputStream Is = image.getBinaryStream(0,image.length());
-                BufferedImage img = ImageIO.read(Is);
-                 imgs = SwingFXUtils.toFXImage(img,null);  
-            }
-            oblist.add(new ModelTable(name, description, price, imgs));
-            
-            
-        }
+            image = rs.getString("Image");
+            imgs = new Image(image);
+            FinalImage = new ImageView(image);
+            FinalImage.setFitHeight(100);
+            FinalImage.setFitWidth(150);              
+            oblist.add(new ModelTable(name, description, price, FinalImage,quantity)); } 
       return oblist;          
     }
-    
-    
-   
+
+ private void popupAlert(boolean b,Exception e) {
+        
+        if(b){
+            Alert a = new Alert(Alert.AlertType.INFORMATION);
+            StyleAlert(a);
+            a.setTitle("Successful!");
+            a.setHeaderText("Successful !");
+            a.setContentText("The Opertion was Successful !");
+            a.showAndWait();
+        }
+        else{
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            StyleAlert(a);
+            a.setTitle("Something Went Wrong!");
+            a.setHeaderText("Look Like something went wrong!");
+            a.setContentText("Please Look into the error details below ! ");
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            TextArea area  = new TextArea(sw.toString());
+            a.getDialogPane().setExpandableContent(area);
+            a.showAndWait();
+            
+          
+        }
+        
+    }
+
+     private void popupAlert(boolean b) {
+        
+        if(b){
+            Alert a = new Alert(Alert.AlertType.INFORMATION );
+            StyleAlert(a);
+            a.setTitle("Successful!");
+            a.setHeaderText("Successful !");
+            a.setContentText("The Opertion was Successful !");
+            a.showAndWait();
+            
+        }
+        else{
+           Alert a = new Alert(Alert.AlertType.ERROR);
+           StyleAlert(a);
+           a.setTitle("Something Went Wrong !");
+            a.setHeaderText("Looks Like Something Went Wrong !");
+            a.setContentText("Error Details are not Available at the moment , Please contact "
+                    + "the Dev ! ");
+            a.showAndWait();   
+        }
+        
+    }
+
+    public void StyleAlert(Alert a) {
+        DialogPane pane = a.getDialogPane();
+        a.initStyle(StageStyle.UNDECORATED);
+//        pane.getStylesheets().add(getClass().getResource("Styles/DialogPane.css").toExternalForm());
+        
+    }
+
+    private void clearCreate() {
+        ItemName.clear();
+        Quantity.clear();
+        description.clear();
+        ItemPrice.clear();
+        MainImage.setImage(new Image(getClass().getResource("Assets/image-placeholder-1200x800.jpg").toString()));
+        CrOrders.   getChildren().add(LabelRemove);
+
+    }
+
 
 
    
 }
+
 
 
 

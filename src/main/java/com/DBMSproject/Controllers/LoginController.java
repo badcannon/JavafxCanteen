@@ -27,6 +27,12 @@ import java.util.Arrays;
 
 public class LoginController implements Initializable {
 
+    static String CurrentUser;
+    
+    public static String getCurrentUser() {
+        return CurrentUser;
+    }
+
     @FXML
     private Label AlertLabel;
 
@@ -144,6 +150,7 @@ public class LoginController implements Initializable {
     }
 
     private String GetUsername(){
+        CurrentUser = Username.getText();
         return Username.getText();
 
     }
@@ -189,6 +196,8 @@ public class LoginController implements Initializable {
         clsbtn.setCursor(Cursor.HAND);
         minbtn.setCursor(Cursor.HAND);
     }
+    
+  
 
 
 }

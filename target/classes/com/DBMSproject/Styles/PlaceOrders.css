@@ -1,4 +1,4 @@
-    .jfx-text-field{
+/*    .jfx-text-field{
         -fx-border-color: #4059a9;
         -fx-border-radius:5px;
         -fx-border-width:3px;
@@ -15,8 +15,9 @@
         -fx-border-color: #367ff5;
     }
     
-    .jfx-text-field:focused{
-        -fx-border-color:#367ff5;
+*/    .jfx-text-field:focused{
+        -fx-text-fill:#4d4de3;
+        -fx-prompt-text-fill:#0099ff;
     }
- 
- 
+    
+   

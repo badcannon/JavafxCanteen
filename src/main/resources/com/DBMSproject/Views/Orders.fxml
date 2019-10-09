@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -20,18 +22,23 @@
                <content>
                   <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="597.0" prefWidth="1200.0" stylesheets="@../Styles/PlaceOrders.css">
                      <children>
-                        <JFXTreeTableView fx:id="table" prefHeight="561.0" prefWidth="703.0" />
-                        <JFXTextField focusColor="#405aa800" layoutY="562.0" prefHeight="38.0" prefWidth="363.0" promptText="Filter" style="-fx-background-radius: 15px;" unFocusColor="#4d4d4d00">
-                           <font>
-                              <Font size="15.0" />
-                           </font>
-                        </JFXTextField>
-                        <JFXButton fx:id="refresh" layoutX="366.0" layoutY="559.0" onAction="#refresh" prefHeight="41.0" prefWidth="338.0" style="-fx-background-color: #367ff5; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 15; -fx-background-radius: 5px;" text="Refresh" />
+                        <JFXTextField focusColor="#4d4de3" layoutY="563.0" prefHeight="30.0" prefWidth="363.0" promptText="Filter" unFocusColor="#009dff" />
+                        <JFXButton fx:id="refresh" layoutX="366.0" layoutY="560.0" onAction="#refresh" prefHeight="36.0" prefWidth="338.0" style="-fx-background-color: #367ff5; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 15; -fx-background-radius: 5px;" text="Refresh" />
                         <ImageView fitHeight="32.0" fitWidth="34.0" layoutX="471.0" layoutY="565.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Assets/Refresh.png" />
                            </image>
                         </ImageView>
+                        <TableView fx:id="table" prefHeight="558.0" prefWidth="702.0" stylesheets="@../Styles/TableView.css">
+                          <columns>
+                            <TableColumn fx:id="Col_image" prefWidth="143.999966442585" text="Image" />
+                            <TableColumn fx:id="Col_ItemName" prefWidth="150.3999481201172" text="Item Name" />
+                              <TableColumn fx:id="Col_ItemPrice" prefWidth="92.0" text="Item Price" />
+                              <TableColumn fx:id="Col_ItemDescription" prefWidth="162.4000244140625" text="Description" />
+                              <TableColumn fx:id="Col_Quantity" prefWidth="66.39996337890625" text="Quantity" />
+                              <TableColumn fx:id="Col_Add" prefWidth="85.60001220703123" text="Add" />
+                          </columns>
+                        </TableView>
                      </children>
                   </AnchorPane>
                </content>
@@ -45,17 +52,25 @@
                               <Image url="@../Assets/image-placeholder-1200x800.jpg" />
                            </image>
                         </ImageView>
-                        <JFXTextField fx:id="ItemName" focusColor="#405aa800" layoutX="222.0" layoutY="193.0" prefHeight="26.0" prefWidth="590.0" promptText="Item Name" unFocusColor="#4d4d4d00" />
-                        <JFXTextArea fx:id="description" focusColor="#38497a00" layoutX="222.0" layoutY="300.0" prefHeight="103.0" prefWidth="590.0" promptText="Short Description" unFocusColor="#4d4d4d00" />
-                        <JFXTextField fx:id="ItemPrice" focusColor="#405aa800" layoutX="222.0" layoutY="246.0" prefHeight="34.0" prefWidth="590.0" promptText="Item Price " unFocusColor="#4d4d4d00" />
+                        <JFXTextField fx:id="ItemName" focusColor="#4d4be3" labelFloat="true" layoutX="41.0" layoutY="191.0" prefHeight="34.0" prefWidth="465.0" promptText="Item Name*" unFocusColor="#0095fffa" />
+                        <JFXTextArea fx:id="description" focusColor="#4d4de3" labelFloat="true" layoutX="41.0" layoutY="362.0" prefHeight="80.0" prefWidth="462.0" promptText="Short Description" unFocusColor="#0099ff" />
+                        <JFXTextField fx:id="ItemPrice" focusColor="#4d4de3" labelFloat="true" layoutX="41.0" layoutY="302.0" prefHeight="29.0" prefWidth="466.0" promptText="Item Price* " unFocusColor="#0099fffd" />
                         <Label fx:id="MainLabel" layoutX="117.0" layoutY="14.0" prefHeight="73.0" prefWidth="325.0" text="Add a new item " />
-                        <JFXButton fx:id="Create" layoutX="392.0" layoutY="460.0" onAction="#CreateDets" prefHeight="73.0" prefWidth="242.0" text="Create" />
+                        <JFXButton fx:id="Create" layoutX="392.0" layoutY="465.0" onAction="#CreateDets" prefHeight="73.0" prefWidth="242.0" text="Create" />
                         <ImageView fitHeight="90.0" fitWidth="92.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Assets/Bulb.png" />
                            </image>
                         </ImageView>
-                     </children></AnchorPane>
+                        <JFXTextField fx:id="Quantity" focusColor="#4d4de3" labelFloat="true" layoutX="41.0" layoutY="252.0" prefHeight="28.0" prefWidth="466.0" promptText="Quantity" unFocusColor="#0099fffd" />
+                        <Label fx:id="LabelRemove" alignment="CENTER" layoutX="939.0" layoutY="126.0" onMouseClicked="#EditImage" prefHeight="18.0" prefWidth="218.0" style="-fx-font-weight: bold; -fx-text-fill: whitesmoke;" text="Add Image" textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <JFXComboBox focusColor="#4d4de3" labelFloat="true" layoutX="583.0" layoutY="191.0" prefHeight="34.0" prefWidth="272.0" promptText="Select Type" unFocusColor="#0099ff" />
+                     </children>
+                  </AnchorPane>
               </content>
             </Tab>
             <Tab text="Update Orders">

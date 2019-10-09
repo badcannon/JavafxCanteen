@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,6 +22,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 
 
@@ -68,9 +71,22 @@ public class MainWindowController implements Initializable{
 
     @FXML
     private void handelSignout() throws IOException {
+        Orders ord = new Orders();
+        Alert a= new Alert (Alert.AlertType.CONFIRMATION);
+        ord.StyleAlert(a);
+        a.setHeaderText("Log Off?");
+        a.setContentText("Are you Sure You want to Log Out "+LoginController.getCurrentUser()+"? ");
+        Optional<ButtonType> result = a.showAndWait();
+        if(result.get() == ButtonType.OK){
         MainApp.setRoot(StageManager.Change("LOGIN") );
-        System.out.println("Done!");
+
+        }
+        else{
+            System.out.println("Cancle!");
+        }
+        
     }
+    
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -203,7 +219,7 @@ public class MainWindowController implements Initializable{
                             case "Option3": pane2 = FXMLLoader.load(getClass().getResource(StageManager.Change("SETTINGS")));
                                             Displays.getChildren().setAll(pane2);
                             break;
-                            case "Option4": MainApp.PrimaryStage.close();
+                            case "Option4": handelExit();
                             break;
                             
                             default : System.out.println("Wrong Option!");
@@ -223,6 +239,24 @@ public class MainWindowController implements Initializable{
             
         }
         
+    }
+    
+    void handelExit(){
+         Orders ord = new Orders();
+        Alert a= new Alert (Alert.AlertType.CONFIRMATION);
+        ord.StyleAlert(a);
+        a.setHeaderText("Exit");
+        a.setContentText("Are you Sure You want to Quit "+LoginController.getCurrentUser()+"? ");
+        Optional<ButtonType> result = a.showAndWait();
+        if(result.get() == ButtonType.OK){
+       
+            MainApp.PrimaryStage.close();
+        }
+        else{
+            System.out.println("Cancle!");
+        }
+        
+    
     }
 
    public JFXDrawer getdrawer() {

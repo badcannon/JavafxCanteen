@@ -1,0 +1,7 @@
+1 > filter based on tag ! 
+2 > add combo box feature with tags retrived from db (Different table ! )
+3 > modified time , modified status 
+4 > custom style for alert boxes ! 
+5 > sold table ! 
+6 > setting page where you can edit tags !
+7 > tags different table ! 
