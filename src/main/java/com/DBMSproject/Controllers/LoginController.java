@@ -22,8 +22,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import com.DBMSproject.Enums.StageManager;
-import java.io.PrintStream;
-import java.util.Arrays;
 
 public class LoginController implements Initializable {
 

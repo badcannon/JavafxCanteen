@@ -24,7 +24,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.layout.Pane;
 
 
 public class MainWindowController implements Initializable{
@@ -108,8 +107,8 @@ public class MainWindowController implements Initializable{
     private HamburgerSlideCloseTransition transition;
     public void transHam(){
             
-        HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(Ham1);
-        this.transition = transition;
+        HamburgerSlideCloseTransition transition1 = new HamburgerSlideCloseTransition(Ham1);
+        this.transition = transition1;
         transition.setRate(-1);
         Ham1.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
                 //if its open close if its closed open :D

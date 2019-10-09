@@ -124,9 +124,7 @@ public class Orders implements Initializable {
         try {
             ConnectDbOrders();
             CreateTable();
-        } catch (SQLException ex) {
-            Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (SQLException | IOException ex) {
             Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -287,6 +285,7 @@ public class Orders implements Initializable {
             price = rs.getString("price");
             image = rs.getString("Image");
             imgs = new Image(image);
+            imgs = new Image(getClass().getResource("Assets/image-placeholder-1200x800.jpg").toString());
             FinalImage = new ImageView(image);
             FinalImage.setFitHeight(100);
             FinalImage.setFitWidth(150);              
@@ -358,13 +357,11 @@ public class Orders implements Initializable {
         description.clear();
         ItemPrice.clear();
         MainImage.setImage(new Image(getClass().getResource("Assets/image-placeholder-1200x800.jpg").toString()));
-        CrOrders.   getChildren().add(LabelRemove);
-
+        CrOrders.getChildren().add(LabelRemove);
     }
 
-
-
-   
+  
+ 
 }
 
 
