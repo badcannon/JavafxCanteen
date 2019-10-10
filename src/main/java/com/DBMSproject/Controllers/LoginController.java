@@ -1,5 +1,5 @@
-package com.DBMSproject;
 
+package com.DBMSproject;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -22,6 +22,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import com.DBMSproject.Enums.StageManager;
+import com.jfoenix.controls.JFXComboBox;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class LoginController implements Initializable {
 
@@ -57,7 +65,15 @@ public class LoginController implements Initializable {
 
     @FXML
     private Circle Circle;
+    
+    @FXML
+    private JFXComboBox<String> Roles;
+    
+    private boolean flag = false;
 
+    
+    private Map<String,String> RolesHash = new HashMap<>();
+    private Map<String,String> LoginHash = new HashMap<>();
 
     @FXML
     void Minimize(ActionEvent event) {
@@ -73,30 +89,33 @@ public class LoginController implements Initializable {
 
     @FXML
     void login(ActionEvent event) throws SQLException, IOException, InterruptedException {
-        String DefInsert = "INSERT INTO canteen.logindets VALUES('global','global')";
         Statement statement = MainApp.Connect.createStatement();
         ResultSet rs = statement.executeQuery("SELECT  * from canteen.logindets");
-        if(rs.next() == false){
-
-            SetAlert("Creating Default Details Try again !",false);
-            statement.execute(DefInsert);
-        }
-        else {
-            do{
-                String User = rs.getString("Username");
-                String Pass = rs.getString("Password");
-
-                if(User.equals(GetUsername()) && Pass.equals(GetPassword())){
-                    SetAlert("Login Complete ! ",true);
-                    playAnimation();
-                    handelLogin();
+        ResultSet role = statement.executeQuery("SELECT * FROM canteen.roles;");
+        Set <Map.Entry<String,String>> st = LoginHash.entrySet();
+        for(Map.Entry<String, String> mt:st){
+            if(mt.getKey().equals(GetUsername())){
+                if(mt.getValue().equals(GetPassword()))
+                {
+                   if(findRole(GetUsername()))
+                        handelLogin();
+                   else
+                       SetAlert("Role Set Is Wrong !", false);
+                
                 }
-                else {
-                    SetAlert("Wrong Username/Password ,Try Again",false);
+                else{
+                    
+                    SetAlert("Password Entered is wrong!", false);
+                 
                 }
+            
             }
-            while (rs.next());
+            else {
+                SetAlert("Username is Not found in the Database ! ", false);
+            }
+        
         }
+        
 
     }
 
@@ -112,10 +131,15 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Center();
-        ConnectDbLogin();
-        MainApp.Dragable(root);
-        Styles();
+        try {
+            Center();
+            ConnectDbLogin();
+            MainApp.Dragable(root);
+            Styles();
+            InitializeValues();
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -133,8 +157,16 @@ public class LoginController implements Initializable {
         if(Con){
             try {
                 String LoginTableStatement = "CREATE TABLE IF NOT EXISTS canteen.logindets(Username VARCHAR(20) PRIMARY KEY,Password VARCHAR(20)) ";
+                String RolesTableStatement = "CREATE TABLE IF NOT EXISTS `canteen`.`roles` (\n" +
+                                             "  `Role` varchar(20) NOT NULL,\n" +
+                                             "  `Username` varchar(20) NOT NULL,\n" +
+                                             "  PRIMARY KEY (`Username`),\n" +
+                                             "  KEY `Username_idx` (`Username`),\n" +
+                                             "  CONSTRAINT `Username` FOREIGN KEY (`Username`) REFERENCES `logindets` (`Username`) ON DELETE CASCADE ON UPDATE CASCADE\n" +
+                                             ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;";
                 Statement statement =MainApp.Connect.createStatement();
                 statement.execute(LoginTableStatement);
+                statement.execute(RolesTableStatement);
                 }
             catch (SQLException e ){
                 System.out.println("Sql Error");
@@ -194,8 +226,87 @@ public class LoginController implements Initializable {
         clsbtn.setCursor(Cursor.HAND);
         minbtn.setCursor(Cursor.HAND);
     }
-    
-  
 
+    private void InitializeValues() throws SQLException {
+        String DefInsert = "INSERT INTO canteen.logindets VALUES('global','global')";
+        String DefRole = "INSERT INTO `canteen`.`roles`values('RootAdmin','global');";
+        Statement statement = MainApp.Connect.createStatement();
+        ResultSet rs = statement.executeQuery("SELECT  * from canteen.logindets");
+
+        if(rs.next() == false){
+        statement.execute(DefInsert);
+        LoginHash.put("global","global");
+
+        }
+        else{
+            do{
+            
+            String User = rs.getString("Username");
+            String Pass = rs.getString("Password");
+            
+            LoginHash.put(User, Pass);
+            
+            
+            }while(rs.next());
+        
+        }
+        
+        ResultSet role = statement.executeQuery("SELECT * FROM canteen.roles;");
+
+        
+        if(role.next() == false ){
+                statement.execute(DefRole);
+                RolesHash.put("RootAdmin", "global");
+                Roles.getItems().add("RootAdmin");
+
+                
+         }
+         else {
+               do{
+                    
+                    String User = role.getString("Username");
+                    String Role = role.getString("Role");
+                    RolesHash.put(Role,User);
+                    if(!Exists(Role))
+                    Roles.getItems().add(Role);
+                
+               }
+                while(role.next());
+            }
+
+
+    }
+
+    private boolean findRole(String UserName) {
+       Set <Map.Entry<String,String>> st = RolesHash.entrySet();
+       for (Map.Entry<String,String> Role : st){
+           if(Role.getValue().equals(UserName)){
+               
+               if (Role.getKey().equals(Roles.getValue())){
+                return true;
+               }
+                           
+           }
+       
+       }
+        
+       return false;
+
+    }
+
+    private boolean Exists(String Role) {
+        ObservableList<String> oblist= FXCollections.observableArrayList();
+        oblist.addAll(Roles.getItems());
+        oblist.forEach((role) ->{
+        
+            if(role.equals(Role)){
+              flag = true;  
+            }
+            
+        });
+        
+        flag = false;
+        return flag;
+    }
 
 }

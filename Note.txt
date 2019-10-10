@@ -6,3 +6,4 @@
 6 > setting page where you can edit tags !
 7 > tags different table ! 
 8 > Download and copy image file .. to a new directory and then add the new path to DB! 
+9 > Filter Based on the combobox next to the filter ! 

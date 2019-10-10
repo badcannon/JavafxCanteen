@@ -163,7 +163,7 @@ public class MainWindowController implements Initializable{
     private void loignInfo() {
     
            loginInfo.setText("Welcome "
-           +"Global " + "You have logged in at \n" + new java.util.Date().toString());
+           +LoginController.getCurrentUser() + "You have logged in at \n" + new java.util.Date().toString());
 
     }
 
