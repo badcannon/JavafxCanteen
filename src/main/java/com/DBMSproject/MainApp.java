@@ -51,14 +51,14 @@ public class MainApp extends Application {
 
     static boolean Connect(){
         try {
-            String defaultStatement = "CREATE SCHEMA IF NOT exists `canteen` ;";
+            String defaultStatement = "CREATE SCHEMA IF NOT EXISTS `canteen` ;";
             Class.forName("com.mysql.cj.jdbc.Driver");
             //Defined Earlier !
             Connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/","root","shosperm");
             Statement statement = Connect.createStatement();
             statement.execute(defaultStatement);
             Connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/canteen","root","shosperm");
-
+            
             }
         catch (Exception e){
             System.out.println(e.getMessage());

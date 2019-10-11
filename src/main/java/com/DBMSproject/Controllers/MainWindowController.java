@@ -94,7 +94,6 @@ public class MainWindowController implements Initializable{
             DrawerProps();
             MainApp.Dragable(root);
             ConnectDb();
-            ToolTip();
             transHam();
             CloseDrawer();
             loignInfo();
@@ -145,20 +144,6 @@ public class MainWindowController implements Initializable{
         
         });
     }
-
-    public void ToolTip() {
-       try{
-        Tooltip tt = new Tooltip();
-        tt.setText("Logout");
-        tt.setStyle("-fx-font: normal bold 4 Langdon; "
-    + "-fx-base: #AE3522; "
-    + "-fx-text-fill: orange;");
-        signout.setTooltip(tt);
-    }
-       catch(Exception e){
-                        System.out.println(e.getMessage());
-    }
-}
 
     private void loignInfo() {
     

@@ -1,0 +1,35 @@
+.jfx-button{
+        -fx-background-color:#367ff5;
+        -fx-text-fill:whitesmoke;
+        -fx-font-weight:bold;
+    
+}
+
+.jfx-button:hover{
+    -fx-background-color:#6600cc;
+        -fx-text-fill:#367ff5;
+}
+
+
+  .MainLabel{
+        -fx-font-size:30px;
+        -fx-text-fill:#6600cc;
+        -fx-font-weight:bold;
+    }
+    .MainPane{
+        -fx-background-color:#fff;
+        
+    }
+    
+    
+    #Choose{
+        -fx-font-size:30px;
+        -fx-text-fill:#6600cc;
+        -fx-font-weight:bold;
+        
+    }
+    
+ 
+    
+    
+    

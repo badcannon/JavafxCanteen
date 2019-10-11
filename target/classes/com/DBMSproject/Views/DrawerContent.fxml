@@ -29,10 +29,10 @@
                </image>
             </ImageView>
          </graphic></JFXButton>
-      <JFXButton accessibleText="Option2" prefHeight="100.0" prefWidth="300.0" text="Statistics" />
-      <JFXButton accessibleText="Option3" prefHeight="100.0" prefWidth="300.0" text="Settings" />
-      <JFXButton prefHeight="97.0" prefWidth="323.0" text="Option 4 " />
-      <JFXButton accessibleText="Option4" prefHeight="100.0" prefWidth="300.0" text="Exit" />
+      <JFXButton accessibleText="Option2" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="300.0" text="Statistics" textAlignment="CENTER" />
+      <JFXButton accessibleText="Option3" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="300.0" text="Settings" />
+      <JFXButton alignment="CENTER" contentDisplay="CENTER" prefHeight="97.0" prefWidth="323.0" text="Option 4 " />
+      <JFXButton accessibleText="Option4" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="300.0" text="Exit" />
       <Label alignment="BOTTOM_CENTER" prefHeight="23.0" prefWidth="300.0" text="Project I guess ! :D " textAlignment="CENTER" />
    </children>
 </VBox>

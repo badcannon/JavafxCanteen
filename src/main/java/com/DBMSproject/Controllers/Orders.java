@@ -1,5 +1,6 @@
 package com.DBMSproject;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
@@ -19,6 +20,7 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,11 +30,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -49,13 +53,23 @@ import javafx.stage.StageStyle;
 
 public class Orders implements Initializable {
 
+  
+
     private MainWindowController Main = new MainWindowController();
     private JFXDrawer drawer = Main.getdrawer() ;
-    private File file;
+    private File file,Specialfile;
     private HamburgerSlideCloseTransition transition = Main.gettransition();
     private PreparedStatement pst;
     private FileInputStream Fis; 
     private ObservableList oblist = FXCollections.observableArrayList();
+    
+    @FXML
+    private JFXButton CreateSpecial;
+    
+    @FXML
+    AnchorPane SpecialPane;
+    
+    
     
     @FXML
     private AnchorPane OrderCreate;
@@ -80,7 +94,11 @@ public class Orders implements Initializable {
 
     @FXML
     private TableColumn<ModelTable, JFXButton> Col_Add;
+    
+    @FXML
+    private JFXTextField filter;
 
+    
 
     @FXML
     private JFXButton refresh;
@@ -118,13 +136,101 @@ public class Orders implements Initializable {
     @FXML
     private Label LabelRemove;
     
+    /*
+    
+    Special Orders ! 
+    
+    
+    */
+    
+    @FXML
+    private AnchorPane MainPane;
+    
+    @FXML
+    private AnchorPane MainPane4;
+
+    @FXML
+    private Label MainLabelSpecial;
+
+    @FXML
+    private JFXComboBox<String> SpecialCombo;
+
+    @FXML
+    private JFXButton CreateSpecialDef;
+
+    @FXML
+    private JFXButton SpecialLoad;
+
+    @FXML
+    private AnchorPane MainPane3;
+
+    @FXML
+    private JFXTextField SpecialItem;
+
+    @FXML
+    private ImageView SpecialImage;
+
+    @FXML
+    private JFXTextField SpecialPrice;
+
+    @FXML
+    private JFXTextField SpecialQuantity;
+
+    @FXML
+    private JFXButton SpecialAdd;
+
+    @FXML
+    private JFXButton SpecialDone;
+
+    @FXML
+    private AnchorPane MainPane2;
+
+    @FXML
+    private JFXTextField SpecialTableName;
+
+    @FXML
+    private Label Choose;
+
+    @FXML
+    private JFXButton SpecialCreateTable;
+
+    @FXML
+    private Label AlertLabel;
+
+    @FXML
+    private JFXButton SpecialBack;
+    
+    @FXML
+    private Label SpecialImageLabel;
+    
+    @FXML
+    private JFXButton BackHome;
+    
+    //Main Special Dets Object : 
+    
+    SpecialDets SpObject = new SpecialDets();
+    
+    
+    
+    
+    
+    
+    
+    
+    
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
        
         try {
             ConnectDbOrders();
             CreateTable();
+            ToolTipIntialize();
+            SpObject.ConnectSpecialDB();
+            SpObject.setTableNames();
+            BringMainPaneFront();
         } catch (SQLException | IOException ex) {
+            Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -212,9 +318,9 @@ public class Orders implements Initializable {
                         "  `Itemquantity` int(11) DEFAULT NULL,\n" +
                         "  `createdDateTime` datetime DEFAULT NULL,\n" +
                         "  `creator` varchar(100) DEFAULT NULL,\n"+ 
-                        "  PRIMARY KEY (`Itemname`)\n" +
-                                
-                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;");
+                        "  `LastModified` varchar(100) DEFAULT NULL, \n"+
+                        "  PRIMARY KEY (`Itemname`)\n" +                                
+                        ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;");
 
                         } catch (SQLException ex) {
                 Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
@@ -244,6 +350,7 @@ public class Orders implements Initializable {
         }
         return Quantity.getText();
     }
+    
     String getCreationtime(){
         DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         return df.format(new Date());
@@ -293,7 +400,7 @@ public class Orders implements Initializable {
       return oblist;          
     }
 
- private void popupAlert(boolean b,Exception e) {
+    private void popupAlert(boolean b,Exception e) {
         
         if(b){
             Alert a = new Alert(Alert.AlertType.INFORMATION);
@@ -321,7 +428,7 @@ public class Orders implements Initializable {
         
     }
 
-     private void popupAlert(boolean b) {
+    private void popupAlert(boolean b) {
         
         if(b){
             Alert a = new Alert(Alert.AlertType.INFORMATION );
@@ -360,6 +467,192 @@ public class Orders implements Initializable {
         CrOrders.getChildren().add(LabelRemove);
     }
 
+    private void ToolTipIntialize() {
+        Tooltip tipFilter = new Tooltip();
+        tipFilter.setText("Filter Based On ItemName or Category!");
+        tipFilter.setStyle("-fx-background-radius: 7 7 7 7;-fx-background-color:linear-gradient(#6600cc , #367ff5 );");
+        filter.setTooltip(tipFilter);
+        
+        Tooltip tipItemName  = new Tooltip();
+        tipItemName.setText("Required !");
+        tipItemName.setStyle("-fx-background-radius: 7 7 7 7;-fx-background-color:linear-gradient(#6600cc , #367ff5 );");
+        ItemName.setTooltip(tipItemName);
+        
+        Tooltip tipItemPrice = new Tooltip();
+        tipItemPrice.setText("Required !");
+        tipItemPrice.setStyle("-fx-background-radius: 7 7 7 7;-fx-background-color:linear-gradient(#6600cc , #367ff5 );");
+        ItemPrice.setTooltip(tipItemPrice);
+    }
+    
+ 
+   
+    @FXML
+    void AddRefresh(ActionEvent event) {
+        if(event.getSource() == SpecialAdd){
+            
+            String itemName = SpecialItem.getText();
+            String itemPrice = SpecialPrice.getText();
+            String itemQantity = SpecialQuantity.getText();
+            String imageUri = Specialfile.toURI().toString();
+            boolean flag = SpObject.InsertToTable(itemName, itemPrice, itemQantity, imageUri,getCreationtime(),getCreateBy());
+            if(flag){
+                popupAlert(flag);
+                clearDets();
+            }
+            else{
+                popupAlert(flag,new SQLException("There is problem with the Sql!"));
+            
+            }
+        
+        }
+
+    }
+
+
+
+    @FXML
+    void DoneBack(ActionEvent event) {
+        if(event.getSource() == SpecialDone){
+            
+            popupAlert("Warning");
+        
+        }
+
+    }
+
+
+
+    @FXML
+    void GoBack(ActionEvent event) {
+          if(event.getSource() == SpecialBack || event.getSource() == BackHome){
+              
+              MainPane.toFront();
+              clearDets();
+            
+        }
+
+    }
+
+
+    @FXML
+    void SpecialImageEdit(MouseEvent event) {
+          if(event.getSource() == SpecialImage || event.getSource() == SpecialImageLabel){
+          
+              FileChooser filechooser = new FileChooser();
+              filechooser.getExtensionFilters().addAll(new ExtensionFilter("Image Files","*.png","*.jpeg","*.jpg"));
+              Specialfile = filechooser.showOpenDialog(MainApp.PrimaryStage);
+               if(Specialfile!=null){
+                Image newImage = new Image(Specialfile.toURI().toString(),200,150,true,true); //location,prefwidth,prefheight,preserver ratio
+                SpecialImage.setImage(newImage);
+                MainPane3.getChildren().remove(SpecialImageLabel);
+               }
+          
+          
+          }
+        
+        
+      
+
+    }
+
+    @FXML
+    void SpecialTableCreate(ActionEvent event)  {
+        if(event.getSource() == SpecialCreateTable){
+            try {
+                boolean result ;
+                result = SpObject.CreateTable(getTableName());
+                if(result){
+                    popupAlert(true);
+                    clearDets();
+                    BringMainPane3Front();
+                }
+                else{
+                    Exception ex = new SQLException("Looks like the Table Name Exists");
+                    popupAlert(false,ex);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        }
+        
+        
+
+    }
+    
+    @FXML 
+    void CreateSpecialNow(ActionEvent event){
+        if(event.getSource() == CreateSpecialDef){
+
+            BringMainPane2Front();
+            clearDets();
+        
+        }
+    }
+    
+    
+    
+    
+    void BringMainPaneFront(){
+        MainPane.toFront();
+    }
+    
+    void BringMainPane2Front(){
+        MainPane2.toFront();
+    }
+    
+    void BringMainPane3Front(){
+        MainPane3.toFront();
+    }
+    
+    void BringMainPane4Front(){
+        MainPane4.toFront();
+    }
+
+    String getTableName(){
+        return SpecialTableName.getText();
+    }
+
+    private void popupAlert(String warning) {
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+        a.setHeaderText("Warning!");
+        a.setContentText("Please Add the Last entered Values before Clicking on done ,"
+                + "If you have added the same Please Click on oK");
+        a.setHeight(300);
+        a.setWidth(300);
+        StyleAlert(a);
+        Optional<ButtonType> result = a.showAndWait();
+        if(result.get() == ButtonType.OK){
+        
+            BringMainPane4Front();
+        
+        }
+        
+
+
+    }
+
+    private void clearDets() {
+      SpecialTableName.clear();
+      SpecialItem.clear();
+      SpecialPrice.clear();
+      SpecialQuantity.clear();
+      SpecialImage.setImage(new Image(getClass().getResource("Assets/image-placeholder-1200x800.jpg").toString()));
+      if(MainPane3.getChildren().contains(SpecialImageLabel))
+      MainPane3 = MainPane3;
+      else
+      MainPane3.getChildren().add(SpecialImageLabel);
+        }
+   
+   
+   
+      
+       
+       
   
  
 }

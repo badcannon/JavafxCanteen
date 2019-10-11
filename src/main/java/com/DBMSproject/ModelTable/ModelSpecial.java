@@ -1,27 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.DBMSproject;
 
 import javafx.scene.image.ImageView;
 
-/**
- *
- * @author shree
- */
-public class ModelTable  {
+
+public class ModelSpecial {
+    
     String ItemName,Description, Price,Quantity;
     ImageView file;
 
-    public ModelTable(String ItemName,String Description,String Price,ImageView file,String Quantity){
-        this.ItemName =  ItemName ;
-        this.Description =  Description ;
-        this.Price =  Price ;
+    public ModelSpecial(String ItemName, String Description, String Price, String Quantity, ImageView file) {
+        this.ItemName = ItemName;
+        this.Description = Description;
+        this.Price = Price;
+        this.Quantity = Quantity;
         this.file = file;
-        this.Quantity = Quantity  ;
-    } 
+    }
 
     public String getItemName() {
         return ItemName;
@@ -62,8 +56,6 @@ public class ModelTable  {
     public void setFile(ImageView file) {
         this.file = file;
     }
-
-  
     
     
     
