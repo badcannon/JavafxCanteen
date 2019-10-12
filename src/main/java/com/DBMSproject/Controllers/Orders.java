@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -153,7 +154,7 @@ public class Orders implements Initializable {
     private Label MainLabelSpecial;
 
     @FXML
-    private JFXComboBox<String> SpecialCombo;
+    private JFXComboBox<String> SpecialComboTable;
 
     @FXML
     private JFXButton CreateSpecialDef;
@@ -206,6 +207,45 @@ public class Orders implements Initializable {
     @FXML
     private JFXButton BackHome;
     
+    
+    @FXML
+    private JFXComboBox<String> specialCategory;
+    
+    
+//    Special TableView : 
+    
+    @FXML
+    private TableView<ModelSpecial> SpecialTable;
+    
+    @FXML
+    private TableColumn<ModelSpecial, ImageView> col_SpecialImage;
+
+    @FXML
+    private TableColumn<ModelSpecial, String> col_SpecialName;
+
+    @FXML
+    private TableColumn<ModelSpecial, String> col_SpecialPrice;
+
+    @FXML
+    private TableColumn<ModelSpecial, String> col_ItemQuantity;
+
+    @FXML
+    private TableColumn<ModelSpecial, String> col_Category;
+
+    @FXML
+    private TableColumn<ModelSpecial, String> col_totalPrice;
+
+    @FXML
+    private TableColumn<ModelSpecial, JFXButton> col_Update ;
+    
+        
+    
+    
+    String WorkingTable;
+
+    
+    
+    
     //Main Special Dets Object : 
     
     SpecialDets SpObject = new SpecialDets();
@@ -228,6 +268,7 @@ public class Orders implements Initializable {
             SpObject.ConnectSpecialDB();
             SpObject.setTableNames();
             BringMainPaneFront();
+            
         } catch (SQLException | IOException ex) {
             Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -316,6 +357,7 @@ public class Orders implements Initializable {
                         "  `Image` varchar(400) DEFAULT NULL,\n" +
                         "  `description` varchar(200) DEFAULT 'None',\n" +
                         "  `Itemquantity` int(11) DEFAULT NULL,\n" +
+                        "  `Category` varchar(50) DEFAULT NULL,\n"+
                         "  `createdDateTime` datetime DEFAULT NULL,\n" +
                         "  `creator` varchar(100) DEFAULT NULL,\n"+ 
                         "  `LastModified` varchar(100) DEFAULT NULL, \n"+
@@ -380,19 +422,20 @@ public class Orders implements Initializable {
         String name,description,price,quantity;
         String image;
         ImageView FinalImage;
+        Image imgs = new Image(getClass().getResource("Assets/image-placeholder-1200x800.jpg").toString());
         String Query = "SELECT * FROM `canteen`.`menu`;";
         Statement smt = MainApp.Connect.createStatement();
         ResultSet rs =  smt.executeQuery(Query);
         while(rs.next())
         {
-            Image imgs;
             name = rs.getString("Itemname");
             description = rs.getString("description");
             quantity = rs.getString("Itemquantity");
             price = rs.getString("price");
             image = rs.getString("Image");
+            if(new File(image).exists() && !(new File(image).isDirectory()))
             imgs = new Image(image);
-            imgs = new Image(getClass().getResource("Assets/image-placeholder-1200x800.jpg").toString());
+            
             FinalImage = new ImageView(image);
             FinalImage.setFitHeight(100);
             FinalImage.setFitWidth(150);              
@@ -487,17 +530,21 @@ public class Orders implements Initializable {
  
    
     @FXML
-    void AddRefresh(ActionEvent event) {
+    void AddRefresh(ActionEvent event) throws SQLException {
         if(event.getSource() == SpecialAdd){
             
             String itemName = SpecialItem.getText();
             String itemPrice = SpecialPrice.getText();
             String itemQantity = SpecialQuantity.getText();
             String imageUri = Specialfile.toURI().toString();
-            boolean flag = SpObject.InsertToTable(itemName, itemPrice, itemQantity, imageUri,getCreationtime(),getCreateBy());
+            String category = specialCategory.getValue();
+            String creationTime = getCreationtime();
+            String creator = getCreateBy();
+            boolean flag = SpObject.InsertToTable(itemName, itemPrice, itemQantity, imageUri,category,creationTime,creator);
             if(flag){
                 popupAlert(flag);
                 clearDets();
+                CreateSpecialTableRefresh();
             }
             else{
                 popupAlert(flag,new SQLException("There is problem with the Sql!"));
@@ -523,10 +570,10 @@ public class Orders implements Initializable {
 
 
     @FXML
-    void GoBack(ActionEvent event) {
+    void GoBack(ActionEvent event) throws SQLException {
           if(event.getSource() == SpecialBack || event.getSource() == BackHome){
               
-              MainPane.toFront();
+              BringMainPaneFront();
               clearDets();
             
         }
@@ -562,9 +609,11 @@ public class Orders implements Initializable {
                 boolean result ;
                 result = SpObject.CreateTable(getTableName());
                 if(result){
+                    WorkingTable = getTableName().replaceAll(" ", "").toLowerCase();
                     popupAlert(true);
                     clearDets();
                     BringMainPane3Front();
+
                 }
                 else{
                     Exception ex = new SQLException("Looks like the Table Name Exists");
@@ -597,7 +646,9 @@ public class Orders implements Initializable {
     
     
     
-    void BringMainPaneFront(){
+    void BringMainPaneFront() throws SQLException{
+        SpecialComboTable.getItems().clear();
+        InitializeSpecialCombo();
         MainPane.toFront();
     }
     
@@ -605,7 +656,9 @@ public class Orders implements Initializable {
         MainPane2.toFront();
     }
     
-    void BringMainPane3Front(){
+    void BringMainPane3Front() throws SQLException{
+        specialCategory.getItems().clear();
+        initSpecialCategory();
         MainPane3.toFront();
     }
     
@@ -647,7 +700,80 @@ public class Orders implements Initializable {
       else
       MainPane3.getChildren().add(SpecialImageLabel);
         }
-   
+
+    private void initSpecialCategory() throws SQLException {
+        ObservableList<String> oblist = FXCollections.observableArrayList();
+        oblist.clear();
+        oblist.addAll(SpObject.CreateAndAddSpecialCats());
+        specialCategory.getItems().addAll(oblist);
+    }
+
+    private void CreateSpecialTableRefresh() throws SQLException {
+        
+//    String ItemName,Description, Price,Quantity,category;
+//    ImageView file;
+//    JFXButton Update;
+
+
+        PropertyValueFactory<ModelSpecial,ImageView> img = new PropertyValueFactory<>("file");
+        col_SpecialImage.setCellValueFactory(img);
+        col_Category.setCellValueFactory(new PropertyValueFactory<>("category"));
+        col_SpecialName.setCellValueFactory(new PropertyValueFactory<>("ItemName"));
+        col_SpecialPrice.setCellValueFactory(new PropertyValueFactory<>("Price"));
+        col_ItemQuantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
+        col_totalPrice.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
+        col_Update.setCellValueFactory(new PropertyValueFactory<>("Update"));
+        
+        ObservableList<ModelSpecial> oblist = FXCollections.observableArrayList();
+        oblist.addAll( SpObject.PrePareList());
+        SpecialTable.setItems(oblist);
+        SpecialTable.setEditable(true);
+              
+        
+        
+        
+    }
+    
+    
+    
+    @FXML 
+    void LoadTable(ActionEvent event){
+        if(event.getSource() == SpecialLoad){
+        
+       String Table =  SpecialComboTable.getValue();
+       try{
+       SpObject.setWorkingTable(Table);
+       CreateSpecialTableRefresh();
+       initSpecialCategory();
+       
+       BringMainPane3Front();
+       }catch(Exception e){
+       
+           popupAlert(false, e);
+       
+       }
+        }
+    
+    
+    
+    }
+
+    private void InitializeSpecialCombo() throws SQLException {
+        
+        ArrayList<String> ArList = new ArrayList<>();
+        ArList.addAll(SpObject.returnTables());
+        if(ArList.isEmpty()){
+         SpecialComboTable.setPlaceholder(new Label("Sorry No Menu Exists"));
+                 }
+        else {
+        
+        SpecialComboTable.getItems().addAll(ArList);
+        }
+        
+    }
+
+ 
+    
    
    
       

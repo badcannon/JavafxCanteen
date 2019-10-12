@@ -69,7 +69,7 @@
                               <Font size="15.0" />
                            </font>
                         </Label>
-                        <JFXComboBox focusColor="#4d4de3" labelFloat="true" layoutX="583.0" layoutY="191.0" prefHeight="34.0" prefWidth="272.0" promptText="Select Type" unFocusColor="#0099ff" />
+                        <JFXComboBox focusColor="#4d4de3" labelFloat="true" layoutX="583.0" layoutY="191.0" prefHeight="34.0" prefWidth="272.0" promptText="Select category" unFocusColor="#0099ff" />
                      </children>
                   </AnchorPane>
               </content>
@@ -81,32 +81,25 @@
             </Tab>
             <Tab text="Special Orders">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" stylesheets="@../Styles/SpecialOrders.css">
                      <children>
                         <TableView fx:id="SpecialTable" prefHeight="538.0" prefWidth="790.0" stylesheets="@../Styles/TableView.css">
                           <columns>
-                            <TableColumn prefWidth="135.199951171875" text="Item Image" />
-                            <TableColumn prefWidth="178.400146484375" text="Item Name " />
-                              <TableColumn prefWidth="116.0" text="Item Price " />
-                              <TableColumn prefWidth="89.600341796875" text="Item Quantity" />
-                              <TableColumn prefWidth="115.19970703125" text="Item Total Price" />
-                              <TableColumn prefWidth="80.80029296875" text="Update" />
-                              <TableColumn prefWidth="72.7998046875" text="Remove" />
+                            <TableColumn fx:id="col_SpecialImage" prefWidth="135.199951171875" text="Item Image" />
+                            <TableColumn fx:id="col_SpecialName" prefWidth="178.400146484375" text="Item Name " />
+                              <TableColumn fx:id="col_SpecialPrice" prefWidth="116.0" text="Item Price " />
+                              <TableColumn fx:id="col_ItemQuantity" prefWidth="89.600341796875" text="Item Quantity" />
+                              <TableColumn fx:id="col_Category" prefWidth="98.39990234375" text="Category" />
+                              <TableColumn fx:id="col_totalPrice" prefWidth="100.0" text="Item Total Price" />
+                              <TableColumn fx:id="col_Update" prefWidth="72.7998046875" text="Update" />
                           </columns>
                         </TableView>
                         <StackPane layoutX="790.0" prefHeight="601.0" prefWidth="410.0">
                            <children>
-                              <AnchorPane fx:id="MainPane" prefHeight="602.0" prefWidth="410.0" styleClass="MainPane" stylesheets="@../Styles/SpecialOrders.css">
+                              <AnchorPane fx:id="MainPane4" prefHeight="602.0" prefWidth="410.0" styleClass="MainPane" stylesheets="@../Styles/SpecialOrders.css">
                                  <children>
-                                    <ImageView fitHeight="104.0" fitWidth="138.0" layoutX="1.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../Assets/CustomMade.jpg" />
-                                       </image>
-                                    </ImageView>
-                                    <Label fx:id="MainLabelSpecial" layoutX="159.0" layoutY="50.0" prefHeight="65.0" prefWidth="244.0" styleClass="MainLabel" text="Special Orders" />
-                                    <JFXComboBox fx:id="SpecialCombo" labelFloat="true" layoutX="45.0" layoutY="222.0" prefHeight="35.0" prefWidth="342.0" promptText="Load Exsiting Menu" />
-                                    <JFXButton fx:id="CreateSpecialDef" layoutX="216.0" layoutY="289.0" onAction="#CreateSpecialNow" prefHeight="57.0" prefWidth="162.0" text="Create" />
-                                    <JFXButton fx:id="SpecialLoad" layoutX="44.0" layoutY="289.0" prefHeight="57.0" prefWidth="162.0" text="Load" />
+                                    <JFXButton layoutX="214.0" layoutY="314.0" prefHeight="58.0" prefWidth="164.0" text="Print" />
+                                    <JFXButton fx:id="BackHome" layoutX="28.0" layoutY="314.0" onAction="#GoBack" prefHeight="58.0" prefWidth="164.0" text="Back Home" />
                                  </children>
                               </AnchorPane>
                               <AnchorPane fx:id="MainPane2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="602.0" prefWidth="410.0" styleClass="MainPane" stylesheets="@../Styles/SpecialOrders.css">
@@ -120,12 +113,12 @@
                               </AnchorPane>
                               <AnchorPane id="AnchorPane" fx:id="MainPane3" prefHeight="602.0" prefWidth="410.0" styleClass="MainPane" stylesheets="@../Styles/SpecialOrders.css">
                                  <children>
-                                    <JFXTextField fx:id="SpecialItem" layoutX="14.0" layoutY="254.0" prefHeight="32.0" prefWidth="374.0" promptText="Item Name " />
-                                    <JFXTextField fx:id="SpecialPrice" layoutX="14.0" layoutY="313.0" prefHeight="32.0" prefWidth="374.0" promptText="Item Price" />
-                                    <JFXTextField fx:id="SpecialQuantity" layoutX="15.0" layoutY="375.0" prefHeight="32.0" prefWidth="374.0" promptText="Item Quantity" />
+                                    <JFXTextField fx:id="SpecialItem" focusColor="#4d4de3" labelFloat="true" layoutX="14.0" layoutY="254.0" prefHeight="32.0" prefWidth="374.0" promptText="Item Name " unFocusColor="#0099ff" />
+                                    <JFXTextField fx:id="SpecialPrice" focusColor="#4d4de3" labelFloat="true" layoutX="14.0" layoutY="313.0" prefHeight="32.0" prefWidth="374.0" promptText="Item Price" unFocusColor="#0099ff" />
+                                    <JFXTextField fx:id="SpecialQuantity" focusColor="#4d4de3" labelFloat="true" layoutX="15.0" layoutY="375.0" prefHeight="32.0" prefWidth="374.0" promptText="Item Quantity" unFocusColor="#0099ff" />
                                     <Label layoutX="127.0" layoutY="10.0" prefHeight="52.0" prefWidth="264.0" styleClass="MainLabel" text="Add a new item" />
-                                    <JFXButton fx:id="SpecialAdd" layoutX="18.0" layoutY="472.0" onAction="#AddRefresh" prefHeight="63.0" prefWidth="166.0" text="Add" />
-                                    <JFXButton fx:id="SpecialDone" layoutX="218.0" layoutY="472.0" onAction="#DoneBack" prefHeight="63.0" prefWidth="166.0" text="Done" />
+                                    <JFXButton fx:id="SpecialAdd" layoutX="18.0" layoutY="495.0" onAction="#AddRefresh" prefHeight="63.0" prefWidth="166.0" text="Add" />
+                                    <JFXButton fx:id="SpecialDone" layoutX="218.0" layoutY="495.0" onAction="#DoneBack" prefHeight="63.0" prefWidth="166.0" text="Done" />
                                     <ImageView fitHeight="45.0" fitWidth="61.0" layoutX="70.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../Assets/add.png" />
@@ -137,16 +130,27 @@
                                        </image>
                                     </ImageView>
                                     <Label fx:id="SpecialImageLabel" alignment="CENTER" layoutX="145.0" layoutY="181.0" onMouseClicked="#SpecialImageEdit" prefHeight="18.0" prefWidth="117.0" style="-fx-font-weight: bold;" text="Add Image" textFill="#848282" />
+                                    <JFXComboBox fx:id="specialCategory" focusColor="#4d4de3" labelFloat="true" layoutX="14.0" layoutY="435.0" prefHeight="32.0" prefWidth="374.0" promptText="Category" unFocusColor="#0099ff" />
                                  </children>
                               </AnchorPane>
-                              <AnchorPane fx:id="MainPane4" prefHeight="602.0" prefWidth="410.0" styleClass="MainPane" stylesheets="@../Styles/SpecialOrders.css">
+                              <AnchorPane fx:id="MainPane" prefHeight="602.0" prefWidth="410.0" styleClass="MainPane" stylesheets="@../Styles/SpecialOrders.css">
                                  <children>
-                                    <JFXButton layoutX="214.0" layoutY="314.0" prefHeight="58.0" prefWidth="164.0" text="Print" />
-                                    <JFXButton fx:id="BackHome" layoutX="28.0" layoutY="314.0" onAction="#GoBack" prefHeight="58.0" prefWidth="164.0" text="Back Home" />
+                                    <ImageView fitHeight="104.0" fitWidth="138.0" layoutX="1.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Assets/CustomMade.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Label fx:id="MainLabelSpecial" layoutX="159.0" layoutY="50.0" prefHeight="65.0" prefWidth="244.0" styleClass="MainLabel" text="Special Orders" />
+                                    <JFXComboBox fx:id="SpecialComboTable" labelFloat="true" layoutX="45.0" layoutY="222.0" prefHeight="35.0" prefWidth="342.0" promptText="Load Exsiting Menu" />
+                                    <JFXButton fx:id="CreateSpecialDef" layoutX="216.0" layoutY="289.0" onAction="#CreateSpecialNow" prefHeight="57.0" prefWidth="162.0" text="Create" />
+                                    <JFXButton fx:id="SpecialLoad" layoutX="44.0" layoutY="289.0" onAction="#LoadTable" prefHeight="57.0" prefWidth="162.0" text="Load" />
                                  </children>
                               </AnchorPane>
                            </children>
                         </StackPane>
+                        <JFXTextField layoutX="7.0" layoutY="549.0" prefHeight="26.0" prefWidth="233.0" promptText="Filter" />
+                        <JFXButton layoutX="266.0" layoutY="547.0" prefHeight="34.0" prefWidth="170.0" styleClass="jfx-button" text="Find" />
+                        <JFXButton layoutX="446.0" layoutY="547.0" prefHeight="34.0" prefWidth="170.0" styleClass="jfx-button" text="Remove Selected " />
                      </children>
                   </AnchorPane>
               </content>

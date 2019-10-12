@@ -5,6 +5,8 @@
  */
 package com.DBMSproject;
 
+import com.jfoenix.controls.JFXButton;
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,7 +15,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import javafx.scene.control.Alert;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 
 public class SpecialDets{
@@ -23,6 +28,14 @@ public class SpecialDets{
     private String workingTable;
     private boolean flag = false;
    
+    
+    ArrayList<String> returnTables() throws SQLException{
+        setTableNames();
+        return TableNames;
+    
+    }
+    
+    
    
    void ConnectSpecialDB() throws SQLException, ClassNotFoundException {
         
@@ -89,6 +102,7 @@ public class SpecialDets{
                              "`ItemName` VARCHAR(30) NOT NULL," +
                              "`Price` FLOAT NOT NULL," +
                              "`Quantity` INT(38) NULL," +
+                             "`Category` varchar(50) DEFAULT NULL,"+
                              "`createdDateTime` datetime DEFAULT NULL," +
                              "`creator` varchar(100) DEFAULT NULL,"+ 
                              "`LastModified` varchar(100) DEFAULT NULL,"+
@@ -106,16 +120,17 @@ public class SpecialDets{
             
     }
 
-    boolean InsertToTable(String itemName,String itemPrice,String itemQuantity,String imgpath,String CreateTime,String Creator) {
+    boolean InsertToTable(String itemName,String itemPrice,String itemQuantity,String imgpath,String category,String CreateTime,String Creator) {
         try{
-        String pmt = "INSERT INTO `canteenextras`.`"+FinalWorkingTableName+"` (`Image`,`ItemName`,`Price`,`Quantity`,`createdDateTime`,`creator`) VALUES(?,?,?,?,?,?);";
+        String pmt = "INSERT INTO `canteenextras`.`"+FinalWorkingTableName+"` (`Image`,`ItemName`,`Price`,`Quantity`,`Category`,`createdDateTime`,`creator`) VALUES(?,?,?,?,?,?,?);";
         PreparedStatement stm = ConnectSpecial.prepareStatement(pmt);
         stm.setString(1,imgpath);
         stm.setString(2, itemName);
         stm.setString(3, itemPrice);
         stm.setString(4, itemQuantity);
-        stm.setString(5, CreateTime);
-        stm.setString(6, Creator);
+        stm.setString(5, category);
+        stm.setString(6, CreateTime);
+        stm.setString(7, Creator);
         stm.execute();
         
         }
@@ -129,5 +144,107 @@ public class SpecialDets{
     return true;
     
     }
+
+    ObservableList<String> CreateAndAddSpecialCats() throws SQLException {
+        
+        ObservableList<String> oblist = FXCollections.observableArrayList();
+        System.out.println("We Are IN !!!");
+        String defCatQuery = "CREATE TABLE IF NOT EXISTS`canteen`.`specialcategory` (\n" +
+                             "  `CategoryName` varchar(30)  NOT NULL,\n" +
+                             "  PRIMARY KEY (`CategoryName`)\n" +
+                             ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;";
+        Statement smt = ConnectSpecial.createStatement();
+        smt.execute(defCatQuery);
+        String Select = "SELECT * FROM `canteen`.`specialcategory`;";
+        String defaultCategories[] =  {"BreakFast","Lunch","Dinner"};
+        ResultSet rs = smt.executeQuery(Select);
+        //rs Always points to the tables before first row ! 
+        String insStatement = "INSERT INTO `canteen`.`specialcategory`(`CategoryName`) VALUES(?);";
+        PreparedStatement ptm = ConnectSpecial.prepareStatement(insStatement);
+        
+        
+        if(rs.next() == false){
+            for(String x : defaultCategories){
+                ptm.setString(1, x);
+                ptm.execute();
+                oblist.add(x);
+                System.out.println(oblist.isEmpty());
+            
+            }
+          
+        }
+        
+        else {
+        
+            do {
+            
+            String x  = rs.getString("CategoryName");
+            oblist.add(x);
+            
+            }while(rs.next());
+        
+        }
+        
+        return oblist;
+
+
+    }
+
+    ObservableList<ModelSpecial> PrePareList() throws SQLException {
+
+        ObservableList<ModelSpecial> oblist = FXCollections.observableArrayList();
+        String name,category;
+        String quantity,price,finalPrice;
+        Float totalprice = new Float(0);
+        String image;
+        Image imgs;
+        ImageView FinalImage;
+        String Select = "SELECT * FROM  `canteenextras`.`"+FinalWorkingTableName+"`;";
+        Statement smt = ConnectSpecial.createStatement();
+        ResultSet rs = smt.executeQuery(Select);
+        while(rs.next()){
+        name = rs.getString("ItemName");
+        category = rs.getString("Category");
+        price = rs.getString("Price");
+        quantity = rs.getString("Quantity");
+        totalprice = (Integer.parseInt(quantity) * Float.parseFloat(price));
+        finalPrice = totalprice.toString();
+        image = rs.getString("Image");
+        try{
+         imgs = new Image(image);
+        }catch(Exception e){
+         imgs = new Image(getClass().getResource("Assets/image-placeholder-1200x800.jpg").toString());
+  
+        }
+        FinalImage = new ImageView(imgs);
+        FinalImage.setFitHeight(100);
+        FinalImage.setFitWidth(150); 
+        oblist.add(new ModelSpecial(name,price,quantity, category,finalPrice, FinalImage,new JFXButton("Update")));
+        
+        
+        
+        
+        
+        }
+        return oblist;
+    }
       
+    
+    void setWorkingTable(String TableName){
+    
+        FinalWorkingTableName = TableName;
+    
+    }
+    
+    
 }
+//
+//"`Image` VARCHAR(300)," +
+//                             "`ItemName` VARCHAR(30) NOT NULL," +
+//                             "`Price` FLOAT NOT NULL," +
+//                             "`Quantity` INT(38) NULL," +
+//                             "`Category` varchar(50) DEFAULT NULL,"+
+//                             "`createdDateTime` datetime DEFAULT NULL," +
+//                             "`creator` varchar(100) DEFAULT NULL,"+ 
+//                             "`LastModified` varchar(100) DEFAULT NULL,"+
+//                             "PRIMARY KEY (`ItemName`));";

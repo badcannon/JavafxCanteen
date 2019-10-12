@@ -269,6 +269,7 @@ public class LoginController implements Initializable {
                     RolesHash.put(Role,User);
                     if(!Exists(Role))
                     Roles.getItems().add(Role);
+                    
                 
                }
                 while(role.next());
@@ -308,5 +309,9 @@ public class LoginController implements Initializable {
         flag = false;
         return flag;
     }
+    
+    
+    
+    
 
 }
