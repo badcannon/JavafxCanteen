@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
@@ -105,6 +106,7 @@ public class SpecialDets{
                              "`Category` varchar(50) DEFAULT NULL,"+
                              "`createdDateTime` datetime DEFAULT NULL," +
                              "`creator` varchar(100) DEFAULT NULL,"+ 
+                             "`Modifier` varchar(100) DEFAULT NULL," +
                              "`LastModified` varchar(100) DEFAULT NULL,"+
                              "PRIMARY KEY (`ItemName`));";
                 
@@ -219,7 +221,7 @@ public class SpecialDets{
         FinalImage = new ImageView(imgs);
         FinalImage.setFitHeight(100);
         FinalImage.setFitWidth(150); 
-        oblist.add(new ModelSpecial(name,price,quantity, category,finalPrice, FinalImage,new JFXButton("Update")));
+        oblist.add(new ModelSpecial(name,price,quantity, category,finalPrice, FinalImage));
         
         
         
@@ -235,7 +237,43 @@ public class SpecialDets{
         FinalWorkingTableName = TableName;
     
     }
+
+    void removeSelected(String ItemName) throws SQLException {
+
+      
+        String remove= "DELETE FROM `canteenextras`.`"+FinalWorkingTableName+"` WHERE `ItemName` = '"+ItemName+"';";
+        Statement smt = ConnectSpecial.createStatement();
+        smt.execute(remove);
+        
+    }
+
+    boolean UpdateSpecial(String OldItemName,String Modifier,String ModifiedAt, String itemName, String itemPrice, String itemQantity, String imageUri, String category) throws SQLException {
+    try{
+      String Update = ""
+                    + "UPDATE `canteenextras`.`"+FinalWorkingTableName+"` "
+                    + "SET    `image` = '"+imageUri+"', "
+                    + "       `itemname` = '"+itemName+"', "
+                    + "       `price` = '"+itemPrice+"', "
+                    + "       `quantity` = '"+itemQantity+"', "
+                    + "       `category` = '"+category+"', "
+                    + "       `lastmodified` = '"+ModifiedAt+"', "
+                    + "       `Modifier` = '"+Modifier+"'"
+                    + "WHERE  `itemname` = '"+OldItemName+"';";
+      
+      Statement smt = ConnectSpecial.createStatement();
+      smt.execute(Update);
+    }catch(Exception e)
+    {
+        System.out.println(e.getMessage());
+        return false;
+    }
     
+        return true;
+    
+    }
+
+    
+
     
 }
 //

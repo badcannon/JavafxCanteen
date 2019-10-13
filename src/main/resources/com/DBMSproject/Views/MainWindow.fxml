@@ -42,7 +42,7 @@
       </ImageView>
       <HBox fx:id="Footer" alignment="TOP_RIGHT" layoutY="690.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="1200.0">
          <children>
-            <Label prefHeight="30.0" prefWidth="342.0" text="SystemDateAndTime" />
+            <JFXButton prefHeight="31.0" prefWidth="270.0" style="-fx-font-weight: bold;" text="Give Feedback" textFill="WHITE" />
          </children>
       </HBox>
       <JFXDrawer fx:id="drawer" defaultDrawerSize="300.0" layoutY="39.0" prefHeight="650.0" prefWidth="300.0" resizableOnDrag="true" resizeContent="true" />

@@ -146,11 +146,33 @@
                                     <JFXButton fx:id="SpecialLoad" layoutX="44.0" layoutY="289.0" onAction="#LoadTable" prefHeight="57.0" prefWidth="162.0" text="Load" />
                                  </children>
                               </AnchorPane>
+                              <AnchorPane id="AnchorPane" fx:id="UpdatePane" layoutX="10.0" layoutY="10.0" prefHeight="602.0" prefWidth="410.0" styleClass="MainPane" stylesheets="@../Styles/SpecialOrders.css">
+                                 <children>
+                                    <JFXTextField fx:id="SpecialUpdateItem" focusColor="#4d4de3" labelFloat="true" layoutX="14.0" layoutY="254.0" prefHeight="32.0" prefWidth="374.0" promptText="Item Name " unFocusColor="#0099ff" />
+                                    <JFXTextField fx:id="SpecialPriceUpdate" focusColor="#4d4de3" labelFloat="true" layoutX="14.0" layoutY="313.0" prefHeight="32.0" prefWidth="374.0" promptText="Item Price" unFocusColor="#0099ff" />
+                                    <JFXTextField fx:id="SpecialQuantityUpdate" focusColor="#4d4de3" labelFloat="true" layoutX="15.0" layoutY="375.0" prefHeight="32.0" prefWidth="374.0" promptText="Item Quantity" unFocusColor="#0099ff" />
+                                    <Label layoutX="127.0" layoutY="10.0" prefHeight="52.0" prefWidth="264.0" styleClass="MainLabel" text="Update Item" />
+                                    <JFXButton fx:id="SpecialAddUpdate" layoutX="18.0" layoutY="495.0" onAction="#UpdateSpecial" prefHeight="63.0" prefWidth="166.0" text="Update" />
+                                    <JFXButton fx:id="SpecialUpdateBack" layoutX="218.0" layoutY="495.0" onAction="#UpdateBack" prefHeight="63.0" prefWidth="166.0" text="Back" />
+                                    <ImageView fitHeight="45.0" fitWidth="61.0" layoutX="70.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Assets/add.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fx:id="SpecialUpdateImage" fitHeight="150.0" fitWidth="200.0" layoutX="101.0" layoutY="91.0" onMouseClicked="#SpecialImageUpdate" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../Assets/image-placeholder-1200x800.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Label fx:id="SpecialImageLabelUpdate" alignment="CENTER" layoutX="145.0" layoutY="181.0" onMouseClicked="#SpecialImageUpdate" prefHeight="18.0" prefWidth="117.0" style="-fx-font-weight: bold;" text="Update Image" textFill="#848282" />
+                                    <JFXComboBox fx:id="specialCategoryUpdate" focusColor="#4d4de3" labelFloat="true" layoutX="14.0" layoutY="435.0" prefHeight="32.0" prefWidth="374.0" promptText="Category" unFocusColor="#0099ff" />
+                                 </children>
+                              </AnchorPane>
                            </children>
                         </StackPane>
                         <JFXTextField layoutX="7.0" layoutY="549.0" prefHeight="26.0" prefWidth="233.0" promptText="Filter" />
                         <JFXButton layoutX="266.0" layoutY="547.0" prefHeight="34.0" prefWidth="170.0" styleClass="jfx-button" text="Find" />
-                        <JFXButton layoutX="446.0" layoutY="547.0" prefHeight="34.0" prefWidth="170.0" styleClass="jfx-button" text="Remove Selected " />
+                        <JFXButton fx:id="removeSpecial" layoutX="446.0" layoutY="547.0" onAction="#removeFromSpecialTable" prefHeight="34.0" prefWidth="170.0" styleClass="jfx-button" text="Remove Selected " />
                      </children>
                   </AnchorPane>
               </content>

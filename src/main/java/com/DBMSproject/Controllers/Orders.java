@@ -34,6 +34,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -53,6 +54,8 @@ import javafx.stage.StageStyle;
 
 
 public class Orders implements Initializable {
+
+
 
   
 
@@ -236,9 +239,12 @@ public class Orders implements Initializable {
     private TableColumn<ModelSpecial, String> col_totalPrice;
 
     @FXML
-    private TableColumn<ModelSpecial, JFXButton> col_Update ;
+    private TableColumn<ModelSpecial, ModelSpecial> col_Update ;
     
-        
+    
+    @FXML
+    private JFXButton removeSpecial; 
+ 
     
     
     String WorkingTable;
@@ -360,6 +366,7 @@ public class Orders implements Initializable {
                         "  `Category` varchar(50) DEFAULT NULL,\n"+
                         "  `createdDateTime` datetime DEFAULT NULL,\n" +
                         "  `creator` varchar(100) DEFAULT NULL,\n"+ 
+                        "  `Modifier` varchar(100) DEFAULT NULL," +
                         "  `LastModified` varchar(100) DEFAULT NULL, \n"+
                         "  PRIMARY KEY (`Itemname`)\n" +                                
                         ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;");
@@ -507,7 +514,13 @@ public class Orders implements Initializable {
         description.clear();
         ItemPrice.clear();
         MainImage.setImage(new Image(getClass().getResource("Assets/image-placeholder-1200x800.jpg").toString()));
+        if(CrOrders.getChildren().contains(LabelRemove))
+        {
+            CrOrders = CrOrders;
+        }
+        else{
         CrOrders.getChildren().add(LabelRemove);
+                }
     }
 
     private void ToolTipIntialize() {
@@ -716,13 +729,43 @@ public class Orders implements Initializable {
 
 
         PropertyValueFactory<ModelSpecial,ImageView> img = new PropertyValueFactory<>("file");
+        PropertyValueFactory<ModelSpecial,JFXButton> btn = new PropertyValueFactory<>("Update");
         col_SpecialImage.setCellValueFactory(img);
         col_Category.setCellValueFactory(new PropertyValueFactory<>("category"));
         col_SpecialName.setCellValueFactory(new PropertyValueFactory<>("ItemName"));
         col_SpecialPrice.setCellValueFactory(new PropertyValueFactory<>("Price"));
         col_ItemQuantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
         col_totalPrice.setCellValueFactory(new PropertyValueFactory<>("totalPrice"));
-        col_Update.setCellValueFactory(new PropertyValueFactory<>("Update"));
+        
+        //Creating a Cell factory to add the button :
+        col_Update.setCellFactory(col ->{
+        JFXButton update = new JFXButton("Update");
+            
+        TableCell<ModelSpecial,ModelSpecial> cell = new TableCell<>(){
+        @Override
+        public void updateItem(ModelSpecial table,boolean empty){
+        super.updateItem(table, empty);
+        if(empty){
+            setGraphic(null);
+        }
+        else {
+            setGraphic(update);
+        }
+        }
+        
+        
+        };
+        update.setOnAction(e -> {
+            try {
+                getUpdateItems(cell.getIndex());
+            } catch (SQLException ex) {
+                Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+           
+        return cell;
+        
+        });
         
         ObservableList<ModelSpecial> oblist = FXCollections.observableArrayList();
         oblist.addAll( SpObject.PrePareList());
@@ -734,6 +777,21 @@ public class Orders implements Initializable {
         
     }
     
+    private void getUpdateItems(int x) throws SQLException{
+    
+        System.out.println("Hello");
+        Alert a = new Alert(Alert.AlertType.WARNING);
+        a.setHeaderText("Warning feature in Development!");
+        a.showAndWait();
+        
+        String Name = SpecialTable.getItems().get(x).ItemName;
+        String Quantity = SpecialTable.getItems().get(x).Price;
+        String Price = SpecialTable.getItems().get(x).Price;
+        ImageView img = SpecialTable.getItems().get(x).file;
+        Image image = img.getImage();
+
+        BringUpdatePaneFront(Name,Quantity,Price,image);
+    }
     
     
     @FXML 
@@ -771,19 +829,171 @@ public class Orders implements Initializable {
         }
         
     }
-
- 
     
-   
+    
+    
+        
+    @FXML
+    private void removeFromSpecialTable(ActionEvent event) throws SQLException{
+        
+        if(event.getSource() == removeSpecial){
+        try{
+         if(SpecialTable.getSelectionModel().getSelectedIndex() < 0)
+             popupAlert(false);
+         else{  
+         ModelSpecial Mustbermoved = SpecialTable.getItems().get(SpecialTable.getSelectionModel().getSelectedIndex());
+         
+         SpObject.removeSelected(Mustbermoved.ItemName);
+             popupAlert(true);
+         CreateSpecialTableRefresh();
+         }
+        }catch(Exception e){
+            popupAlert(false,e);
+        }
+         
+        }
+        
+        
+        
+        
+        
+    
+    
+    
+    }
+
+//    Button Part
+   @FXML
+    private AnchorPane UpdatePane;
+
+    @FXML
+    private JFXTextField SpecialUpdateItem;
+
+    @FXML
+    private JFXTextField SpecialPriceUpdate;
+
+    @FXML
+    private JFXTextField SpecialQuantityUpdate;
+
+    @FXML
+    private JFXButton SpecialAddUpdate;
+
+    @FXML
+    private JFXButton SpecialUpdateBack;
+
+    @FXML
+    private ImageView SpecialUpdateImage;
+
+    @FXML
+    private Label SpecialImageLabelUpdate;
+
+    @FXML
+    private JFXComboBox<String> specialCategoryUpdate;
+  
+    private String OldItemName;
+    
+    private String Modifier;
+    
+    private File SpecialUpdatedImage;
+ 
    
       
+   @FXML
+    void UpdateBack(ActionEvent event) throws SQLException {
+        if(event.getSource() == SpecialUpdateBack){
+        
+         BringMainPane3Front();
+        
+        }
+
+    }
+
+    @FXML
+    void UpdateSpecial(ActionEvent event) throws SQLException {
+        if(event.getSource() == SpecialAddUpdate){
+        
+            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+            a.setHeaderText("Overwrite Data ?");
+            a.setContentText("You are About to Over write the Data Are you sure ?");
+            StyleAlert(a);
+            Optional<ButtonType> result = a.showAndWait();
+            if(result.get() == ButtonType.OK){
+            String itemName = SpecialUpdateItem.getText();
+            String itemPrice = SpecialPriceUpdate.getText();
+            String itemQantity = SpecialQuantityUpdate.getText();
+            String imageUri =  SpecialUpdateImage.getImage().getUrl().toString();
+            String category = specialCategoryUpdate.getValue();
+            setModifierName();
+             boolean flag = SpObject.UpdateSpecial(OldItemName,Modifier,getCreationtime(),itemName,itemPrice,itemQantity,imageUri,category);
+                if(flag){
+                
+                     CreateSpecialTableRefresh();
+
+                    
+                }
+                else {
+                    popupAlert(false);
+                }
+            
+            }
+        
+        }
+
+    }  
+    @FXML
+    void SpecialImageUpdate(MouseEvent event) {
+        if(event.getSource() == SpecialUpdateImage || event.getSource() == SpecialImageLabelUpdate){
+            
+            
+            FileChooser filechooser = new FileChooser();
+            filechooser.setSelectedExtensionFilter(new ExtensionFilter("Images", "*.jpeg,*.jpg,*.png"));
+            SpecialUpdatedImage = filechooser.showOpenDialog(MainApp.PrimaryStage);
+            if(SpecialUpdatedImage!=null){
+                
+                Image image = new Image(SpecialUpdatedImage.toURI().toString(),200,150,true,true); //location,prefwidth,prefheight,preserver ratio
+                SpecialUpdateImage.setImage(image);
+                
+            }
+            
+        
+        
+        }
+            
+    }
+
+    void BringUpdatePaneFront(String Name,String Price, String Quantity,Image img) throws SQLException {
+        
+        SpecialUpdateItem.setText(Name);
+        setOldUpdateName(Name);
+        SpecialPriceUpdate.setText(Price);
+        SpecialQuantityUpdate.setText(Quantity);
+        SpecialUpdateImage.setImage(img);
+        ObservableList<String> oblist = FXCollections.observableArrayList();
+        oblist.clear();
+        oblist.addAll(SpObject.CreateAndAddSpecialCats());
+        specialCategoryUpdate.getItems().addAll(oblist);
+        UpdatePane.toFront();
+
+    }
+    
+    
+    void setOldUpdateName(String Name){
+    
+     OldItemName = Name;
+    
+    }
        
-       
-  
+    void setModifierName()
+    {
+    
+        Modifier = LoginController.getCurrentUser();
+    
+    }
  
 }
 
 
+//you can do so like add image label to edit image ! 
 
 
 

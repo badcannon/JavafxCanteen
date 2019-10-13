@@ -1,38 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="300.0" stylesheets="@../Styles/DrawerContent.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="300.0" stylesheets="@../Styles/DrawerContent.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="Image" fitHeight="156.0" fitWidth="301.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
+      <ImageView fx:id="Image" fitHeight="156.0" fitWidth="301.0" layoutX="-1.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Assets/CanteenDrawer.jpg" />
          </image>
          <cursor>
             <Cursor fx:constant="DEFAULT" />
          </cursor>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
       </ImageView>
-      <JFXButton accessibleText="Orders" alignment="CENTER" prefHeight="100.0" prefWidth="300.0" text="Orders" textAlignment="CENTER">
-         <graphic>
-            <ImageView fitHeight="40.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Assets/Orders.png" />
-               </image>
-            </ImageView>
-         </graphic></JFXButton>
-      <JFXButton accessibleText="Option2" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="300.0" text="Statistics" textAlignment="CENTER" />
-      <JFXButton accessibleText="Option3" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="300.0" text="Settings" />
-      <JFXButton alignment="CENTER" contentDisplay="CENTER" prefHeight="97.0" prefWidth="323.0" text="Option 4 " />
-      <JFXButton accessibleText="Option4" alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="300.0" text="Exit" />
-      <Label alignment="BOTTOM_CENTER" prefHeight="23.0" prefWidth="300.0" text="Project I guess ! :D " textAlignment="CENTER" />
+      <JFXButton accessibleText="Orders" alignment="CENTER" layoutX="-1.0" layoutY="148.0" prefHeight="98.0" prefWidth="300.0" text="Orders" textAlignment="CENTER" />
+      <JFXButton accessibleText="Option2" alignment="CENTER" contentDisplay="CENTER" layoutY="245.0" prefHeight="100.0" prefWidth="300.0" text="Statistics" textAlignment="CENTER">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </JFXButton>
+      <JFXButton accessibleText="Option3" alignment="CENTER" contentDisplay="CENTER" layoutX="-1.0" layoutY="345.0" prefHeight="100.0" prefWidth="300.0" text="Settings" />
+      <JFXButton alignment="CENTER" contentDisplay="CENTER" layoutY="445.0" prefHeight="98.0" prefWidth="300.0" text="  Staff " textAlignment="CENTER" />
+      <JFXButton accessibleText="Option4" alignment="CENTER" contentDisplay="CENTER" layoutY="536.0" prefHeight="100.0" prefWidth="300.0" text="Exit" />
+      <Label alignment="BOTTOM_CENTER" layoutX="-1.0" layoutY="624.0" prefHeight="23.0" prefWidth="300.0" text="Project I guess ! :D " textAlignment="CENTER" />
+      <ImageView fitHeight="40.0" fitWidth="49.0" layoutX="44.0" layoutY="275.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" x="20.0">
+         <image>
+            <Image url="@../Assets/Stats.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="40.0" fitWidth="49.0" layoutX="64.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Assets/Orders.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="40.0" fitWidth="49.0" layoutX="64.0" layoutY="375.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Assets/settings.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="40.0" fitWidth="49.0" layoutX="62.0" layoutY="474.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Assets/StaffMan.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="40.0" fitWidth="49.0" layoutX="64.0" layoutY="566.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Assets/Exit.png" />
+         </image>
+      </ImageView>
    </children>
-</VBox>
+</AnchorPane>

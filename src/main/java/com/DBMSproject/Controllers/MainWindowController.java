@@ -177,7 +177,7 @@ public class MainWindowController implements Initializable{
     }
 
     private void DrawerProps() throws IOException {
-        VBox pane = new VBox();
+        AnchorPane pane = new AnchorPane();
         pane = new FXMLLoader(getClass().getResource(StageManager.Change("DRAWER"))).load();
         drawer.setSidePane(pane);
         //Assigning fucntions to the buttons with a loop !
