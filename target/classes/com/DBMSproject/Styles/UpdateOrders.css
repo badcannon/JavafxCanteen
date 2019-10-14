@@ -1,0 +1,29 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 15, 2019, 1:10:00 AM
+    Author     : shree
+*/
+#UpdateLabelMain{
+        -fx-font-size:40px;
+        -fx-text-fill:#6600cc;
+        -fx-font-weight:bold;
+    }
+    
+    .jfx-button{
+        -fx-background-color:#367ff5;
+        -fx-text-fill:whitesmoke;
+        -fx-font-weight:bold;
+        
+    }
+    
+    .jfx-button:hover{
+            -fx-background-color:#6600cc;
+        -fx-text-fill:#367ff5;
+   
+        
+    }
+

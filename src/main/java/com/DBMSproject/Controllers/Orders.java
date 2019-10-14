@@ -76,7 +76,8 @@ public class Orders implements Initializable {
     @FXML
     AnchorPane SpecialPane;
     
-    
+    @FXML
+    AnchorPane UpdateOrders;
     
     @FXML
     private AnchorPane OrderCreate;
@@ -149,6 +150,8 @@ public class Orders implements Initializable {
     
     @FXML
     private JFXButton RemoveTable;
+    
+    ModelTable MainTableSelectedData;
     
     
     
@@ -237,6 +240,9 @@ public class Orders implements Initializable {
     @FXML
     private JFXTabPane TabPane;
     
+    @FXML
+    private JFXButton UpdateSelectedMain;
+    
     String WorkingTable;
 
     
@@ -248,14 +254,6 @@ public class Orders implements Initializable {
     PlaceOrderHelper PlObject = new PlaceOrderHelper();
     
 
-    
-    
-    
-    
-    
-    
-    
-    
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
        
@@ -285,6 +283,7 @@ public class Orders implements Initializable {
     oblist.clear();
     oblist.addAll(PlObject.setCategoryNames());
     CrOrdersCategory.getItems().addAll(oblist);
+    UpdateCategoryMainTable.getItems().addAll(oblist);
     
     
     }
@@ -475,7 +474,7 @@ public class Orders implements Initializable {
         Col_Quantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
         Col_Category.setCellValueFactory(new PropertyValueFactory<>("Category"));
         Col_Update.setCellFactory(callback->{
-        JFXButton Add = new JFXButton("Update");
+        JFXButton Add = new JFXButton("Add");
         TableCell<ModelTable,ModelTable> cell = new TableCell<>(){
             
             @Override
@@ -490,6 +489,7 @@ public class Orders implements Initializable {
             Add.setOnAction(e->{
             
                 System.out.println("Working!");
+                
             
             });
             
@@ -506,6 +506,141 @@ public class Orders implements Initializable {
         
      
     }
+    @FXML
+    JFXTextField UpdateMainItemName;
+    @FXML
+    JFXTextField UpdateMainTableQuantity;
+    @FXML
+    JFXTextField UpdateMainTablePrice;
+    @FXML
+    JFXTextArea UpdateMainTableDes;
+    @FXML
+    ImageView UpdateMainTableImage;
+    @FXML
+    JFXComboBox<String> UpdateCategoryMainTable;
+    @FXML
+    JFXButton UpdateMainTableFinal;
+    @FXML
+    Label UpdateLabel;
+    
+    @FXML
+    JFXButton CancleMainUpdate;
+    
+    
+    String OldMainTableName;
+    
+    
+    @FXML    
+    private void UpdateMainTable(ActionEvent event){
+    
+        if(event.getSource() ==UpdateSelectedMain){
+        
+        if (table.getSelectionModel().getSelectedIndex() < 0){
+        
+            Exception E = new Exception("Please Select a Row !");
+            popupAlert(false,E);
+        
+        }
+        
+        else{
+        
+        
+            MainTableSelectedData = table.getItems().get(table.getSelectionModel().getSelectedIndex());
+            OldMainTableName  = MainTableSelectedData.ItemName;
+            UpdateMainItemName.setText(MainTableSelectedData.ItemName);
+            UpdateMainTablePrice.setText(MainTableSelectedData.Price);
+            UpdateMainTableDes.setText(MainTableSelectedData.Description);
+            UpdateMainTableQuantity.setText(MainTableSelectedData.Quantity);
+            UpdateMainTableImage.setImage(MainTableSelectedData.file.getImage());
+            TabPane.getSelectionModel().select(2);
+
+        }
+
+        }
+    
+    
+    }
+     @FXML
+    void EditUpdatedImage(MouseEvent event) {
+        
+        if (event.getSource() == UpdateMainTableImage){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().addAll(new  ExtensionFilter("Image Files","*.png","*.jpeg","*.jpg"));
+        file = fileChooser.showOpenDialog(MainApp.PrimaryStage);
+        System.out.println(file);
+             if(file!=null){
+                 Image image = new Image(file.toURI().toString(),281,208,true,true); //location,prefwidth,prefheight,preserver ratio
+                 UpdateMainTableImage.setImage(image);
+                 UpdateOrders.getChildren().remove(UpdateLabel);
+                
+             }
+        
+        }
+
+    }
+        
+    @FXML
+    void CancleUpdateMainTable(ActionEvent event){
+    
+        if(event.getSource() == CancleMainUpdate){
+        
+        TabPane.getSelectionModel().select(0);
+        ClearDetsUpdate();
+            
+        }
+    
+    
+    }
+    
+  void ClearDetsUpdate(){
+      
+      UpdateMainItemName.clear();
+      UpdateMainTableDes.clear();
+      UpdateMainTablePrice.clear();
+      UpdateMainTableQuantity.clear();
+      UpdateMainTableImage.setImage(new Image(getClass().getResource("Assets/image-placeholder-1200x800.jpg").toString()));
+       if(UpdateOrders.getChildren().contains(UpdateLabel)) {
+        UpdateOrders = UpdateOrders;
+       }    
+       else {
+           UpdateOrders.getChildren().add(UpdateLabel);
+       }
+            
+            }
+    
+    
+    @FXML
+    void FinalUpdateMainTable(ActionEvent event) throws SQLException{
+    if(event.getSource() == UpdateMainTableFinal){
+        try{
+     String Image,Name,Price,Description,Quantity,Category,Modifier,LastModified;
+     Image = UpdateMainTableImage.getImage().getUrl().toString();
+     Name = UpdateMainItemName.getText();
+     Price = UpdateMainTablePrice.getText();
+     Description = UpdateMainTableDes.getText();
+     Quantity = UpdateMainTableQuantity.getText();
+     Modifier  = getCreateBy();
+     LastModified = getCreationtime();
+     Category = UpdateCategoryMainTable.getValue();
+     PlObject.UpdateMainTable(Image,Name,Price,Description,Quantity,Category,Modifier,LastModified,OldMainTableName);
+     popupAlert(true);
+     CreateTable();
+     TabPane.getSelectionModel().select(0);
+    ClearDetsUpdate();
+
+        }catch(Exception e){
+        
+            popupAlert(false,e);
+        }
+     
+    
+    
+    
+    }
+    
+    
+    }
+    
 
     private ObservableList<ModelTable> returnList() throws SQLException, IOException {
         ObservableList<ModelTable> oblist = FXCollections.observableArrayList();

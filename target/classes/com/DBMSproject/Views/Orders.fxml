@@ -24,8 +24,8 @@
                   <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="597.0" prefWidth="1200.0" stylesheets="@../Styles/PlaceOrders.css">
                      <children>
                         <JFXTextField fx:id="filter" focusColor="#4d4de3" layoutY="563.0" prefHeight="30.0" prefWidth="363.0" promptText="Filter" unFocusColor="#009dff" />
-                        <JFXButton fx:id="refresh" layoutX="366.0" layoutY="560.0" onAction="#refresh" prefHeight="36.0" prefWidth="223.0" style="-fx-background-color: #367ff5; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 15; -fx-background-radius: 5px;" text="Refresh" />
-                        <ImageView fitHeight="32.0" fitWidth="34.0" layoutX="405.0" layoutY="562.0" pickOnBounds="true" preserveRatio="true">
+                        <JFXButton fx:id="refresh" layoutX="366.0" layoutY="560.0" onAction="#refresh" prefHeight="36.0" prefWidth="141.0" style="-fx-background-color: #367ff5; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 12; -fx-background-radius: 5px;" text="Refresh" />
+                        <ImageView fitHeight="32.0" fitWidth="34.0" layoutX="381.0" layoutY="562.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../Assets/Refresh.png" />
                            </image>
@@ -38,10 +38,11 @@
                               <TableColumn fx:id="Col_ItemDescription" prefWidth="162.4000244140625" text="Description" />
                               <TableColumn fx:id="Col_Quantity" prefWidth="66.39996337890625" text="Quantity" />
                               <TableColumn fx:id="Col_Category" prefWidth="117.5999755859375" text="Category" />
-                              <TableColumn fx:id="Col_Update" prefWidth="76.0" text="Update" />
+                              <TableColumn fx:id="Col_Update" prefWidth="76.0" text="Add" />
                           </columns>
                         </TableView>
-                        <JFXButton fx:id="RemoveTable" layoutX="597.0" layoutY="560.0" onAction="#removeFromMainTable" prefHeight="36.0" prefWidth="213.0" style="-fx-background-color: #367ff5; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 15; -fx-background-radius: 5px;" text="Remove Selected" />
+                        <JFXButton fx:id="RemoveTable" layoutX="509.0" layoutY="560.0" onAction="#removeFromMainTable" prefHeight="36.0" prefWidth="137.0" style="-fx-background-color: #367ff5; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 12; -fx-background-radius: 5px;" text="Remove Selected" />
+                        <JFXButton fx:id="UpdateSelectedMain" layoutX="647.0" layoutY="560.0" onAction="#UpdateMainTable" prefHeight="36.0" prefWidth="160.0" style="-fx-background-color: #367ff5; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 12; -fx-background-radius: 5px;" text="Update Selected" />
                      </children>
                   </AnchorPane>
                </content>
@@ -78,7 +79,29 @@
             </Tab>
             <Tab fx:id="UpdateTab" text="Update Orders">
                <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" />
+                  <AnchorPane fx:id="UpdateOrders" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="1200.0" stylesheets="@../Styles/UpdateOrders.css">
+                     <children>
+                        <ImageView fx:id="UpdateMainTableImage" fitHeight="208.0" fitWidth="281.0" layoutX="905.0" layoutY="14.0" onMouseClicked="#EditUpdatedImage" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Assets/image-placeholder-1200x800.jpg" />
+                           </image>
+                        </ImageView>
+                        <JFXTextField fx:id="UpdateMainItemName" focusColor="#4d4be3" labelFloat="true" layoutX="41.0" layoutY="191.0" prefHeight="34.0" prefWidth="465.0" promptText="Item Name*" unFocusColor="#0095fffa" />
+                        <JFXTextArea fx:id="UpdateMainTableDes" focusColor="#4d4de3" labelFloat="true" layoutX="41.0" layoutY="362.0" prefHeight="80.0" prefWidth="462.0" promptText="Short Description" unFocusColor="#0099ff" />
+                        <JFXTextField fx:id="UpdateMainTablePrice" focusColor="#4d4de3" labelFloat="true" layoutX="41.0" layoutY="302.0" prefHeight="29.0" prefWidth="466.0" promptText="Item Price* " unFocusColor="#0099fffd" />
+                        <Label fx:id="UpdateLabelMain" layoutX="111.0" layoutY="22.0" prefHeight="73.0" prefWidth="325.0" styleClass="headers-region" text="Update Item " />
+                        <JFXButton fx:id="UpdateMainTableFinal" layoutX="340.0" layoutY="465.0" onAction="#FinalUpdateMainTable" prefHeight="73.0" prefWidth="242.0" styleClass="jfx-button" text="Update" />
+                        <ImageView fitHeight="90.0" fitWidth="92.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Assets/Update.png" />
+                           </image>
+                        </ImageView>
+                        <JFXTextField fx:id="UpdateMainTableQuantity" focusColor="#4d4de3" labelFloat="true" layoutX="41.0" layoutY="252.0" prefHeight="28.0" prefWidth="466.0" promptText="Quantity" unFocusColor="#0099fffd" />
+                        <JFXComboBox fx:id="UpdateCategoryMainTable" focusColor="#4d4de3" labelFloat="true" layoutX="583.0" layoutY="191.0" prefHeight="34.0" prefWidth="272.0" promptText="Select category" unFocusColor="#0099ff" />
+                        <Label fx:id="UpdateLabel" layoutX="1006.0" layoutY="199.0" style="-fx-text-fill: gray; -fx-font-weight: bold;" text="Update Image" />
+                        <JFXButton fx:id="CancleMainUpdate" layoutX="598.0" layoutY="465.0" onAction="#CancleUpdateMainTable" prefHeight="73.0" prefWidth="242.0" text="Cancle" />
+                     </children>
+                  </AnchorPane>
                </content>
             </Tab>
             <Tab text="Special Orders">

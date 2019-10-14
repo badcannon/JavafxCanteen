@@ -108,5 +108,34 @@ public class PlaceOrderHelper {
         return oblist;
         
         }
+
+    void UpdateMainTable(String Image, String Name, String Price, String Description, String Quantity, String Category, String Modifier, String LastModified,String Oldname) throws SQLException {
+       try{
+           
+        String Update = ""
+                    + "UPDATE `canteen`.`menu` "
+                    + "SET    `Image` = '"+Image+"', "
+                    + "       `Itemname` = '"+Name+"', "
+                    + "       `description` = '"+Description+"', "
+                    + "       `price` = '"+Price+"', "
+                    + "       `Itemquantity` = '"+Quantity+"', "
+                    + "       `category` = '"+Category+"', "
+                    + "       `LastModified` = '"+LastModified+"', "
+                    + "       `Modifier` = '"+Modifier+"'"
+                    + "WHERE  `itemname` = '"+Oldname+"';";
+      
+      Statement smt = MainApp.Connect.createStatement();
+      smt.execute(Update);
+       }
+       catch(Exception e){
+           System.out.println(e.getMessage());
+           
+       }
+        
+
+
+    }
+
+ 
     
 }
