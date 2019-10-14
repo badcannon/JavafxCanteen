@@ -162,7 +162,7 @@ public class SpecialDets{
         ResultSet rs = smt.executeQuery(Select);
         //rs Always points to the tables before first row ! 
         String insStatement = "INSERT INTO `canteen`.`specialcategory`(`CategoryName`) VALUES(?);";
-        PreparedStatement ptm = ConnectSpecial.prepareStatement(insStatement);
+        PreparedStatement ptm = MainApp.Connect.prepareStatement(insStatement);
         
         
         if(rs.next() == false){

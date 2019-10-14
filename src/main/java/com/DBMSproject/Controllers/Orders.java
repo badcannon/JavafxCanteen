@@ -34,6 +34,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -47,6 +49,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.StageStyle;
+import com.jfoenix.controls.JFXTabPane;
 
 
 
@@ -97,7 +100,11 @@ public class Orders implements Initializable {
     private TableColumn<ModelTable, String> Col_Quantity;
 
     @FXML
-    private TableColumn<ModelTable, JFXButton> Col_Add;
+    private TableColumn<ModelTable,String> Col_Category;
+
+    @FXML
+    private TableColumn<ModelTable,ModelTable> Col_Update;
+   
     
     @FXML
     private JFXTextField filter;
@@ -139,6 +146,16 @@ public class Orders implements Initializable {
     
     @FXML
     private Label LabelRemove;
+    
+    @FXML
+    private JFXButton RemoveTable;
+    
+    
+    
+    
+    
+    
+    
     
     /*
     
@@ -212,40 +229,13 @@ public class Orders implements Initializable {
     
     
     @FXML
+    private JFXComboBox<String> CrOrdersCategory;
+    
+    @FXML
     private JFXComboBox<String> specialCategory;
     
-    
-//    Special TableView : 
-    
     @FXML
-    private TableView<ModelSpecial> SpecialTable;
-    
-    @FXML
-    private TableColumn<ModelSpecial, ImageView> col_SpecialImage;
-
-    @FXML
-    private TableColumn<ModelSpecial, String> col_SpecialName;
-
-    @FXML
-    private TableColumn<ModelSpecial, String> col_SpecialPrice;
-
-    @FXML
-    private TableColumn<ModelSpecial, String> col_ItemQuantity;
-
-    @FXML
-    private TableColumn<ModelSpecial, String> col_Category;
-
-    @FXML
-    private TableColumn<ModelSpecial, String> col_totalPrice;
-
-    @FXML
-    private TableColumn<ModelSpecial, ModelSpecial> col_Update ;
-    
-    
-    @FXML
-    private JFXButton removeSpecial; 
- 
-    
+    private JFXTabPane TabPane;
     
     String WorkingTable;
 
@@ -255,7 +245,9 @@ public class Orders implements Initializable {
     //Main Special Dets Object : 
     
     SpecialDets SpObject = new SpecialDets();
+    PlaceOrderHelper PlObject = new PlaceOrderHelper();
     
+
     
     
     
@@ -273,7 +265,9 @@ public class Orders implements Initializable {
             ToolTipIntialize();
             SpObject.ConnectSpecialDB();
             SpObject.setTableNames();
+            SetCatValues();
             BringMainPaneFront();
+            
             
         } catch (SQLException | IOException ex) {
             Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
@@ -281,6 +275,67 @@ public class Orders implements Initializable {
             Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
+    
+    @FXML
+    void SetCatValues() throws SQLException{
+    
+    ObservableList<String> oblist = FXCollections.observableArrayList();
+    oblist.clear();
+    oblist.addAll(PlObject.setCategoryNames());
+    CrOrdersCategory.getItems().addAll(oblist);
+    
+    
+    }
+    
+    
+    
+    
+    @FXML
+    void removeFromMainTable(ActionEvent event) throws SQLException, IOException{
+        
+    if(event.getSource() == RemoveTable){
+        
+        if(table.getSelectionModel().getSelectedIndex() < 0){
+        
+            popupAlert(false);
+            System.out.println("Error 1");
+        }
+        else{
+        
+        ModelTable Delete = table.getItems().get(table.getSelectionModel().getFocusedIndex());
+         boolean flag =  PlObject.RemoveTable(Delete);
+        if(flag){
+            popupAlert(true);
+            CreateTable();
+            
+        }
+        else{
+            popupAlert(false);
+        }
+        
+        
+        }
+         
+    
+    }
+    
+    
+    }
+    
+    
+    
+    
+    
+    
+    @FXML
+    String getCatValue(){
+        
+        return  CrOrdersCategory.getValue();
+    
+    }
+    
     
 
      @FXML
@@ -290,7 +345,7 @@ public class Orders implements Initializable {
         {
             
             try {
-            String Query = "INSERT INTO `canteen`.`menu` (Itemname,price,Image,description,Itemquantity,createdDateTime,creator) VALUES(?,?,?,?,?,?,?);";
+            String Query = "INSERT INTO `canteen`.`menu` (Itemname,price,Image,description,Itemquantity,Category,createdDateTime,creator) VALUES(?,?,?,?,?,?,?,?);";
             pst = MainApp.Connect.prepareStatement(Query);
             pst.setString(1,getItemName());
             pst.setString(2, getPrice());
@@ -301,8 +356,9 @@ public class Orders implements Initializable {
             }
             pst.setString(4, getDescription());
             pst.setString(5, getQuantity());
-            pst.setString(6, getCreationtime());
-            pst.setString(7, getCreateBy());
+            pst.setString(6, getCatValue());
+            pst.setString(7, getCreationtime());
+            pst.setString(8, getCreateBy());
             pst.execute();
             pst.close();
             popupAlert(true);
@@ -417,6 +473,33 @@ public class Orders implements Initializable {
         Col_ItemPrice.setCellValueFactory(new PropertyValueFactory<>("Price"));
         Col_ItemDescription.setCellValueFactory(new PropertyValueFactory<>("Description"));
         Col_Quantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
+        Col_Category.setCellValueFactory(new PropertyValueFactory<>("Category"));
+        Col_Update.setCellFactory(callback->{
+        JFXButton Add = new JFXButton("Update");
+        TableCell<ModelTable,ModelTable> cell = new TableCell<>(){
+            
+            @Override
+            public void updateItem(ModelTable tableUsed ,boolean empty){
+            super.updateItem(tableUsed,empty);
+            if(empty){
+                setGraphic(null);            }
+            else {
+            setGraphic(Add);
+            }
+           
+            Add.setOnAction(e->{
+            
+                System.out.println("Working!");
+            
+            });
+            
+            
+        }
+            
+         
+        };
+        return cell;
+        });
         oblist = returnList();
         table.setItems(oblist);
         
@@ -429,6 +512,7 @@ public class Orders implements Initializable {
         String name,description,price,quantity;
         String image;
         ImageView FinalImage;
+        String Category;
         Image imgs = new Image(getClass().getResource("Assets/image-placeholder-1200x800.jpg").toString());
         String Query = "SELECT * FROM `canteen`.`menu`;";
         Statement smt = MainApp.Connect.createStatement();
@@ -445,8 +529,9 @@ public class Orders implements Initializable {
             
             FinalImage = new ImageView(image);
             FinalImage.setFitHeight(100);
-            FinalImage.setFitWidth(150);              
-            oblist.add(new ModelTable(name, description, price, FinalImage,quantity)); } 
+            FinalImage.setFitWidth(150); 
+            Category = rs.getString("Category");
+            oblist.add(new ModelTable(name, description, price, FinalImage,quantity,Category)); } 
       return oblist;          
     }
 
@@ -861,6 +946,35 @@ public class Orders implements Initializable {
     
     
     }
+    //    Special TableView : 
+    
+    @FXML
+    private TableView<ModelSpecial> SpecialTable;
+    
+    @FXML
+    private TableColumn<ModelSpecial, ImageView> col_SpecialImage;
+
+    @FXML
+    private TableColumn<ModelSpecial, String> col_SpecialName;
+
+    @FXML
+    private TableColumn<ModelSpecial, String> col_SpecialPrice;
+
+    @FXML
+    private TableColumn<ModelSpecial, String> col_ItemQuantity;
+
+    @FXML
+    private TableColumn<ModelSpecial, String> col_Category;
+
+    @FXML
+    private TableColumn<ModelSpecial, String> col_totalPrice;
+
+    @FXML
+    private TableColumn<ModelSpecial, ModelSpecial> col_Update ;
+    
+    
+    @FXML
+    private JFXButton removeSpecial; 
 
 //    Button Part
    @FXML
@@ -889,14 +1003,15 @@ public class Orders implements Initializable {
 
     @FXML
     private JFXComboBox<String> specialCategoryUpdate;
-  
+      
+    
     private String OldItemName;
     
     private String Modifier;
     
     private File SpecialUpdatedImage;
- 
-   
+    
+    
       
    @FXML
     void UpdateBack(ActionEvent event) throws SQLException {
@@ -989,6 +1104,7 @@ public class Orders implements Initializable {
         Modifier = LoginController.getCurrentUser();
     
     }
+  
  
 }
 

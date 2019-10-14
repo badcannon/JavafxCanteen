@@ -63,3 +63,16 @@
 .table-row-cell:empty .table-cell {
     -fx-border-width: 0px;
 }
+
+.jfx-button{
+    -fx-background-color:#367ff5;
+        -fx-text-fill:whitesmoke;
+        -fx-font-weight:bold;
+    
+    
+}
+
+.jfx-button:hover{
+    -fx-background-color:#6600cc;
+        -fx-text-fill:#367ff5;
+}

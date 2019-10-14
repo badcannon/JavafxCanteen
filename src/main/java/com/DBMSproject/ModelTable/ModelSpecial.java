@@ -10,7 +10,6 @@ public class ModelSpecial {
     String ItemName, Price,Quantity,category,totalPrice;
 
     ImageView file;
-    JFXButton Update;
     Orders ords = new Orders();
     
     public ModelSpecial(String ItemName, String Price, String Quantity, String category, String totalPrice, ImageView file) {

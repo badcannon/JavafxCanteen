@@ -12,16 +12,25 @@ import javafx.scene.image.ImageView;
  * @author shree
  */
 public class ModelTable  {
-    String ItemName,Description, Price,Quantity;
+    String ItemName,Description, Price,Quantity,Category;
     ImageView file;
 
-    public ModelTable(String ItemName,String Description,String Price,ImageView file,String Quantity){
+    public ModelTable(String ItemName,String Description,String Price,ImageView file,String Quantity,String Category){
         this.ItemName =  ItemName ;
         this.Description =  Description ;
         this.Price =  Price ;
         this.file = file;
         this.Quantity = Quantity  ;
+        this.Category = Category;
     } 
+
+    public String getCategory() {
+        return Category;
+    }
+
+    public void setCategory(String Category) {
+        this.Category = Category;
+    }
 
     public String getItemName() {
         return ItemName;
