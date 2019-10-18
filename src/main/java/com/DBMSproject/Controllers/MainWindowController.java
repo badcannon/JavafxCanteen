@@ -4,6 +4,7 @@ import com.DBMSproject.Enums.StageManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
+import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import java.io.IOException;
 import java.net.URL;
@@ -15,11 +16,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -51,6 +50,10 @@ public class MainWindowController implements Initializable{
     @FXML
     private JFXDrawer drawer;
     
+        @FXML
+    private JFXProgressBar PBar;
+    
+       
 
     
 //    This must be accessed by orders.java
@@ -74,7 +77,7 @@ public class MainWindowController implements Initializable{
         Alert a= new Alert (Alert.AlertType.CONFIRMATION);
         ord.StyleAlert(a);
         a.setHeaderText("Log Off?");
-        a.setContentText("Are you Sure You want to Log Out "+LoginController.getCurrentUser()+"? ");
+        a.setContentText("Are you Sure You want to Log Out  "+LoginController.getCurrentUser()+"? ");
         Optional<ButtonType> result = a.showAndWait();
         if(result.get() == ButtonType.OK){
         MainApp.setRoot(StageManager.Change("LOGIN") );
@@ -86,6 +89,15 @@ public class MainWindowController implements Initializable{
         
     }
     
+        private void StartStop(boolean b) {
+        if(true)
+        Displays.getChildren().add(PBar);
+        else
+        Displays.getChildren().remove(PBar);
+        
+    }
+
+ 
 
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -250,5 +262,7 @@ public class MainWindowController implements Initializable{
     public HamburgerSlideCloseTransition gettransition() {
         return transition;
     }
+
+
 
 }

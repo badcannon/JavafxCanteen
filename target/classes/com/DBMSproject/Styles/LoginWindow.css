@@ -20,5 +20,17 @@
     /*-fx-stroke: blue;*/
 }
 
+#clsbtn:hover{
+    
+    -fx-background-color:tomato;
+    
+}
+
+#minbtn:hover{
+    -fx-background-color:#4d4de3;
+    
+    
+}
+
 
 

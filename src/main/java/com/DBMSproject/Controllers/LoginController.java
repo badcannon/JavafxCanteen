@@ -23,6 +23,8 @@ import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 import com.DBMSproject.Enums.StageManager;
 import com.jfoenix.controls.JFXComboBox;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -148,7 +150,9 @@ public class LoginController implements Initializable {
         {
         MainApp.setRoot(StageManager.Change("MAINWINDOW") );
        }catch (Exception e ){
-           System.out.println(e.getStackTrace().getClass().getMethods());
+           StringWriter sw = new StringWriter();
+           PrintWriter pw = new PrintWriter(sw);
+           System.out.println(e.getLocalizedMessage());
        }
     }
 

@@ -177,8 +177,7 @@
                                     <JFXTextField fx:id="SpecialPriceUpdate" focusColor="#4d4de3" labelFloat="true" layoutX="14.0" layoutY="313.0" prefHeight="32.0" prefWidth="374.0" promptText="Item Price" unFocusColor="#0099ff" />
                                     <JFXTextField fx:id="SpecialQuantityUpdate" focusColor="#4d4de3" labelFloat="true" layoutX="15.0" layoutY="375.0" prefHeight="32.0" prefWidth="374.0" promptText="Item Quantity" unFocusColor="#0099ff" />
                                     <Label layoutX="127.0" layoutY="10.0" prefHeight="52.0" prefWidth="264.0" styleClass="MainLabel" text="Update Item" />
-                                    <JFXButton fx:id="SpecialAddUpdate" layoutX="18.0" layoutY="495.0" onAction="#UpdateSpecial" prefHeight="63.0" prefWidth="166.0" text="Update" />
-                                    <JFXButton fx:id="SpecialUpdateBack" layoutX="218.0" layoutY="495.0" onAction="#UpdateBack" prefHeight="63.0" prefWidth="166.0" text="Back" />
+                                    <JFXButton fx:id="SpecialAddUpdate" layoutX="118.0" layoutY="504.0" onAction="#UpdateSpecial" prefHeight="63.0" prefWidth="166.0" text="Update" />
                                     <ImageView fitHeight="45.0" fitWidth="61.0" layoutX="70.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../Assets/add.png" />

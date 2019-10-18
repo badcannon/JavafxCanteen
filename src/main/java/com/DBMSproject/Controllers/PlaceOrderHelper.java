@@ -111,6 +111,22 @@ public class PlaceOrderHelper {
 
     void UpdateMainTable(String Image, String Name, String Price, String Description, String Quantity, String Category, String Modifier, String LastModified,String Oldname) throws SQLException {
        try{
+           boolean flag=false;
+           String UpdateTableDef = "CREATE TABLE IF NOT EXISTS `canteen`.`menuedits` (\n" +
+                                "  `ItemName` VARCHAR(20) NOT NULL,\n" +
+                                "  `Modifier` VARCHAR(40) NULL,\n" +
+                                "  `LastModified` DATETIME NULL,\n" +
+                                "  `countModified` INT NULL,\n" +
+                                "   PRIMARY KEY (`ItemName`),\n" +
+                                "   CONSTRAINT `ItemName`\n" +
+                                "   FOREIGN KEY (`ItemName`)\n" +
+                                "   REFERENCES `canteen`.`menu` (`Itemname`)\n" +
+                                "   ON DELETE CASCADE\n" +
+                                "   ON UPDATE CASCADE);";
+           
+           Statement Statement1 = MainApp.Connect.createStatement();
+           Statement1.execute(UpdateTableDef);
+           
            
         String Update = ""
                     + "UPDATE `canteen`.`menu` "
@@ -119,13 +135,39 @@ public class PlaceOrderHelper {
                     + "       `description` = '"+Description+"', "
                     + "       `price` = '"+Price+"', "
                     + "       `Itemquantity` = '"+Quantity+"', "
-                    + "       `category` = '"+Category+"', "
-                    + "       `LastModified` = '"+LastModified+"', "
-                    + "       `Modifier` = '"+Modifier+"'"
+                    + "       `category` = '"+Category+"' "
                     + "WHERE  `itemname` = '"+Oldname+"';";
       
       Statement smt = MainApp.Connect.createStatement();
       smt.execute(Update);
+      String CheckIfExists = "SELECT * FROM `canteen`.`menuedits`";
+      Statement statement2 = MainApp.Connect.createStatement();
+      ResultSet rs = statement2.executeQuery(CheckIfExists);
+      String ItemNameExist;
+      while(rs.next()){
+          
+          ItemNameExist = rs.getString("ItemName");
+          if(ItemNameExist.equals(Name)){
+          
+              flag =true;
+          
+          }
+          
+          
+      
+      }
+      
+      if(flag == true){
+          updatemenuEdits(Oldname,Name,Modifier,LastModified);
+          System.out.println("Done");
+      }
+      else {
+      
+          insertMenuEdits(Oldname,Name,Modifier,LastModified);
+          System.out.println(""
+                  + "DOne1");
+      }
+      
        }
        catch(Exception e){
            System.out.println(e.getMessage());
@@ -134,6 +176,51 @@ public class PlaceOrderHelper {
         
 
 
+    }
+
+    private void updatemenuEdits(String Oldname, String Name, String Modifier, String LastModified) throws SQLException {
+        String getCount = "SELECT countModified FROM `canteen`.`menuedits` WHERE `ItemName`='"+Name+"'";
+        ResultSet rs = MainApp.Connect.createStatement().executeQuery(getCount);
+        int count = 0;
+
+        while(rs.next()){
+            
+            count=rs.getInt("countModified");
+            
+        
+        }
+        count = count++;
+        String update = "UPDATE `canteen`.`menuedits`\n" +
+                        "SET\n" +
+                        "`Modifier` = '"+Modifier+"',\n" +
+                        "`LastModified` = '"+LastModified+"',\n" +
+                        "`countModified` = '"+count+"'\n" +
+                        "WHERE `ItemName` = '"+Name+"';";
+       Statement smt = MainApp.Connect.createStatement();
+       smt.execute(update);        
+    }
+
+    private void insertMenuEdits(String Oldname, String Name, String Modifier, String LastModified) throws SQLException {
+        int count = 1 ;
+        String Insert = "INSERT INTO `canteen`.`menuedits`\n" +
+                        "(`ItemName`,\n" +
+                        "`Modifier`,\n" +
+                        "`LastModified`,\n" +
+                        "`countModified`)\n" +
+                        "VALUES\n" +
+                        "(?,\n" +
+                        "?,\n" +
+                        "?,\n" +
+                        "?);";
+        PreparedStatement pmt = MainApp.Connect.prepareStatement(Insert);
+        pmt.setString(1,Name);
+        pmt.setString(2, Modifier);
+        pmt.setString(3, LastModified);
+        pmt.setInt(4, count);
+        pmt.execute();
+        
+    
+    
     }
 
  

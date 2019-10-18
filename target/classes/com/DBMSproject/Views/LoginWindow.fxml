@@ -67,7 +67,7 @@
             <JFXButton fx:id="logbtn" buttonType="RAISED" layoutX="151.0" layoutY="401.0" onAction="#login" prefHeight="50.0" prefWidth="106.0" ripplerFill="WHITE" style="-fx-background-color: #367ff5;" text="Login" />
             <JFXPasswordField fx:id="Password" focusColor="#367ff5" labelFloat="true" layoutX="49.0" layoutY="300.0" prefHeight="26.0" prefWidth="313.0" promptText="Password" />
             <Label fx:id="AlertLabel" alignment="CENTER" ellipsisString="" layoutX="49.0" layoutY="205.0" prefHeight="26.0" prefWidth="313.0" />
-            <Label fx:id="LoginLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="49.0" layoutY="137.0" prefHeight="54.0" prefWidth="313.0" text="Admin Login" textFill="#367ff5">
+            <Label fx:id="LoginLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="49.0" layoutY="137.0" prefHeight="54.0" prefWidth="313.0" text="Login" textFill="#367ff5">
                <font>
                   <Font size="24.0" />
                </font>

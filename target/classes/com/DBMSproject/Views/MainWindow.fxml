@@ -5,10 +5,16 @@
 <?import com.jfoenix.controls.JFXHamburger?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" stylesheets="@../Styles/MainWindow.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.DBMSproject.MainWindowController">
    <children>
@@ -46,6 +52,205 @@
          </children>
       </HBox>
       <JFXDrawer fx:id="drawer" defaultDrawerSize="300.0" layoutY="39.0" prefHeight="650.0" prefWidth="300.0" resizableOnDrag="true" resizeContent="true" />
-      <AnchorPane fx:id="Displays" layoutY="39.0" prefHeight="650.0" prefWidth="1200.0" />
+      <AnchorPane fx:id="Displays" layoutY="39.0" prefHeight="650.0" prefWidth="1200.0" style="-fx-background-color: #fff;">
+         <children>
+            <Pane layoutX="1.0" prefHeight="298.0" prefWidth="1200.0" style="-fx-background-color: #0085c7;">
+               <children>
+                  <Line endX="1099.0" endY="7.62939453125E-6" layoutX="101.0" layoutY="58.0" startX="-100.0" stroke="WHITE" />
+                  <Pane layoutX="413.0" layoutY="14.0" prefHeight="254.0" prefWidth="375.0" style="-fx-background-color: #07aafa;">
+                     <children>
+                        <Label alignment="CENTER" layoutX="52.0" layoutY="55.0" prefHeight="72.0" prefWidth="270.0" text="Canteen Management" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="39.0" fitWidth="52.0" layoutX="51.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Assets/fa-cutlery.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="39.0" fitWidth="52.0" layoutX="162.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Assets/User.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fitHeight="39.0" fitWidth="52.0" layoutX="270.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Assets/settingsBlack.png" />
+                           </image>
+                        </ImageView>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="72.0" layoutX="34.0" layoutY="8.0" stroke="BLACK" strokeType="INSIDE" width="300.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="72.0" layoutX="34.0" layoutY="106.0" stroke="BLACK" strokeType="INSIDE" width="300.0" />
+                     </children>
+                  </Pane>
+                  <ImageView fitHeight="46.0" fitWidth="54.0" layoutX="165.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true" rotate="-24.4">
+                     <image>
+                        <Image url="@../Assets/ordersImageBack.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="30.0" fitWidth="16.0" layoutX="130.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" rotate="34.7">
+                     <image>
+                        <Image url="@../Assets/DrinkAndBurger.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="30.0" fitWidth="24.0" layoutX="91.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true" rotate="-36.3">
+                     <image>
+                        <Image url="@../Assets/soup-FoodBoul.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="46.0" fitWidth="54.0" layoutX="291.0" layoutY="229.0" pickOnBounds="true" preserveRatio="true" rotate="-37.4">
+                     <image>
+                        <Image url="@../Assets/DrinkAndBurger.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="42.0" fitWidth="46.0" layoutX="849.0" layoutY="145.0" pickOnBounds="true" preserveRatio="true" rotate="-102.8">
+                     <image>
+                        <Image url="@../Assets/DrinkAndBurger.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="940.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true" rotate="36.3">
+                     <image>
+                        <Image url="@../Assets/soup-FoodBoul.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="67.0" fitWidth="74.0" layoutX="849.0" layoutY="201.0" pickOnBounds="true" preserveRatio="true" rotate="32.5">
+                     <image>
+                        <Image url="@../Assets/ordersImageBack.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="34.0" fitWidth="30.0" layoutX="962.0" layoutY="229.0" pickOnBounds="true" preserveRatio="true" rotate="-23.2">
+                     <image>
+                        <Image url="@../Assets/ordersImageBack.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="46.0" fitWidth="54.0" layoutX="998.0" layoutY="161.0" pickOnBounds="true" preserveRatio="true" rotate="25.3">
+                     <image>
+                        <Image url="@../Assets/DrinkAndBurger.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="39.0" fitWidth="33.0" layoutX="901.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true" rotate="-64.2">
+                     <image>
+                        <Image url="@../Assets/soup-FoodBoul.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="64.0" fitWidth="64.0" layoutX="303.0" layoutY="156.0" pickOnBounds="true" preserveRatio="true" rotate="10.0">
+                     <image>
+                        <Image url="@../Assets/ordersImageBack.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="231.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true" rotate="40.2">
+                     <image>
+                        <Image url="@../Assets/soup-FoodBoul.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="30.0" fitWidth="16.0" layoutX="83.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/DrinkAndBurger.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="30.0" fitWidth="24.0" layoutX="146.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true" rotate="-34.4">
+                     <image>
+                        <Image url="@../Assets/soup-FoodBoul.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="37.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/ordersImageBack.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="42.0" fitWidth="42.0" layoutX="128.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true" rotate="29.5">
+                     <image>
+                        <Image url="@../Assets/ordersImageBack.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="33.0" fitWidth="22.0" layoutX="1037.0" layoutY="138.0" pickOnBounds="true" preserveRatio="true" rotate="50.0">
+                     <image>
+                        <Image url="@../Assets/soup-FoodBoul.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="22.0" fitWidth="16.0" layoutX="1112.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true" rotate="-55.3">
+                     <image>
+                        <Image url="@../Assets/soup-FoodBoul.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="30.0" fitWidth="22.0" layoutX="1086.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/DrinkAndBurger.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="22.0" fitWidth="30.0" layoutX="1075.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/ordersImageBack.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="22.0" fitWidth="16.0" layoutX="1131.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/ordersImageBack.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Circle fill="#0085c7" layoutX="597.0" layoutY="306.0" radius="37.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+            <ImageView fitHeight="39.0" fitWidth="50.0" layoutX="576.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Assets/Home.png" />
+               </image>
+            </ImageView>
+            <Pane layoutX="14.0" layoutY="374.0" prefHeight="254.0" prefWidth="248.0" style="-fx-background-color: #06d19b;">
+               <effect>
+                  <DropShadow />
+               </effect></Pane>
+            <Pane layoutX="312.0" layoutY="374.0" prefHeight="254.0" prefWidth="248.0" style="-fx-background-color: #03befc;">
+               <effect>
+                  <DropShadow />
+               </effect></Pane>
+            <Pane layoutX="634.0" layoutY="374.0" prefHeight="254.0" prefWidth="248.0" style="-fx-background-color: #3c0485;">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Pane>
+            <Pane layoutX="940.0" layoutY="374.0" prefHeight="254.0" prefWidth="248.0" style="-fx-background-color: #d007eb;">
+               <effect>
+                  <DropShadow />
+               </effect></Pane>
+            <Circle fill="#03befc" layoutX="138.0" layoutY="374.0" opacity="0.8" radius="31.0" stroke="TRANSPARENT" strokeType="INSIDE">
+               <effect>
+                  <DropShadow />
+               </effect></Circle>
+            <Circle fill="#3c0485" layoutX="1064.0" layoutY="374.0" opacity="0.8" radius="31.0" stroke="TRANSPARENT" strokeType="INSIDE">
+               <effect>
+                  <DropShadow />
+               </effect></Circle>
+            <ImageView fitHeight="38.0" fitWidth="50.0" layoutX="119.0" layoutY="355.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Assets/Orders.png" />
+               </image></ImageView>
+            <Circle fill="#06d19b" layoutX="436.0" layoutY="374.0" opacity="0.8" radius="31.0" stroke="TRANSPARENT" strokeType="INSIDE">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Circle>
+            <Circle fill="#d007eb" layoutX="758.0" layoutY="374.0" opacity="0.8" radius="31.0" stroke="TRANSPARENT" strokeType="INSIDE">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Circle>
+            <ImageView fitHeight="38.0" fitWidth="50.0" layoutX="417.0" layoutY="355.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Assets/Stats.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="38.0" fitWidth="50.0" layoutX="739.0" layoutY="355.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Assets/StaffMan.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="38.0" fitWidth="50.0" layoutX="1045.0" layoutY="355.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Assets/settings.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

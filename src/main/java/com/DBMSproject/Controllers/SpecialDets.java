@@ -6,6 +6,7 @@
 package com.DBMSproject;
 
 import com.jfoenix.controls.JFXButton;
+import java.awt.BorderLayout;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -26,6 +27,7 @@ public class SpecialDets{
    static ArrayList<String> TableNames = new ArrayList<>();
     static Connection ConnectSpecial ;
     private String FinalWorkingTableName;
+    private String UpdateTableEdits;
     private String workingTable;
     private boolean flag = false;
    
@@ -63,6 +65,7 @@ public class SpecialDets{
         while(rs.next()){
             
            String Table =  rs.getString("TABLE_NAME");
+           if(!Table.endsWith("edit"))
            TableNames.add(Table);
                    
         }
@@ -98,6 +101,7 @@ public class SpecialDets{
           
             else{
                 System.out.println(FinalWorkingTableName);
+                UpdateTableEdits = FinalWorkingTableName + "edit";
                 String smt = "CREATE TABLE `canteenextras`.`"+FinalWorkingTableName+"`(" +
                              "`Image` VARCHAR(300)," +
                              "`ItemName` VARCHAR(30) NOT NULL," +
@@ -105,9 +109,7 @@ public class SpecialDets{
                              "`Quantity` INT(38) NULL," +
                              "`Category` varchar(50) DEFAULT NULL,"+
                              "`createdDateTime` datetime DEFAULT NULL," +
-                             "`creator` varchar(100) DEFAULT NULL,"+ 
-                             "`Modifier` varchar(100) DEFAULT NULL," +
-                             "`LastModified` varchar(100) DEFAULT NULL,"+
+                             "`creator` varchar(100) DEFAULT NULL"+ 
                              "PRIMARY KEY (`ItemName`));";
                 
                 System.out.println(smt);
@@ -240,7 +242,6 @@ public class SpecialDets{
 
     void removeSelected(String ItemName) throws SQLException {
 
-      
         String remove= "DELETE FROM `canteenextras`.`"+FinalWorkingTableName+"` WHERE `ItemName` = '"+ItemName+"';";
         Statement smt = ConnectSpecial.createStatement();
         smt.execute(remove);
@@ -249,19 +250,66 @@ public class SpecialDets{
 
     boolean UpdateSpecial(String OldItemName,String Modifier,String ModifiedAt, String itemName, String itemPrice, String itemQantity, String imageUri, String category) throws SQLException {
     try{
-      String Update = ""
+      boolean flagExist= false;
+      String Update = "" 
                     + "UPDATE `canteenextras`.`"+FinalWorkingTableName+"` "
                     + "SET    `image` = '"+imageUri+"', "
                     + "       `itemname` = '"+itemName+"', "
                     + "       `price` = '"+itemPrice+"', "
                     + "       `quantity` = '"+itemQantity+"', "
-                    + "       `category` = '"+category+"', "
-                    + "       `lastmodified` = '"+ModifiedAt+"', "
-                    + "       `Modifier` = '"+Modifier+"'"
+                    + "       `category` = '"+category+"'"
                     + "WHERE  `itemname` = '"+OldItemName+"';";
+      UpdateTableEdits = FinalWorkingTableName + "edit";
+      String UpdateEditsDef = "CREATE TABLE IF NOT EXISTS `canteenextras`.`"+UpdateTableEdits+"` (\n" +
+                                "  `ItemName` VARCHAR(20) NOT NULL,\n" +
+                                "  `Modifier` VARCHAR(40) NULL,\n" +
+                                "  `LastModified` DATETIME NULL,\n" +
+                                "  `countModified` INT NULL,\n" +
+                                "   PRIMARY KEY (`ItemName`),\n" +
+                                "   CONSTRAINT `ItemName`\n" +
+                                "   FOREIGN KEY (`ItemName`)\n" +
+                                "   REFERENCES `canteenextras`.`"+FinalWorkingTableName+"` (`Itemname`)\n" +
+                                "   ON DELETE CASCADE\n" +
+                                "   ON UPDATE CASCADE);";
+      
       
       Statement smt = ConnectSpecial.createStatement();
+      smt.execute(UpdateEditsDef);
       smt.execute(Update);
+        System.out.println("Here !");
+      
+      String CheckIfExists = "SELECT * FROM `canteenextras`.`"+UpdateTableEdits+"`";
+      Statement statement2 = MainApp.Connect.createStatement();
+      ResultSet rs = statement2.executeQuery(CheckIfExists);
+      String ItemNameExist;
+      while(rs.next()){
+          
+          ItemNameExist = rs.getString("ItemName");
+          if(ItemNameExist.equals(itemName)){
+          
+              System.out.println(ItemNameExist);
+              System.out.println(itemName);
+              flagExist =true;
+              System.out.println(flagExist);
+          
+          }
+          
+          
+      
+      }
+       if(flagExist == true){
+           System.out.println("Entered Here !");
+          updatemenuEdits(itemName,Modifier,ModifiedAt);
+          System.out.println("Done");
+      }
+      else {
+      
+          insertMenuEdits(itemName,Modifier,ModifiedAt);
+          System.out.println(""
+                  + "DOne1");
+      }
+      
+      
     }catch(Exception e)
     {
         System.out.println(e.getMessage());
@@ -271,6 +319,49 @@ public class SpecialDets{
         return true;
     
     }
+    
+       private void updatemenuEdits( String Name, String Modifier, String LastModified) throws SQLException {
+        String getCount = "SELECT countModified FROM `canteenextras`.`"+UpdateTableEdits+"` WHERE `ItemName`='"+Name+"'";
+        ResultSet rs = MainApp.Connect.createStatement().executeQuery(getCount);
+        rs.next();
+        int countX = rs.getInt("countModified");
+        countX++;
+        System.out.println(countX);
+        
+        String update = "UPDATE `canteenextras`.`"+UpdateTableEdits+"`\n" +
+                        "SET\n" +
+                        "`ItemName` = '"+Name+"',"+
+                        "`Modifier` = '"+Modifier+"',\n" +
+                        "`LastModified` = '"+LastModified+"',\n" +
+                        "`countModified` = '"+countX+"'\n" +
+                        "WHERE `ItemName` = '"+Name+"';";
+       Statement smt = MainApp.Connect.createStatement();
+       smt.execute(update);        
+    }
+
+    private void insertMenuEdits( String Name, String Modifier, String LastModified) throws SQLException {
+        int count = 1 ;
+        String Insert = "INSERT INTO `canteenextras`.`"+UpdateTableEdits+"`\n" +
+                        "(`ItemName`,\n" +
+                        "`Modifier`,\n" +
+                        "`LastModified`,\n" +
+                        "`countModified`)\n" +
+                        "VALUES\n" +
+                        "(?,\n" +
+                        "?,\n" +
+                        "?,\n" +
+                        "?);";
+        PreparedStatement pmt = MainApp.Connect.prepareStatement(Insert);
+        pmt.setString(1,Name);
+        pmt.setString(2, Modifier);
+        pmt.setString(3, LastModified);
+        pmt.setInt(4, count);
+        pmt.execute();
+        
+    
+    
+    }
+
 
     
 

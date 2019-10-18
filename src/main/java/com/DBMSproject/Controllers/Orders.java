@@ -34,8 +34,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -421,8 +419,6 @@ public class Orders implements Initializable {
                         "  `Category` varchar(50) DEFAULT NULL,\n"+
                         "  `createdDateTime` datetime DEFAULT NULL,\n" +
                         "  `creator` varchar(100) DEFAULT NULL,\n"+ 
-                        "  `Modifier` varchar(100) DEFAULT NULL," +
-                        "  `LastModified` varchar(100) DEFAULT NULL, \n"+
                         "  PRIMARY KEY (`Itemname`)\n" +                                
                         ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;");
 
@@ -1000,10 +996,7 @@ public class Orders implements Initializable {
     private void getUpdateItems(int x) throws SQLException{
     
         System.out.println("Hello");
-        Alert a = new Alert(Alert.AlertType.WARNING);
-        a.setHeaderText("Warning feature in Development!");
-        a.showAndWait();
-        
+            
         String Name = SpecialTable.getItems().get(x).ItemName;
         String Quantity = SpecialTable.getItems().get(x).Price;
         String Price = SpecialTable.getItems().get(x).Price;
@@ -1127,10 +1120,7 @@ public class Orders implements Initializable {
     @FXML
     private JFXButton SpecialAddUpdate;
 
-    @FXML
-    private JFXButton SpecialUpdateBack;
-
-    @FXML
+       @FXML
     private ImageView SpecialUpdateImage;
 
     @FXML
@@ -1148,15 +1138,6 @@ public class Orders implements Initializable {
     
     
       
-   @FXML
-    void UpdateBack(ActionEvent event) throws SQLException {
-        if(event.getSource() == SpecialUpdateBack){
-        
-         BringMainPane3Front();
-        
-        }
-
-    }
 
     @FXML
     void UpdateSpecial(ActionEvent event) throws SQLException {
@@ -1178,6 +1159,8 @@ public class Orders implements Initializable {
                 if(flag){
                 
                      CreateSpecialTableRefresh();
+                     popupAlert(true);
+                     BringMainPane3Front();
 
                     
                 }

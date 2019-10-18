@@ -18,6 +18,7 @@
             <artifactId>javafx-controls</artifactId>
             <version>12.0.2</version>
         </dependency>
+        
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
@@ -86,6 +87,24 @@
                         <option>javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix</option>
                         <option>--add-opens</option>
                         <option>javafx.controls/com.sun.javafx.scene.control=com.jfoenix</option>
+                        <option>--add-opens</option>
+                <option>javafx.scene/com.sun.javafx.scene.NodeHelper=com.jfoenix</option>
+                 <option>--add-opens</option>
+                <option>javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix</option>
+                <option>--add-opens</option>
+                <option>javafx.controls/com.sun.javafx.scene.control=com.jfoenix</option>
+                <option>--add-exports</option>
+                <option>javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix</option>
+                <option>--add-exports</option>
+                <option>javafx.controls/com.sun.javafx.scene.control=com.jfoenix</option>
+                <option>--add-exports</option>
+                <option>javafx.base/com.sun.javafx.binding=com.jfoenix</option>
+                <option>--add-exports</option>
+                <option>javafx.graphics/com.sun.javafx.stage=com.jfoenix</option>
+                <option>--add-exports</option>
+                <option>javafx.base/com.sun.javafx.event=com.jfoenix</option>
+                <option>--add-exports</option>
+                <option>javafx.scene/com.sun.javafx.scene.NodeHelper=com.jfoenix</option>
                         <!--<option>-Dprism.allowhidpi=false</option>-->
                     </options>
 
