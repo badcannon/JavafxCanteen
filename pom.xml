@@ -81,30 +81,13 @@
                 <version>0.0.3</version>
                 <configuration>
                     <mainClass>com.DBMSproject.MainApp</mainClass>
-                    <executable>C:\Program Files\Java\Java Jdk's\jdk-11.0.4\bin\java.exe</executable>
+                    <executable>/usr/lib/jvm/java-11-openjdk-amd64/bin/java</executable>
                     <options>
                         <option>--add-opens</option>
                         <option>javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix</option>
                         <option>--add-opens</option>
                         <option>javafx.controls/com.sun.javafx.scene.control=com.jfoenix</option>
-                        <option>--add-opens</option>
-                <option>javafx.scene/com.sun.javafx.scene.NodeHelper=com.jfoenix</option>
-                 <option>--add-opens</option>
-                <option>javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix</option>
-                <option>--add-opens</option>
-                <option>javafx.controls/com.sun.javafx.scene.control=com.jfoenix</option>
-                <option>--add-exports</option>
-                <option>javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix</option>
-                <option>--add-exports</option>
-                <option>javafx.controls/com.sun.javafx.scene.control=com.jfoenix</option>
-                <option>--add-exports</option>
-                <option>javafx.base/com.sun.javafx.binding=com.jfoenix</option>
-                <option>--add-exports</option>
-                <option>javafx.graphics/com.sun.javafx.stage=com.jfoenix</option>
-                <option>--add-exports</option>
-                <option>javafx.base/com.sun.javafx.event=com.jfoenix</option>
-                <option>--add-exports</option>
-                <option>javafx.scene/com.sun.javafx.scene.NodeHelper=com.jfoenix</option>
+               
                         <!--<option>-Dprism.allowhidpi=false</option>-->
                     </options>
 

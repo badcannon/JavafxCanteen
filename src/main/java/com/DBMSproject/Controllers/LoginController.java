@@ -35,11 +35,20 @@ import javafx.collections.ObservableList;
 
 public class LoginController implements Initializable {
 
+//    Varibales For User,flag,Maping variables etc..
     static String CurrentUser;
     
-    public static String getCurrentUser() {
-        return CurrentUser;
-    }
+    
+    private boolean flag = false;
+
+    
+    private Map<String,String> RolesHash = new HashMap<>();
+    
+    
+    private Map<String,String> LoginHash = new HashMap<>();
+
+
+//    FXML variables ! 
 
     @FXML
     private Label AlertLabel;
@@ -71,24 +80,61 @@ public class LoginController implements Initializable {
     @FXML
     private JFXComboBox<String> Roles;
     
-    private boolean flag = false;
-
     
-    private Map<String,String> RolesHash = new HashMap<>();
-    private Map<String,String> LoginHash = new HashMap<>();
+    
+//    LoginWindow Evaluator :
+    LoginWindowHelper winHelp = new LoginWindowHelper();
+    
 
+//    Initalize the App :
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            Center();
+            ConnectDbLogin();
+            MainApp.Dragable(root);
+            Styles();
+            InitializeValues();
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    
+    
+    
+    
+        
+//    Get the current User 
+       public static String getCurrentUser() {
+        return CurrentUser;
+    }
+    
+    
+    
+    
+//    Minimize the App 
+    
     @FXML
     void Minimize(ActionEvent event) {
 
         MainApp.PrimaryStage.setIconified(true);
 
     }
-
+    
+        
+ 
+//    Close the app !
     @FXML
     void close(ActionEvent event) {
         MainApp.PrimaryStage.close();
     }
 
+    
+//    Login Evaluator !
     @FXML
     void login(ActionEvent event) throws SQLException, IOException, InterruptedException {
         Statement statement = MainApp.Connect.createStatement();
@@ -121,29 +167,6 @@ public class LoginController implements Initializable {
 
     }
 
-    private void playAnimation() {
-        RotateTransition rotateTransition = new RotateTransition();
-        rotateTransition.setAutoReverse(false);
-        rotateTransition.setByAngle(360);
-        rotateTransition.setDuration(Duration.millis(200));
-        rotateTransition.setCycleCount(1000);
-        rotateTransition.setNode(Circle);
-    }
-
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            Center();
-            ConnectDbLogin();
-            MainApp.Dragable(root);
-            Styles();
-            InitializeValues();
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
 
     private void handelLogin() throws IOException {
        try
@@ -157,32 +180,17 @@ public class LoginController implements Initializable {
     }
 
     private void ConnectDbLogin() {
-        boolean Con = MainApp.Connect();
-        if(Con){
-            try {
-                String LoginTableStatement = "CREATE TABLE IF NOT EXISTS canteen.logindets(Username VARCHAR(20) PRIMARY KEY,Password VARCHAR(20)) ";
-                String RolesTableStatement = "CREATE TABLE IF NOT EXISTS `canteen`.`roles` (\n" +
-                                             "  `Role` varchar(20) NOT NULL,\n" +
-                                             "  `Username` varchar(20) NOT NULL,\n" +
-                                             "  PRIMARY KEY (`Username`),\n" +
-                                             "  KEY `Username_idx` (`Username`),\n" +
-                                             "  CONSTRAINT `Username` FOREIGN KEY (`Username`) REFERENCES `logindets` (`Username`) ON DELETE CASCADE ON UPDATE CASCADE\n" +
-                                             ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;";
-                Statement statement =MainApp.Connect.createStatement();
-                statement.execute(LoginTableStatement);
-                statement.execute(RolesTableStatement);
-                }
-            catch (SQLException e ){
-                System.out.println("Sql Error");
-            }
-        }
-        else{
+        boolean x = winHelp.ConnectToDb();
+        if(!x){
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setTitle("Database Error!");
             a.showAndWait();
         }
     }
-
+    
+//   Get App UserName and Password Details 
+    
+    
     private String GetUsername(){
         CurrentUser = Username.getText();
         return Username.getText();
@@ -193,43 +201,18 @@ public class LoginController implements Initializable {
         return Password.getText();
     }
 
-    private void SetUsername(String User){
-        Username.setText(User);
+    
 
-    }
-    private void SetPassword(String Pass){
-        Password.setText(Pass);
-    }
-
+//Send Alert When the Password Is wrong!
     private void SetAlert(String Value,boolean flag) throws InterruptedException {
-        if(flag){
-            Circle.setStyle("-fx-stroke: lime");
-            AlertLabel.setText(Value);
-            AlertLabel.setStyle("-fx-text-fill: lime;-fx-font-weight: bold;-fx-font-size: 14px;");
-        }
-        else {
-            Circle.setStyle("-fx-stroke: tomato");
+        if(!flag){
             AlertLabel.setText(Value);
             AlertLabel.setStyle("-fx-text-fill: tomato;-fx-font-weight: bold;-fx-font-size: 14px;");
         }
 
     }
 
-    private void Center() {
-         MainApp.PrimaryStage.setHeight(548);
-        MainApp.PrimaryStage.setWidth(713);
-        MainApp.PrimaryStage.setX((MainApp.bounds.getWidth()-713)/2);
-       MainApp.PrimaryStage.setY((MainApp.bounds.getHeight()-548)/2);
-    
-    }
 
-    private void Styles() {
-        logbtn.setCursor(Cursor.HAND);
-        Username.setCursor(Cursor.TEXT);
-        Password.setCursor(Cursor.TEXT);
-        clsbtn.setCursor(Cursor.HAND);
-        minbtn.setCursor(Cursor.HAND);
-    }
 
     private void InitializeValues() throws SQLException {
         String DefInsert = "INSERT INTO canteen.logindets VALUES('global','global')";
@@ -312,6 +295,27 @@ public class LoginController implements Initializable {
         
         flag = false;
         return flag;
+    }
+    
+    
+    
+//    Center the app in the Given Display!
+    
+        private void Center() {
+        MainApp.PrimaryStage.setHeight(548);
+        MainApp.PrimaryStage.setWidth(713);
+        MainApp.PrimaryStage.setX((MainApp.bounds.getWidth()-713)/2);
+        MainApp.PrimaryStage.setY((MainApp.bounds.getHeight()-548)/2);
+    
+    }
+
+//  Set Cursor Style For certain Elements/controls :
+    private void Styles() {
+        logbtn.setCursor(Cursor.HAND);
+        Username.setCursor(Cursor.TEXT);
+        Password.setCursor(Cursor.TEXT);
+        clsbtn.setCursor(Cursor.HAND);
+        minbtn.setCursor(Cursor.HAND);
     }
     
     

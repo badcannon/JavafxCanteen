@@ -4,12 +4,12 @@ import com.DBMSproject.Enums.StageManager;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXHamburger;
-import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,8 +21,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.input.MouseButton;
 
 
 public class MainWindowController implements Initializable{
@@ -50,8 +52,10 @@ public class MainWindowController implements Initializable{
     @FXML
     private JFXDrawer drawer;
     
-        @FXML
-    private JFXProgressBar PBar;
+        
+    
+    
+    
     
        
 
@@ -59,12 +63,7 @@ public class MainWindowController implements Initializable{
 //    This must be accessed by orders.java
 
    
-    @FXML
-    void Minimize(MouseEvent event) {
-        if(event.getSource() == logo){
-            MainApp.PrimaryStage.setIconified(true);
-        }
-    }
+    
     
     @FXML
     void Sign(ActionEvent event) throws IOException{
@@ -89,14 +88,6 @@ public class MainWindowController implements Initializable{
         
     }
     
-        private void StartStop(boolean b) {
-        if(true)
-        Displays.getChildren().add(PBar);
-        else
-        Displays.getChildren().remove(PBar);
-        
-    }
-
  
 
     @Override
@@ -109,6 +100,8 @@ public class MainWindowController implements Initializable{
             transHam();
             CloseDrawer();
             loignInfo();
+            setUpHome();
+            mouseMinimize();
 //       Styles(); 
         } catch (IOException ex) {
                         System.out.println("Io first!");
@@ -194,28 +187,46 @@ public class MainWindowController implements Initializable{
         drawer.setSidePane(pane);
         //Assigning fucntions to the buttons with a loop !
         for (Node node : pane.getChildren()) {
+            
+             
+            
+            
             //checking if its null !
             if(node.getAccessibleText()!=null){
+                
+             
+            
+       
             //Adding Event Handlers :
             node.setOnMouseClicked(new EventHandler<MouseEvent>(){
                 @Override
                 public void handle(MouseEvent event){
                     try {
-                        AnchorPane pane,pane1,pane2;
+                        AnchorPane pane;
 
                         switch(node.getAccessibleText()){
+                            case "Home":  pane = FXMLLoader.load(getClass().getResource(StageManager.Change("HOME")));
+                                            Displays.getChildren().removeAll();
+                                            Displays.getChildren().setAll(pane);
+                                            break;
                             
                             case "Orders":  pane = FXMLLoader.load(getClass().getResource(StageManager.Change("ORDERS")));
                                             Displays.getChildren().removeAll();
                                             Displays.getChildren().setAll(pane);
                             break;
-                            case "Option2": pane1 = FXMLLoader.load(getClass().getResource(StageManager.Change("STATS")));
-                                            Displays.getChildren().setAll(pane1);
+                            case "Stats": pane = FXMLLoader.load(getClass().getResource(StageManager.Change("STATS")));
+                                           Displays.getChildren().removeAll();
+                                            Displays.getChildren().setAll(pane);
                             break;
-                            case "Option3": pane2 = FXMLLoader.load(getClass().getResource(StageManager.Change("SETTINGS")));
-                                            Displays.getChildren().setAll(pane2);
+                            case "Settings": pane = FXMLLoader.load(getClass().getResource(StageManager.Change("SETTINGS")));
+                                            Displays.getChildren().removeAll();
+                                            Displays.getChildren().setAll(pane);
                             break;
-                            case "Option4": handelExit();
+                            case "Staff" : pane = FXMLLoader.load(getClass().getResource(StageManager.Change("STAFF")));
+                                           Displays.getChildren().removeAll();
+                                           Displays.getChildren().setAll(pane); 
+                            break;
+                            case "Exit": handelExit();
                             break;
                             
                             default : System.out.println("Wrong Option!");
@@ -262,7 +273,53 @@ public class MainWindowController implements Initializable{
     public HamburgerSlideCloseTransition gettransition() {
         return transition;
     }
+    
+  void setUpHome(){
+   
+      AnchorPane pane;
+      
+      try{
+      pane = FXMLLoader.load(getClass().getResource(StageManager.Change("HOME")));
+      Displays.getChildren().removeAll();
+      Displays.getChildren().setAll(pane);
+      
+      }catch(Exception e){
+          System.out.println(e.getMessage());
+      }
+    
+   
+   }
 
+    private void setValueDrawerInfo(Node node) {
+        Label l = new Label();
+        
+                l.setText("Logged in as :" +LoginController.getCurrentUser());
+        ObservableMap<Object, Object> properties = node.getProperties();
+        //TODO
+//        login info here !
+
+    }
+    
+    
+//    Minimize on double Click :
+    
+    void mouseMinimize(){
+    logo.setOnMouseClicked(new EventHandler<MouseEvent>(){
+      
+
+        @Override
+        public void handle(MouseEvent event) {
+            if(event.getButton().equals(MouseButton.PRIMARY)){
+                if(event.getClickCount() == 2){
+                  MainApp.PrimaryStage.setIconified(true);
+                }                          
+            }
+
+        }
+    
+    });
+    
+    }
 
 
 }

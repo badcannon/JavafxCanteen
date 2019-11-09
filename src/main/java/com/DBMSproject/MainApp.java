@@ -54,10 +54,10 @@ public class MainApp extends Application {
             String defaultStatement = "CREATE SCHEMA IF NOT EXISTS `canteen` ;";
             Class.forName("com.mysql.cj.jdbc.Driver");
             //Defined Earlier !
-            Connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/","root","shosperm");
+            Connect = DriverManager.getConnection("jdbc:mysql://localhost/","root","");
             Statement statement = Connect.createStatement();
             statement.execute(defaultStatement);
-            Connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/canteen","root","shosperm");
+            Connect = DriverManager.getConnection("jdbc:mysql://localhost/canteen","root","");
             
             }
         catch (Exception e){

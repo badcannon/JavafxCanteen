@@ -45,10 +45,10 @@ public class SpecialDets{
     String defaultStatementSpecial = "CREATE SCHEMA IF NOT EXISTS `canteenextras` ;";
     Class.forName("com.mysql.cj.jdbc.Driver");
     //Defined Earlier !
-    ConnectSpecial = DriverManager.getConnection("jdbc:mysql://localhost:3306/","root","shosperm");
+    ConnectSpecial = DriverManager.getConnection("jdbc:mysql://localhost/","root","");
     Statement statement = ConnectSpecial.createStatement();
     statement.execute(defaultStatementSpecial);
-    ConnectSpecial = DriverManager.getConnection("jdbc:mysql://localhost:3306/canteenextras","root","shosperm");
+    ConnectSpecial = DriverManager.getConnection("jdbc:mysql://localhost/canteenextras","root","");
         
 
     }
@@ -65,7 +65,7 @@ public class SpecialDets{
         while(rs.next()){
             
            String Table =  rs.getString("TABLE_NAME");
-           if(!Table.endsWith("edit"))
+           if(!Table.endsWith("edit")&&!Table.equals("ordersdonespecial"))
            TableNames.add(Table);
                    
         }
@@ -102,15 +102,15 @@ public class SpecialDets{
             else{
                 System.out.println(FinalWorkingTableName);
                 UpdateTableEdits = FinalWorkingTableName + "edit";
-                String smt = "CREATE TABLE `canteenextras`.`"+FinalWorkingTableName+"`(" +
+                String smt = "CREATE TABLE  IF NOT EXISTS `canteenextras`.`"+FinalWorkingTableName+"`(" +
                              "`Image` VARCHAR(300)," +
                              "`ItemName` VARCHAR(30) NOT NULL," +
                              "`Price` FLOAT NOT NULL," +
                              "`Quantity` INT(38) NULL," +
                              "`Category` varchar(50) DEFAULT NULL,"+
                              "`createdDateTime` datetime DEFAULT NULL," +
-                             "`creator` varchar(100) DEFAULT NULL"+ 
-                             "PRIMARY KEY (`ItemName`));";
+                             "`creator` varchar(100) DEFAULT NULL,"+ 
+                             "PRIMARY KEY (`ItemName`)) ENGINE = InnoDB;";
                 
                 System.out.println(smt);
                 
@@ -156,7 +156,7 @@ public class SpecialDets{
         String defCatQuery = "CREATE TABLE IF NOT EXISTS`canteen`.`specialcategory` (\n" +
                              "  `CategoryName` varchar(30)  NOT NULL,\n" +
                              "  PRIMARY KEY (`CategoryName`)\n" +
-                             ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;";
+                             ");";
         Statement smt = ConnectSpecial.createStatement();
         smt.execute(defCatQuery);
         String Select = "SELECT * FROM `canteen`.`specialcategory`;";
@@ -360,6 +360,21 @@ public class SpecialDets{
         
     
     
+    }
+
+    void SaveTable() throws SQLException {
+        
+        
+        String DefString = "CREATE TABLE IF NOT EXISTS `canteenextras`.`ordersdonespecial` ( `slno` INT NOT NULL AUTO_INCREMENT , `MenuName` VARCHAR(300) NOT NULL , PRIMARY KEY (`slno`)) ENGINE = InnoDB; ";
+        Statement defSt = MainApp.Connect.createStatement();
+        defSt.execute(DefString);
+        String instString = "INSERT INTO `canteenextras`.`ordersdonespecial` (`slno`, `MenuName`) VALUES (NULL, ?);";
+        PreparedStatement ptm = MainApp.Connect.prepareStatement(instString);
+        ptm.setString(1, FinalWorkingTableName);
+        ptm.execute();
+
+
+
     }
 
 

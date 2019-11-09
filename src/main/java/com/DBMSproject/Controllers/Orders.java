@@ -48,6 +48,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.StageStyle;
 import com.jfoenix.controls.JFXTabPane;
+import java.util.Observer;
+import java.util.Set;
 
 
 
@@ -354,7 +356,7 @@ public class Orders implements Initializable {
             pst.setString(4, getDescription());
             pst.setString(5, getQuantity());
             pst.setString(6, getCatValue());
-            pst.setString(7, getCreationtime());
+            pst.setString(7, getCurrentTime());
             pst.setString(8, getCreateBy());
             pst.execute();
             pst.close();
@@ -420,8 +422,16 @@ public class Orders implements Initializable {
                         "  `createdDateTime` datetime DEFAULT NULL,\n" +
                         "  `creator` varchar(100) DEFAULT NULL,\n"+ 
                         "  PRIMARY KEY (`Itemname`)\n" +                                
-                        ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;");
-
+                        ");");
+                        smt.execute("CREATE TABLE IF NOT EXISTS `canteen`.`ordersdonemain` (\n" +
+                                    "  `OrderId` int(11) NOT NULL AUTO_INCREMENT,\n" +
+                                    "  `ItemName` varchar(45) NOT NULL,\n" +
+                                    "  `Price` float DEFAULT NULL,\n" +
+                                    "  `Quantity` int(11) DEFAULT NULL,\n" +
+                                    "  `TotalPrice` float DEFAULT NULL,\n" +
+                                    "  `Placedtime` datetime DEFAULT NULL,\n" +
+                                    "  PRIMARY KEY (`OrderId`)\n" +
+                                    ");");
                         } catch (SQLException ex) {
                 Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -451,7 +461,7 @@ public class Orders implements Initializable {
         return Quantity.getText();
     }
     
-    String getCreationtime(){
+    String getCurrentTime(){
         DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         return df.format(new Date());
     }
@@ -481,27 +491,281 @@ public class Orders implements Initializable {
             else {
             setGraphic(Add);
             }
+            }
+            };
            
             Add.setOnAction(e->{
-            
-                System.out.println("Working!");
-                
-            
-            });
-            
-            
+            try{
+            addToSoldTable(cell.getIndex());
+            }catch(Exception ex){
+                System.out.println(ex.getMessage());
+               
+   
         }
             
-         
-        };
-        return cell;
+
+        });
+            return cell;
+
         });
         oblist = returnList();
         table.setItems(oblist);
         
-        
-     
     }
+    
+    private void updateQuantiy(ObservableList<ModelTable> oblist1) throws SQLException, IOException  {
+      
+        PropertyValueFactory<ModelTable,ImageView> img = new PropertyValueFactory<>("file");
+        Col_image.setCellValueFactory(img);        
+        Col_ItemName.setCellValueFactory(new PropertyValueFactory<>("ItemName"));
+        Col_ItemPrice.setCellValueFactory(new PropertyValueFactory<>("Price"));
+        Col_ItemDescription.setCellValueFactory(new PropertyValueFactory<>("Description"));
+        Col_Quantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
+        Col_Category.setCellValueFactory(new PropertyValueFactory<>("Category"));
+        Col_Update.setCellFactory(callback->{
+        JFXButton Add = new JFXButton("Add");
+        TableCell<ModelTable,ModelTable> cell = new TableCell<>(){
+            
+            @Override
+            public void updateItem(ModelTable tableUsed ,boolean empty){
+            super.updateItem(tableUsed,empty);
+            if(empty){
+                setGraphic(null);            }
+            else {
+            setGraphic(Add);
+            }
+            }
+            };
+           
+            Add.setOnAction(e->{
+            try{
+            addToSoldTable(cell.getIndex());
+            }catch(Exception ex){
+                System.out.println(ex.getMessage());
+               
+   
+        }
+            
+
+        });
+            return cell;
+
+        });
+        table.setItems(oblist1);
+        updatedatabase(oblist1);
+    }
+    
+    
+    
+    void updatedatabase(ObservableList<ModelTable> oblist1) throws SQLException{
+        
+        
+           for (ModelTable x : oblist1){
+           
+               
+               String newQuantity = x.Quantity;
+               String Name = x.ItemName;
+               String Query = "UPDATE `canteen`.`menu` SET `Itemquantity` = '"+newQuantity+"' WHERE `Itemname` = '"+Name+"';";
+               Statement smt = MainApp.Connect.createStatement();
+               smt.execute(Query);
+                         
+           }
+        
+    
+    }
+
+    
+        @FXML
+    private TableView<SoldTable> ordersTable;
+
+    @FXML
+    private TableColumn<SoldTable, String> Col_orderID;
+
+    @FXML
+   private TableColumn<SoldTable, String> COL_ItemName;
+
+    @FXML
+    private TableColumn<SoldTable, String> COL_price;
+
+    @FXML
+    private TableColumn<SoldTable, String> COL_Quantity;
+
+    @FXML
+    private TableColumn<SoldTable, String> COL_TP;
+
+    @FXML
+    private TableColumn<SoldTable,SoldTable> COL_remove;
+
+    @FXML
+    private Label TotalSum;
+
+    @FXML
+    private JFXButton PlaceOrder;
+    
+    private String OrderId = String.valueOf(0);
+    
+    ObservableList<SoldTable> SIlist = FXCollections.observableArrayList();
+    
+   void  addToSoldTable(int index) throws SQLException, IOException{
+       ModelTable x = table.getItems().get(index);
+       int indexList = -1;
+       boolean Exists = false ;
+        if(x.Quantity.equals("0")){
+          Exception e = new Exception("Quantity Seems to be 0 Please update!");
+           popupAlert(false, e);
+       }
+        else{
+       
+           for(SoldTable item : SIlist){
+           indexList += 1;
+           System.out.println(indexList);
+           if (item.Name.equals( x.ItemName)){ 
+               item.Quantity= Integer.toString(Integer.parseInt(item.Quantity) + Integer.parseInt("1"));
+               item.TotalPrice = Float.toString(Float.parseFloat(item.TotalPrice) + Float.parseFloat(item.Price));
+               SIlist.set(indexList,item);
+               populateSoldTable();
+               x.Quantity = Integer.toString(Integer.parseInt(x.Quantity) - Integer.parseInt("1"));
+               oblist.set(index, x);
+               updateQuantiy(oblist);
+               Exists = true;
+           }       
+       }
+//       String Name,Price,Quantity,TotalPrice,OrderId
+       if(!Exists) {
+       String SIname = x.ItemName;
+       String SIprice = x.Price;
+       String SIquantity = String.valueOf(1);
+       String TotalPrice = SIprice;
+       x.Quantity = Integer.toString(Integer.parseInt(x.Quantity) - 1) ;
+       OrderId = Integer.toString(Integer.parseInt(OrderId) + 1);
+       
+       SIlist.addAll(new SoldTable(OrderId, SIname, SIprice, SIquantity, TotalPrice));
+       populateSoldTable();
+      
+      
+       x.Quantity = Integer.toString(Integer.parseInt(x.Quantity) - Integer.parseInt("1"));
+       oblist.set(index, x);
+       updateQuantiy(oblist);
+       Exists = true;
+       }
+       
+        }
+        float Total = 0;
+        for (int i= 0 ; i < ordersTable.getItems().size(); i++){
+            Total += Float.parseFloat(ordersTable.getItems().get(i).TotalPrice);
+                
+                }
+        TotalSum.setText(Float.toString(Total));
+   }
+    
+    void populateSoldTable(){
+        Col_orderID.setCellValueFactory(new PropertyValueFactory<>("OrderId"));
+        COL_ItemName.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        COL_Quantity.setCellValueFactory(new PropertyValueFactory<>("Quantity"));
+        COL_price.setCellValueFactory(new PropertyValueFactory<>("Price"));
+        COL_TP.setCellValueFactory(new PropertyValueFactory<>("TotalPrice"));
+        COL_remove.setCellFactory(callback->{
+        JFXButton remove = new JFXButton("del");
+        TableCell<SoldTable,SoldTable> cell = new TableCell<>(){
+            
+            @Override
+            public void updateItem(SoldTable tableUsed ,boolean empty){
+            super.updateItem(tableUsed,empty);
+            if(empty){
+                setGraphic(null);            }
+            else {
+            setGraphic(remove);
+            }
+            }
+            };
+           
+            remove.setOnAction(e->{
+            try{
+            removeSoldTable(cell.getIndex());
+            }catch(Exception ex){
+                System.out.println(ex.getMessage());
+               
+   
+        }
+            
+
+        });
+            return cell;
+
+        });
+        ordersTable.setItems(SIlist);
+             
+    
+    }
+    
+    
+    void removeSoldTable(int index) throws SQLException, IOException{
+
+        SoldTable x = ordersTable.getItems().get(index);
+        if(Integer.parseInt(x.Quantity) < 2){
+        SIlist.remove(index);
+        OrderId = Integer.toString(Integer.parseInt(OrderId) -1 );
+        for(int i = index; i < SIlist.size() ; i ++){
+             SoldTable item = SIlist.get(i);
+             item.OrderId = Integer.toString(Integer.parseInt(item.OrderId) - 1) ;   
+             SIlist.set(i,item);
+             populateSoldTable();
+
+            }
+      
+        
+        for(int i = 0 ; i < table.getItems().size(); i++){
+            ModelTable data = table.getItems().get(i);
+            if(data.ItemName.equals(x.Name)){
+                data.Quantity  =  Integer.toString(Integer.parseInt(data.Quantity) + 1);
+                oblist.set(i,data);
+                updateQuantiy(oblist);
+            }
+        }
+       
+       
+        }
+        else{
+            
+       x.Quantity = Integer.toString(Integer.parseInt(x.Quantity) - Integer.parseInt("1"));
+       SIlist.set(index, x);
+       populateSoldTable();
+       for(int i = 0 ; i < table.getItems().size(); i++){
+            ModelTable data = table.getItems().get(i);
+            if(data.ItemName.equals(x.Name)){
+                data.Quantity  =  Integer.toString(Integer.parseInt(data.Quantity) + 1);
+                oblist.set(i,data);
+                updateQuantiy(oblist);
+            }
+        }
+            
+        }
+         
+            
+    }
+   
+    @FXML 
+    JFXButton PlaceOrderbtn;
+    
+    
+    @FXML
+    void placeOrderNow(ActionEvent event) throws SQLException{
+    
+        ObservableList<ModelSoldSave> orderedList = FXCollections.observableArrayList();
+        ObservableList<SoldTable >x = ordersTable.getItems();
+//         String OrderId,ItemName,Quantity,TotalPrice,OrderTime,PlacedBy;
+        for(SoldTable item : x  ){
+            orderedList.add(new ModelSoldSave(item.OrderId, item.Name,item.Quantity ,item.TotalPrice, getCurrentTime(), getCreateBy()));
+        }
+        PlaceOrderHelper.CreatePlaceDB();
+        PlaceOrderHelper.PlaceInsertTOTable(orderedList);
+        popupAlert(true);
+        ordersTable.getItems().clear();
+        TotalSum.setText("");
+    }
+   
+    
+    
     @FXML
     JFXTextField UpdateMainItemName;
     @FXML
@@ -616,7 +880,7 @@ public class Orders implements Initializable {
      Description = UpdateMainTableDes.getText();
      Quantity = UpdateMainTableQuantity.getText();
      Modifier  = getCreateBy();
-     LastModified = getCreationtime();
+     LastModified = getCurrentTime();
      Category = UpdateCategoryMainTable.getValue();
      PlObject.UpdateMainTable(Image,Name,Price,Description,Quantity,Category,Modifier,LastModified,OldMainTableName);
      popupAlert(true);
@@ -767,7 +1031,7 @@ public class Orders implements Initializable {
             String itemQantity = SpecialQuantity.getText();
             String imageUri = Specialfile.toURI().toString();
             String category = specialCategory.getValue();
-            String creationTime = getCreationtime();
+            String creationTime = getCurrentTime();
             String creator = getCreateBy();
             boolean flag = SpObject.InsertToTable(itemName, itemPrice, itemQantity, imageUri,category,creationTime,creator);
             if(flag){
@@ -1155,7 +1419,7 @@ public class Orders implements Initializable {
             String imageUri =  SpecialUpdateImage.getImage().getUrl().toString();
             String category = specialCategoryUpdate.getValue();
             setModifierName();
-             boolean flag = SpObject.UpdateSpecial(OldItemName,Modifier,getCreationtime(),itemName,itemPrice,itemQantity,imageUri,category);
+             boolean flag = SpObject.UpdateSpecial(OldItemName,Modifier,getCurrentTime(),itemName,itemPrice,itemQantity,imageUri,category);
                 if(flag){
                 
                      CreateSpecialTableRefresh();
@@ -1222,6 +1486,23 @@ public class Orders implements Initializable {
         Modifier = LoginController.getCurrentUser();
     
     }
+    
+//    Printing the Special Table : 
+    @FXML
+    JFXButton PrintSpecialTable;
+    
+    @FXML
+    void SpecialTablePrint(ActionEvent event){
+        
+           SpObject.SaveTable();    
+           popupAlert(true);       
+    
+    }
+    
+    
+    
+    
+    
   
  
 }
