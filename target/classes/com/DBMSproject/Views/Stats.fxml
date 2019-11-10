@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
@@ -8,74 +9,198 @@
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="Display2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" style="-fx-background-color: whitesmoke;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.DBMSproject.Stats">
+<AnchorPane fx:id="Display2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" style="-fx-background-color: #56b4fc;" stylesheets="@../Styles/StatsTab.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.DBMSproject.Stats">
    <children>
       <Label layoutX="323.0" layoutY="241.0">
          <font>
             <Font size="56.0" />
          </font>
       </Label>
-      <Label layoutX="102.0" prefHeight="91.0" prefWidth="1098.0" style="-fx-font-weight: bold; -fx-font-size: 48; -fx-text-fill: #269ded;" text="STATISTICS" />
-      <ImageView fitHeight="91.0" fitWidth="91.0" layoutX="-2.0" pickOnBounds="true" preserveRatio="true">
+      <Label layoutX="102.0" prefHeight="99.0" prefWidth="349.0" style="-fx-font-weight: bold; -fx-font-size: 48; -fx-text-fill: white; -fx-background-color: #fffffff;" text="STATISTICS" />
+      <ImageView fitHeight="73.0" fitWidth="78.0" layoutX="14.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Assets/vector-statistics-icon-png_302648.jpg" />
+            <Image url="@../Assets/Charts.png" />
          </image>
       </ImageView>
       <JFXTabPane layoutX="1.0" layoutY="99.0" prefHeight="552.0" prefWidth="1200.0">
          <tabs>
             <Tab text="Main Orders">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #56b4fc;">
                      <children>
-                        <BarChart layoutY="6.0" prefHeight="292.0" prefWidth="381.0" title="Item Popularity">
-                          <xAxis>
-                            <CategoryAxis side="BOTTOM" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis side="LEFT" />
-                          </yAxis>
-                        </BarChart>
-                        <PieChart layoutX="393.0" prefHeight="292.0" prefWidth="381.0" title="Employee Share" />
-                        <LineChart layoutX="7.0" layoutY="298.0" prefHeight="212.0" prefWidth="773.0" title="Monthly Sales">
-                          <xAxis>
-                            <CategoryAxis side="BOTTOM" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis side="LEFT" />
-                          </yAxis>
-                        </LineChart>
-                        <StackPane layoutX="787.0" layoutY="8.0" prefHeight="502.0" prefWidth="406.0" style="-fx-background-color: lightgreen;" />
+                        <Pane layoutX="6.0" layoutY="8.0" prefHeight="277.0" prefWidth="385.0" style="-fx-background-color: #ffffff;">
+                           <children>
+                              <BarChart fx:id="Popularity" barGap="2.0" layoutX="-3.0" legendVisible="false" prefHeight="278.0" prefWidth="366.0" title="Item Popularity">
+                                <xAxis>
+                                  <CategoryAxis fx:id="ItemX" label="Item" side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis fx:id="QuantityY" label="Quantity" side="LEFT" />
+                                </yAxis>
+                              </BarChart>
+                           </children>
+                           <effect>
+                              <DropShadow blurType="GAUSSIAN" />
+                           </effect>
+                        </Pane>
+                        <Pane layoutX="405.0" layoutY="7.0" prefHeight="278.0" prefWidth="369.0" style="-fx-background-color: #ffffff;">
+                           <children>
+                              <PieChart fx:id="PieCharts" prefHeight="275.0" prefWidth="369.0" title="Employee Share" />
+                           </children>
+                           <effect>
+                              <DropShadow blurType="GAUSSIAN" />
+                           </effect>
+                        </Pane>
+                        <Pane layoutX="6.0" layoutY="298.0" style="-fx-background-color: #ffffff;">
+                           <children>
+                              <LineChart fx:id="Sales" prefHeight="212.0" prefWidth="600.0" title="Sales">
+                                <xAxis>
+                                  <CategoryAxis fx:id="daysX" label="Date" side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis fx:id="SalesY" label="Sales" side="LEFT" />
+                                </yAxis>
+                              </LineChart>
+                           </children>
+                           <effect>
+                              <DropShadow blurType="GAUSSIAN" />
+                           </effect>
+                        </Pane>
+                        <StackPane layoutX="787.0" layoutY="8.0" prefHeight="502.0" prefWidth="406.0">
+                           <children>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+                                 <children>
+                                    <Label layoutX="39.0" layoutY="14.0" prefHeight="80.0" prefWidth="329.0" style="-fx-font-weight: bold; -fx-text-fill: #56b4fc;" text="Top Popular Items">
+                                       <font>
+                                          <Font size="35.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="22.0" layoutY="251.0" prefHeight="80.0" prefWidth="364.0" style="-fx-font-weight: bold; -fx-text-fill: #56b4fc;" text="Top Profitable Items">
+                                       <font>
+                                          <Font size="35.0" />
+                                       </font>
+                                    </Label>
+                                    <TableView fx:id="PopularItemTable" layoutX="39.0" layoutY="77.0" prefHeight="160.0" prefWidth="330.0">
+                                      <columns>
+                                        <TableColumn fx:id="Col_PopItem" prefWidth="147.0" text="Item Name" />
+                                        <TableColumn fx:id="Col_PopQuantity" prefWidth="182.0" text="Quantity" />
+                                      </columns>
+                                    </TableView>
+                                    <TableView fx:id="ProfitItemTable" layoutX="39.0" layoutY="319.0" prefHeight="169.0" prefWidth="339.0">
+                                      <columns>
+                                        <TableColumn fx:id="Col_ProfItemName" prefWidth="164.0" text="Item Name" />
+                                        <TableColumn fx:id="Col_ProfItemEarnings" prefWidth="174.0" text="Estimated Earnings " />
+                                      </columns>
+                                    </TableView>
+                                 </children>
+                                 <effect>
+                                    <DropShadow blurType="GAUSSIAN" />
+                                 </effect>
+                              </AnchorPane>
+                           </children></StackPane>
+                        <Pane layoutX="619.0" layoutY="397.0" prefWidth="153.0" style="-fx-background-color: #ffffff;">
+                           <children>
+                              <JFXComboBox fx:id="ItemsMin" prefHeight="35.0" prefWidth="153.0" promptText="Item Name " />
+                           </children>
+                           <effect>
+                              <DropShadow blurType="GAUSSIAN" />
+                           </effect>
+                        </Pane>
                      </children></AnchorPane>
               </content>
             </Tab>
             <Tab text="Special Orders">
               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #56b4fc;">
                      <children>
-                        <BarChart layoutY="6.0" prefHeight="292.0" prefWidth="381.0" title="Menu Popularity">
-                           <xAxis>
-                              <CategoryAxis side="BOTTOM" />
-                           </xAxis>
-                           <yAxis>
-                              <NumberAxis side="LEFT" />
-                           </yAxis>
-                        </BarChart>
-                        <PieChart layoutX="393.0" prefHeight="292.0" prefWidth="381.0" title="Employee Share" />
-                        <LineChart layoutX="7.0" layoutY="298.0" prefHeight="212.0" prefWidth="773.0" title="Monthly Sales">
-                           <xAxis>
-                              <CategoryAxis side="BOTTOM" />
-                           </xAxis>
-                           <yAxis>
-                              <NumberAxis side="LEFT" />
-                           </yAxis>
-                        </LineChart>
-                        <StackPane layoutX="787.0" layoutY="8.0" prefHeight="502.0" prefWidth="406.0" style="-fx-background-color: lightgreen;" />
+                        <Pane layoutX="6.0" layoutY="8.0" prefHeight="277.0" prefWidth="385.0" style="-fx-background-color: #ffffff;">
+                           <children>
+                              <BarChart fx:id="MenuPopulartiy" layoutX="-3.0" prefHeight="278.0" prefWidth="366.0" title="Menu Popularity">
+                                 <xAxis>
+                                    <CategoryAxis label="Menu name" side="BOTTOM" />
+                                 </xAxis>
+                                 <yAxis>
+                                    <NumberAxis label="Quantity" side="LEFT" />
+                                 </yAxis>
+                              </BarChart>
+                           </children>
+                           <effect>
+                              <DropShadow blurType="GAUSSIAN" />
+                           </effect>
+                        </Pane>
+                        <Pane layoutX="405.0" layoutY="7.0" style="-fx-background-color: #ffffff;">
+                           <children>
+                              <PieChart fx:id="EmployeeShareSpecial" prefHeight="278.0" prefWidth="369.0" title="Employee Share" />
+                           </children>
+                           <effect>
+                              <DropShadow blurType="GAUSSIAN" />
+                           </effect>
+                        </Pane>
+                        <Pane layoutX="6.0" layoutY="298.0" prefHeight="212.0" prefWidth="600.0" style="-fx-background-color: #ffffff;">
+                           <children>
+                              <LineChart fx:id="SalesSpecial" layoutX="-7.0" prefHeight="212.0" prefWidth="608.0" title="Sales">
+                                 <xAxis>
+                                    <CategoryAxis label="Date" side="BOTTOM" />
+                                 </xAxis>
+                                 <yAxis>
+                                    <NumberAxis label="Profits" side="LEFT" />
+                                 </yAxis>
+                              </LineChart>
+                           </children>
+                           <effect>
+                              <DropShadow blurType="GAUSSIAN" />
+                           </effect>
+                        </Pane>
+                        <StackPane layoutX="787.0" layoutY="8.0" prefHeight="502.0" prefWidth="406.0">
+                           <children>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+                                 <children>
+                                    <Label layoutX="33.0" layoutY="14.0" prefHeight="80.0" prefWidth="359.0" style="-fx-font-weight: bold; -fx-text-fill: #56b4fc;" text="Top Popular Menu's">
+                                       <font>
+                                          <Font size="35.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutX="13.0" layoutY="251.0" prefHeight="68.0" prefWidth="394.0" style="-fx-font-weight: bold; -fx-text-fill: #56b4fc;" text="Top Profitable Menu's">
+                                       <font>
+                                          <Font size="35.0" />
+                                       </font>
+                                    </Label>
+                                    <TableView fx:id="PopularMenuTable" layoutX="38.0" layoutY="94.0" prefHeight="160.0" prefWidth="330.0">
+                                       <columns>
+                                          <TableColumn fx:id="Col_PopMenu" prefWidth="147.0" text="Menu Name" />
+                                          <TableColumn fx:id="Col_PopMenuQuantity" prefWidth="182.0" text="Quantity" />
+                                       </columns>
+                                    </TableView>
+                                    <TableView layoutX="41.0" layoutY="319.0" prefHeight="169.0" prefWidth="339.0">
+                                       <columns>
+                                          <TableColumn prefWidth="164.0" text="Menu Name" />
+                                          <TableColumn prefWidth="174.0" text="Estimated Earnings " />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                                 <effect>
+                                    <DropShadow blurType="GAUSSIAN" />
+                                 </effect>
+                              </AnchorPane>
+                           </children></StackPane>
+                        <Pane layoutX="625.0" layoutY="404.0" style="-fx-background-color: #ffffff;">
+                           <children>
+                              <JFXComboBox fx:id="SpecialTables" prefHeight="28.0" prefWidth="135.0" promptText="Menu" />
+                           </children>
+                           <effect>
+                              <DropShadow blurType="GAUSSIAN" />
+                           </effect>
+                        </Pane>
                      </children>
                   </AnchorPane>
               </content>

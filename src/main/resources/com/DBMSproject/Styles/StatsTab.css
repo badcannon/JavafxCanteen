@@ -1,0 +1,49 @@
+    .tab{
+        -fx-pref-width:594;
+        -fx-pref-height:30;
+        -fx-font-size:18px;
+       -fx-background-color: #367ff5;
+
+    }
+    
+    .tab:selected{
+               -fx-background-color:aliceblue;
+               -fx-background-radius: 5px;  
+
+    }
+    
+    .tab-header-background{
+ -fx-background-color: #367ff5;
+ -fx-pref-height:20;
+-fx-pref-width:1200;
+
+
+        
+    }
+   .jfx-tab-pane .headers-region .tab:selected .tab-container .tab-label{
+       -fx-text-fill:#6600cc;
+       -fx-font-size:20px;
+    }
+   
+    .jfx-tab-pane .tab-selected-line
+    {
+        -fx-background-color:transparent;
+   
+    }
+    
+    
+    
+    
+  .default-color0.chart-series-line { -fx-stroke: #0066FF; }
+.default-color1.chart-series-line { -fx-stroke:  #6600cc; }
+.default-color2.chart-series-line { -fx-stroke:  #4d4de3; }
+
+
+.default-color0.chart-bar { -fx-bar-fill: #0066FF; }
+.default-color1.chart-bar { -fx-bar-fill: #6600cc; }
+.default-color2.chart-bar { -fx-bar-fill: #4d4de3; }
+
+.default-color0.chart-pie { -fx-pie-color: #0066FF; }
+.default-color1.chart-pie { -fx-pie-color: #6600cc; }
+.default-color2.chart-pie { -fx-pie-color: #4d4de3; }
+.default-color3.chart-pie { -fx-pie-color: #adff2f; }

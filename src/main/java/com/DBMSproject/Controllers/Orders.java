@@ -423,15 +423,7 @@ public class Orders implements Initializable {
                         "  `creator` varchar(100) DEFAULT NULL,\n"+ 
                         "  PRIMARY KEY (`Itemname`)\n" +                                
                         ");");
-                        smt.execute("CREATE TABLE IF NOT EXISTS `canteen`.`ordersdonemain` (\n" +
-                                    "  `OrderId` int(11) NOT NULL AUTO_INCREMENT,\n" +
-                                    "  `ItemName` varchar(45) NOT NULL,\n" +
-                                    "  `Price` float DEFAULT NULL,\n" +
-                                    "  `Quantity` int(11) DEFAULT NULL,\n" +
-                                    "  `TotalPrice` float DEFAULT NULL,\n" +
-                                    "  `Placedtime` datetime DEFAULT NULL,\n" +
-                                    "  PRIMARY KEY (`OrderId`)\n" +
-                                    ");");
+                       
                         } catch (SQLException ex) {
                 Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -617,7 +609,7 @@ public class Orders implements Initializable {
         else{
        
            for(SoldTable item : SIlist){
-           indexList += 1;
+           ++indexList;
            System.out.println(indexList);
            if (item.Name.equals( x.ItemName)){ 
                item.Quantity= Integer.toString(Integer.parseInt(item.Quantity) + Integer.parseInt("1"));
@@ -636,7 +628,6 @@ public class Orders implements Initializable {
        String SIprice = x.Price;
        String SIquantity = String.valueOf(1);
        String TotalPrice = SIprice;
-       x.Quantity = Integer.toString(Integer.parseInt(x.Quantity) - 1) ;
        OrderId = Integer.toString(Integer.parseInt(OrderId) + 1);
        
        SIlist.addAll(new SoldTable(OrderId, SIname, SIprice, SIquantity, TotalPrice));
@@ -1250,7 +1241,6 @@ public class Orders implements Initializable {
         ObservableList<ModelSpecial> oblist = FXCollections.observableArrayList();
         oblist.addAll( SpObject.PrePareList());
         SpecialTable.setItems(oblist);
-        SpecialTable.setEditable(true);
               
         
         
@@ -1492,12 +1482,16 @@ public class Orders implements Initializable {
     JFXButton PrintSpecialTable;
     
     @FXML
-    void SpecialTablePrint(ActionEvent event){
+    void SpecialTablePrint(ActionEvent event) throws SQLException{
         
            SpObject.SaveTable();    
            popupAlert(true);       
     
     }
+
+ 
+
+ 
     
     
     

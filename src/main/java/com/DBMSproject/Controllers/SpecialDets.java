@@ -364,20 +364,35 @@ public class SpecialDets{
 
     void SaveTable() throws SQLException {
         
-        
-        String DefString = "CREATE TABLE IF NOT EXISTS `canteenextras`.`ordersdonespecial` ( `slno` INT NOT NULL AUTO_INCREMENT , `MenuName` VARCHAR(300) NOT NULL , PRIMARY KEY (`slno`)) ENGINE = InnoDB; ";
+        Orders ords = new Orders();
+        String DefString = "CREATE TABLE IF NOT EXISTS `canteenextras`.`ordersdonespecial` ( `slno` INT NOT NULL AUTO_INCREMENT , `MenuName` VARCHAR(300) NOT NULL , `CreatedTime` DATETIME NOT NULL , `CreatedBy` VARCHAR(300) NOT NULL , `TotalCost` FLOAT NOT NULL,PRIMARY KEY (`slno`)) ENGINE = InnoDB;";
         Statement defSt = MainApp.Connect.createStatement();
         defSt.execute(DefString);
-        String instString = "INSERT INTO `canteenextras`.`ordersdonespecial` (`slno`, `MenuName`) VALUES (NULL, ?);";
+        String instString = "INSERT INTO `canteenextras`.`ordersdonespecial` (`slno`, `MenuName`,`CreatedTime`,`CreatedBy`,`TotalCost`) VALUES (NULL, ?,?,?,?);";
         PreparedStatement ptm = MainApp.Connect.prepareStatement(instString);
         ptm.setString(1, FinalWorkingTableName);
+        ptm.setString(2,ords.getCurrentTime());        
+        ptm.setString(3,ords.getCreateBy());
+        ptm.setString(4, getTotalCost());
         ptm.execute();
-
-
-
     }
 
 
+       String getTotalCost() throws SQLException {
+       
+        ModelSpecial x;
+        Float TotalCost = 0f;
+        String query = "Select * from `canteenextras`.`"+FinalWorkingTableName+"`";
+        Statement smt = MainApp.Connect.createStatement();
+        ResultSet rs = smt.executeQuery(query);
+        while(rs.next()){
+            
+            TotalCost += rs.getFloat("Price")*rs.getInt("Quantity");
+        
+        }
+        return String.valueOf(TotalCost);
+
+    }
     
 
     

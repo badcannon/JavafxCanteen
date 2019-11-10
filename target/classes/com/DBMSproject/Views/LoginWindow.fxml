@@ -59,7 +59,7 @@
                   <Circle fx:id="Circle" fill="WHITE" layoutX="70.0" layoutY="64.0" radius="66.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="5.0" />
                   <ImageView fitHeight="90.0" fitWidth="87.0" layoutX="26.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../Assets/GatLogo.png" />
+                        <Image url="@../Assets/store.png" />
                      </image>
                   </ImageView>
                </children>

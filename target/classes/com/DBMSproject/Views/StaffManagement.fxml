@@ -1,16 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.DBMSproject.Staff">
    <children>
-      <Label layoutX="97.0" layoutY="95.0" prefHeight="314.0" prefWidth="1137.0" text="Staff Management!">
+      <Label layoutX="127.0" layoutY="14.0" prefHeight="75.0" prefWidth="871.0" text="Staff Management">
          <font>
-            <Font size="64.0" />
+            <Font size="42.0" />
          </font>
       </Label>
+      <ImageView fitHeight="91.0" fitWidth="91.0" layoutX="14.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Assets/management.png" />
+         </image>
+      </ImageView>
+      <Pane layoutX="27.0" layoutY="141.0" prefHeight="231.0" prefWidth="242.0" style="-fx-background-color: #ffffff;">
+         <effect>
+            <DropShadow />
+         </effect>
+         <children>
+            <ImageView fitHeight="63.0" fitWidth="82.0" layoutX="90.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Assets/add-user.png" />
+               </image>
+            </ImageView>
+            <JFXButton fx:id="createbtn" layoutX="92.0" layoutY="178.0" onAction="#ChangePanel" text="Create" />
+         </children>
+      </Pane>
+      <Pane layoutX="285.0" layoutY="141.0" prefHeight="231.0" prefWidth="242.0" style="-fx-background-color: #ffffff;">
+         <effect>
+            <DropShadow blurType="GAUSSIAN" />
+         </effect>
+         <children>
+            <ImageView fitHeight="63.0" fitWidth="82.0" layoutX="90.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Assets/search.png" />
+               </image>
+            </ImageView>
+            <JFXButton fx:id="Viewbtn" layoutX="92.0" layoutY="178.0" onAction="#ChangePanel" text="View all" />
+         </children>
+      </Pane>
+      <StackPane layoutX="592.0" layoutY="97.0" prefHeight="537.0" prefWidth="592.0">
+         <children>
+            <AnchorPane fx:id="CreateDisplay" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <Label alignment="CENTER" layoutX="121.0" layoutY="8.0" prefHeight="43.0" prefWidth="316.0" text="Create">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="ImageCreate" fitHeight="150.0" fitWidth="200.0" layoutX="179.0" layoutY="69.0" onMouseClicked="#EditImage" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/image-placeholder-1200x800.jpg" />
+                     </image>
+                  </ImageView>
+                  <JFXTextField fx:id="Name" layoutX="147.0" layoutY="237.0" prefWidth="300.0" promptText="Name" />
+                  <JFXTextField fx:id="UserName" layoutX="147.0" layoutY="280.0" prefWidth="300.0" promptText="Username " />
+                  <JFXTextField fx:id="Salary" layoutX="146.0" layoutY="379.0" prefWidth="300.0" promptText="Salary" />
+                  <JFXComboBox fx:id="RolesCombo" layoutX="147.0" layoutY="438.0" prefHeight="28.0" prefWidth="300.0" promptText="Role" />
+                  <JFXButton fx:id="SubmitNew" layoutX="235.0" layoutY="480.0" onAction="#CreateNewAccount" prefHeight="43.0" prefWidth="136.0" text="Create" />
+                  <JFXPasswordField fx:id="Password" layoutX="147.0" layoutY="333.0" prefHeight="28.0" prefWidth="300.0" promptText="Password" />
+               </children></AnchorPane>
+            <AnchorPane fx:id="viewDisplay" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <TableView fx:id="viewTable" layoutX="-1.0" prefHeight="537.0" prefWidth="592.0">
+                    <columns>
+                        <TableColumn fx:id="Col_DP" prefWidth="124.0" text="Display Picture" />
+                      <TableColumn fx:id="Col_Name" prefWidth="143.0" text="Name " />
+                      <TableColumn fx:id="Col_Role" prefWidth="103.0" text="Role" />
+                        <TableColumn fx:id="Col_userName" prefWidth="128.0" text="Username" />
+                        <TableColumn fx:id="Col_Salary" minWidth="0.0" prefWidth="93.0" text="Salary" />
+                    </columns>
+                  </TableView>
+               </children></AnchorPane>
+            <AnchorPane fx:id="RemoveDisplay" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <Label alignment="CENTER" layoutX="121.0" layoutY="8.0" prefHeight="43.0" prefWidth="316.0" text="Remove">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="RemoveImage" fitHeight="150.0" fitWidth="200.0" layoutX="179.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/image-placeholder-1200x800.jpg" />
+                     </image>
+                  </ImageView>
+                  <JFXComboBox fx:id="UsersCombo" layoutX="146.0" layoutY="281.0" prefHeight="28.0" prefWidth="300.0" promptText="Users" />
+                  <JFXButton fx:id="Remove" layoutX="211.0" layoutY="373.0" onAction="#RemoveUser" prefHeight="43.0" prefWidth="136.0" text="Remove" />
+               </children></AnchorPane>
+         </children>
+         <effect>
+            <DropShadow blurType="GAUSSIAN" />
+         </effect>
+      </StackPane>
+      <Pane layoutX="148.0" layoutY="403.0" prefHeight="231.0" prefWidth="242.0" style="-fx-background-color: #ffffff;">
+         <effect>
+            <DropShadow />
+         </effect>
+         <children>
+            <ImageView fitHeight="63.0" fitWidth="82.0" layoutX="90.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Assets/remove-user.png" />
+               </image>
+            </ImageView>
+            <JFXButton fx:id="removebtn" layoutX="92.0" layoutY="178.0" onAction="#ChangePanel" text="Remove" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

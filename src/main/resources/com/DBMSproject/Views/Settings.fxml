@@ -1,15 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="Display1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.DBMSproject.Display3">
+<AnchorPane fx:id="Display1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="194.0" layoutY="243.0" text="Welcome to Display 3">
+      <Label layoutX="140.0" layoutY="6.0" prefHeight="111.0" prefWidth="661.0" text="Settings ">
          <font>
-            <Font size="61.0" />
+            <Font name="System Bold" size="41.0" />
          </font>
       </Label>
+      <ImageView fitHeight="111.0" fitWidth="116.0" layoutX="14.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Assets/settings2.png" />
+         </image>
+      </ImageView>
+      <Pane layoutX="301.0" layoutY="151.0" prefHeight="411.0" prefWidth="598.0" style="-fx-background-color: #ffffff;">
+         <effect>
+            <DropShadow blurType="GAUSSIAN" />
+         </effect>
+         <children>
+            <Label layoutX="38.0" layoutY="93.0" prefHeight="52.0" prefWidth="120.0" text="Dark Mode">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+            <JFXToggleButton layoutX="151.0" layoutY="89.0" text="Off" toggleColor="#0345dd" toggleLineColor="#42aaff" />
+            <Label layoutX="157.0" layoutY="14.0" prefHeight="57.0" prefWidth="259.0" text="Preferences">
+               <font>
+                  <Font name="System Bold" size="40.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="57.0" fitWidth="68.0" layoutX="135.0" layoutY="340.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Assets/Warning.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="212.0" layoutY="369.0" prefHeight="24.0" prefWidth="251.0" text="Features Under Development">
+               <font>
+                  <Font name="System Bold Italic" size="17.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

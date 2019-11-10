@@ -215,14 +215,15 @@ public class LoginController implements Initializable {
 
 
     private void InitializeValues() throws SQLException {
-        String DefInsert = "INSERT INTO canteen.logindets VALUES('global','global')";
-        String DefRole = "INSERT INTO `canteen`.`roles`values('RootAdmin','global');";
+        String Link = getClass().getResource("Assets/code.png").toString();
+        String DefInsert = "INSERT INTO canteen.logindets VALUES('"+Link+"','Dev','root','root',0,'0000/00/00 00:00:00','Dev')";
+        String DefRole = "INSERT INTO `canteen`.`roles`values('RootAdmin','root');";
         Statement statement = MainApp.Connect.createStatement();
         ResultSet rs = statement.executeQuery("SELECT  * from canteen.logindets");
 
         if(rs.next() == false){
         statement.execute(DefInsert);
-        LoginHash.put("global","global");
+        LoginHash.put("root","root");
 
         }
         else{
@@ -243,7 +244,7 @@ public class LoginController implements Initializable {
         
         if(role.next() == false ){
                 statement.execute(DefRole);
-                RolesHash.put("RootAdmin", "global");
+                RolesHash.put("RootAdmin", "root");
                 Roles.getItems().add("RootAdmin");
 
                 

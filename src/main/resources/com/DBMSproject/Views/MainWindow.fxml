@@ -37,7 +37,7 @@
       </HBox>
       <ImageView fx:id="logo" fitHeight="62.0" fitWidth="39.0" layoutX="1.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Assets/GatLogoVanilla.png" />
+            <Image url="@../Assets/burger.png" />
          </image>
       </ImageView>
       <HBox fx:id="Footer" alignment="TOP_RIGHT" layoutY="690.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="1200.0">
