@@ -20,6 +20,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -152,10 +153,8 @@ public class Staff implements Initializable{
             Orders ord = new Orders();
             
             InsertIntoTable(ImageCreate.getImage().getUrl().toString(),Name.getText(),UserName.getText(),Password.getText(),Salary.getText(),RolesCombo.getSelectionModel().getSelectedItem(),ord.getCurrentTime(),ord.getCreateBy());          
-//            Alert;   
-//Clear all Details 
 
-            
+//Clear all Details         
         
         }
         
@@ -321,6 +320,7 @@ public class Staff implements Initializable{
         } 
       return oblists;       
     }
+
 
     
     
