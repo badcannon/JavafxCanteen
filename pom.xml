@@ -70,9 +70,6 @@
                 <version>3.8.0</version>
                 <configuration>
                     <release>11</release>
-
-                  
-                    
                 </configuration>
             </plugin>
             <plugin>
@@ -81,16 +78,14 @@
                 <version>0.0.3</version>
                 <configuration>
                     <mainClass>com.DBMSproject.MainApp</mainClass>
-                    <executable>/usr/lib/jvm/java-11-openjdk-amd64/bin/java</executable>
-                    <options>
+                    <executable>C:\Program Files\Java\jdk-11.0.5\bin\java</executable>
+                        <options>
                         <option>--add-opens</option>
                         <option>javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix</option>
                         <option>--add-opens</option>
                         <option>javafx.controls/com.sun.javafx.scene.control=com.jfoenix</option>
-               
-                        <!--<option>-Dprism.allowhidpi=false</option>-->
                     </options>
-
+   
                 </configuration>
                 
             </plugin>

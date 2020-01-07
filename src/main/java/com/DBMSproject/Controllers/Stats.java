@@ -389,6 +389,7 @@ public class Stats implements Initializable{
           String TableName = rs.getString("TABLE_NAME");
           if(TableName.equals("ordersdonespecial")){
               flagExist= true;
+              System.out.println("Hell Ya?");
           }
           
        }
@@ -396,14 +397,16 @@ public class Stats implements Initializable{
        while(rs.next()){
            
              String TableName = rs.getString("TABLE_NAME");
-          if(TableName.equals("MainOrderList")){
+          if(TableName.equals("mainorderlist")){
               flagExist1= true;
+              System.out.println("Working?");
           }
        
        }
        
        if(flagExist && flagExist1){
        
+           
            popupAlert(true);
        }
        

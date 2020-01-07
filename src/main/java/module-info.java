@@ -11,5 +11,6 @@ module com.DBMSproject {
     requires com.jfoenix;
     requires java.desktop;
     requires javafx.swing;
+    requires java.base;
 }
 

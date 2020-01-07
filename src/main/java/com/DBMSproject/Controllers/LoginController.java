@@ -216,7 +216,8 @@ public class LoginController implements Initializable {
 
     private void InitializeValues() throws SQLException {
         String Link = getClass().getResource("Assets/code.png").toString();
-        String DefInsert = "INSERT INTO canteen.logindets VALUES('"+Link+"','Dev','root','root',0,'0000/00/00 00:00:00','Dev')";
+        Orders ord = new Orders();
+        String DefInsert = "INSERT INTO canteen.logindets VALUES('"+Link+"','Dev','root','root',0,'"+ord.getCurrentTime()+"','Dev')";
         String DefRole = "INSERT INTO `canteen`.`roles`values('RootAdmin','root');";
         Statement statement = MainApp.Connect.createStatement();
         ResultSet rs = statement.executeQuery("SELECT  * from canteen.logindets");
@@ -231,7 +232,7 @@ public class LoginController implements Initializable {
             
             String User = rs.getString("Username");
             String Pass = rs.getString("Password");
-            
+            System.out.println(User + ":" + Pass);
             LoginHash.put(User, Pass);
             
             
@@ -244,16 +245,18 @@ public class LoginController implements Initializable {
         
         if(role.next() == false ){
                 statement.execute(DefRole);
+                System.out.println("Here ?");
                 RolesHash.put("RootAdmin", "root");
                 Roles.getItems().add("RootAdmin");
 
                 
          }
          else {
+            Roles.getItems().clear();
                do{
-                    
                     String User = role.getString("Username");
                     String Role = role.getString("Role");
+                    System.out.println(User +":"+Role);
                     RolesHash.put(Role,User);
                     if(!Exists(Role))
                     Roles.getItems().add(Role);
@@ -261,7 +264,10 @@ public class LoginController implements Initializable {
                 
                }
                 while(role.next());
+ 
+
             }
+        
 
 
     }
@@ -288,13 +294,13 @@ public class LoginController implements Initializable {
         oblist.addAll(Roles.getItems());
         oblist.forEach((role) ->{
         
+            System.out.println(role +":"+Role);
             if(role.equals(Role)){
               flag = true;  
             }
             
         });
         
-        flag = false;
         return flag;
     }
     

@@ -3,6 +3,8 @@ package com.DBMSproject;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.io.File;
@@ -20,7 +22,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
+import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -28,6 +31,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 
 public class Staff implements Initializable{
@@ -102,19 +106,26 @@ public class Staff implements Initializable{
         
     
     @FXML
-    void ChangePanel(ActionEvent event) {
+    void ChangePanel(ActionEvent event) throws SQLException {
         
         if(event.getSource() == createbtn){
-        
+            InitalizeRoles();
+            InitalizeUsers();
+            InitalizeViewTable();
             CreateDisplay.toFront();
         }
         if(event.getSource() == Viewbtn){
         
+            InitalizeRoles();
+            InitalizeUsers();
+            InitalizeViewTable();
             viewDisplay.toFront();
            
         }
         if(event.getSource() == removebtn){
-        
+            InitalizeRoles();
+            InitalizeUsers();
+            InitalizeViewTable();
             RemoveDisplay.toFront();
         }
         
@@ -154,8 +165,16 @@ public class Staff implements Initializable{
             
             InsertIntoTable(ImageCreate.getImage().getUrl().toString(),Name.getText(),UserName.getText(),Password.getText(),Salary.getText(),RolesCombo.getSelectionModel().getSelectedItem(),ord.getCurrentTime(),ord.getCreateBy());          
 
-//Clear all Details         
-        
+            JFXDialogLayout lay = new JFXDialogLayout();
+            lay.setHeading(new Label("User Created!"));
+            lay.setBody(new Label("User Has been Created!"));
+            Name.setText("");
+            UserName.setText("");
+            Password.setText("");
+            Salary.setText("");
+            JFXDialog dial = new JFXDialog(Stack,lay, JFXDialog.DialogTransition.CENTER);
+            dial.show();
+            
         }
         
         
@@ -249,17 +268,25 @@ public class Staff implements Initializable{
     }
     
     @FXML
+    StackPane Stack;
+    
+    @FXML
     void RemoveUser(ActionEvent event) throws SQLException{
         
         if(event.getSource() == Remove){
             
             String Username = UsersCombo.getSelectionModel().getSelectedItem();
-            //Alert()
+            JFXDialogLayout lay = new JFXDialogLayout();
+            lay.setHeading(new Label("Removing User"));
+            lay.setBody(new Label("User Has been removed"));
+            JFXDialog dialog = new JFXDialog(Stack,lay, JFXDialog.DialogTransition.CENTER);
             String Query = "DELETE FROM `logindets` WHERE `UserName` = '"+Username+"';";
             Statement smt = MainApp.Connect.createStatement();
             smt.execute(Query);
-//            Alert!
-        InitalizeUsers();
+            dialog.show();
+            InitalizeRoles();
+            InitalizeUsers();
+            InitalizeViewTable();
         
         }
     

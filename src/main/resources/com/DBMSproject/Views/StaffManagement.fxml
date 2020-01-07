@@ -27,7 +27,7 @@
             <Image url="@../Assets/management.png" />
          </image>
       </ImageView>
-      <Pane layoutX="27.0" layoutY="141.0" prefHeight="231.0" prefWidth="242.0" style="-fx-background-color: #ffffff;">
+      <Pane layoutX="27.0" layoutY="141.0" prefHeight="231.0" prefWidth="242.0" style="-fx-background-color: #5a99f2;">
          <effect>
             <DropShadow />
          </effect>
@@ -37,29 +37,19 @@
                   <Image url="@../Assets/add-user.png" />
                </image>
             </ImageView>
-            <JFXButton fx:id="createbtn" layoutX="92.0" layoutY="178.0" onAction="#ChangePanel" text="Create" />
+            <JFXButton fx:id="createbtn" layoutX="54.0" layoutY="160.0" onAction="#ChangePanel" prefHeight="43.0" prefWidth="136.0" style="-fx-background-color: white;" text="Create" textFill="#be83fc">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></JFXButton>
          </children>
       </Pane>
-      <Pane layoutX="285.0" layoutY="141.0" prefHeight="231.0" prefWidth="242.0" style="-fx-background-color: #ffffff;">
-         <effect>
-            <DropShadow blurType="GAUSSIAN" />
-         </effect>
+      <StackPane fx:id="Stack" layoutX="592.0" layoutY="97.0" prefHeight="537.0" prefWidth="592.0">
          <children>
-            <ImageView fitHeight="63.0" fitWidth="82.0" layoutX="90.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Assets/search.png" />
-               </image>
-            </ImageView>
-            <JFXButton fx:id="Viewbtn" layoutX="92.0" layoutY="178.0" onAction="#ChangePanel" text="View all" />
-         </children>
-      </Pane>
-      <StackPane layoutX="592.0" layoutY="97.0" prefHeight="537.0" prefWidth="592.0">
-         <children>
-            <AnchorPane fx:id="CreateDisplay" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+            <AnchorPane fx:id="CreateDisplay" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: White;">
                <children>
-                  <Label alignment="CENTER" layoutX="121.0" layoutY="8.0" prefHeight="43.0" prefWidth="316.0" text="Create">
+                  <Label alignment="CENTER" layoutX="121.0" layoutY="8.0" prefHeight="43.0" prefWidth="316.0" text="Create" textFill="#be83fc">
                      <font>
-                        <Font name="System Bold" size="20.0" />
+                        <Font name="System Bold" size="34.0" />
                      </font>
                   </Label>
                   <ImageView fx:id="ImageCreate" fitHeight="150.0" fitWidth="200.0" layoutX="179.0" layoutY="69.0" onMouseClicked="#EditImage" pickOnBounds="true" preserveRatio="true">
@@ -74,9 +64,9 @@
                   <JFXButton fx:id="SubmitNew" layoutX="235.0" layoutY="480.0" onAction="#CreateNewAccount" prefHeight="43.0" prefWidth="136.0" text="Create" />
                   <JFXPasswordField fx:id="Password" layoutX="147.0" layoutY="333.0" prefHeight="28.0" prefWidth="300.0" promptText="Password" />
                </children></AnchorPane>
-            <AnchorPane fx:id="viewDisplay" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+            <AnchorPane fx:id="viewDisplay" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: White;">
                <children>
-                  <TableView fx:id="viewTable" layoutX="-1.0" prefHeight="537.0" prefWidth="592.0">
+                  <TableView fx:id="viewTable" layoutX="-1.0" prefHeight="537.0" prefWidth="592.0" stylesheets="@../Styles/TableView.css">
                     <columns>
                         <TableColumn fx:id="Col_DP" prefWidth="124.0" text="Display Picture" />
                       <TableColumn fx:id="Col_Name" prefWidth="143.0" text="Name " />
@@ -86,11 +76,11 @@
                     </columns>
                   </TableView>
                </children></AnchorPane>
-            <AnchorPane fx:id="RemoveDisplay" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
+            <AnchorPane fx:id="RemoveDisplay" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: White;">
                <children>
-                  <Label alignment="CENTER" layoutX="121.0" layoutY="8.0" prefHeight="43.0" prefWidth="316.0" text="Remove">
+                  <Label alignment="CENTER" layoutX="121.0" layoutY="8.0" prefHeight="43.0" prefWidth="316.0" style="-fx-text-fill: #be83fc;" text="Remove">
                      <font>
-                        <Font name="System Bold" size="20.0" />
+                        <Font name="System Bold" size="35.0" />
                      </font>
                   </Label>
                   <ImageView fx:id="RemoveImage" fitHeight="150.0" fitWidth="200.0" layoutX="179.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
@@ -106,7 +96,23 @@
             <DropShadow blurType="GAUSSIAN" />
          </effect>
       </StackPane>
-      <Pane layoutX="148.0" layoutY="403.0" prefHeight="231.0" prefWidth="242.0" style="-fx-background-color: #ffffff;">
+      <Pane layoutX="285.0" layoutY="141.0" prefHeight="231.0" prefWidth="242.0" style="-fx-background-color: #5a99f2;">
+         <effect>
+            <DropShadow blurType="GAUSSIAN" />
+         </effect>
+         <children>
+            <ImageView fitHeight="63.0" fitWidth="82.0" layoutX="90.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Assets/search.png" />
+               </image>
+            </ImageView>
+            <JFXButton fx:id="Viewbtn" layoutX="53.0" layoutY="160.0" onAction="#ChangePanel" prefHeight="43.0" prefWidth="136.0" style="-fx-background-color: white;" text="View all" textFill="#be83fc">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></JFXButton>
+         </children>
+      </Pane>
+      <Pane layoutX="148.0" layoutY="403.0" prefHeight="231.0" prefWidth="242.0" style="-fx-background-color: #5a99f2;">
          <effect>
             <DropShadow />
          </effect>
@@ -116,7 +122,10 @@
                   <Image url="@../Assets/remove-user.png" />
                </image>
             </ImageView>
-            <JFXButton fx:id="removebtn" layoutX="92.0" layoutY="178.0" onAction="#ChangePanel" text="Remove" />
+            <JFXButton fx:id="removebtn" layoutX="53.0" layoutY="158.0" onAction="#ChangePanel" prefHeight="43.0" prefWidth="136.0" style="-fx-background-color: white;" text="Remove" textFill="#be83fc">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></JFXButton>
          </children>
       </Pane>
    </children>

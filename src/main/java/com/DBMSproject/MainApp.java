@@ -54,10 +54,10 @@ public class MainApp extends Application {
             String defaultStatement = "CREATE SCHEMA IF NOT EXISTS `canteen` ;";
             Class.forName("com.mysql.cj.jdbc.Driver");
             //Defined Earlier !
-            Connect = DriverManager.getConnection("jdbc:mysql://localhost/","root","");
+            Connect = DriverManager.getConnection("jdbc:mysql://localhost/?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
             Statement statement = Connect.createStatement();
             statement.execute(defaultStatement);
-            Connect = DriverManager.getConnection("jdbc:mysql://localhost/canteen","root","");
+            Connect = DriverManager.getConnection("jdbc:mysql://localhost/canteen?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
             
             }
         catch (Exception e){

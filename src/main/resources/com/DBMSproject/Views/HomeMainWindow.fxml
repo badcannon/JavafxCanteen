@@ -7,6 +7,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
@@ -156,14 +158,18 @@
             <Image url="@../Assets/Home.png" />
          </image>
       </ImageView>
-      <Pane layoutX="14.0" layoutY="374.0" prefHeight="254.0" prefWidth="248.0" style="-fx-background-color: #06d19b;">
+      <Pane layoutX="14.0" layoutY="374.0" prefHeight="254.0" prefWidth="248.0" style="-fx-background-color: #03befc;">
          <effect>
             <DropShadow />
          </effect>
          <children>
             <Line endX="100.0" layoutX="124.0" layoutY="155.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="3.0" />
-            <Label contentDisplay="CENTER" layoutX="23.0" layoutY="64.0" prefHeight="90.0" prefWidth="203.0" style="-fx-font-weight: bold;" text="Create Orders , Update them and Place Order,with options to create Special orders" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="23.0" layoutY="64.0" prefHeight="90.0" prefWidth="203.0" style="-fx-font-weight: bold;" text="Orders" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font size="20.0" />
+               </font></Label>
             <JFXButton fx:id="getStartedOrders" layoutX="72.0" layoutY="209.0" onAction="#HomeGetStarted" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 15px;" text="Get Started" />
+            <Line endX="100.0" layoutX="122.0" layoutY="64.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="3.0" />
          </children>
       </Pane>
       <Pane layoutX="312.0" layoutY="374.0" prefHeight="254.0" prefWidth="248.0" style="-fx-background-color: #03befc;">
@@ -172,54 +178,98 @@
          </effect>
          <children>
             <Line endX="100.0" layoutX="124.0" layoutY="159.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="3.0" />
-            <Label layoutX="25.0" layoutY="69.0" prefHeight="90.0" prefWidth="203.0" style="-fx-font-weight: bold;" text="View Statstics" textFill="#fdfcfc" wrapText="true" />
+            <Label alignment="CENTER" layoutX="25.0" layoutY="69.0" prefHeight="90.0" prefWidth="203.0" style="-fx-font-weight: bold;" text="Statstics" textFill="#fdfcfc" wrapText="true">
+               <font>
+                  <Font size="20.0" />
+               </font></Label>
             <JFXButton fx:id="getStartedStats" layoutX="71.0" layoutY="209.0" onAction="#HomeGetStarted" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 15px;" text="Get Started" />
+            <Line endX="100.0" layoutX="126.0" layoutY="69.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="3.0" />
          </children>
       </Pane>
-      <Pane layoutX="634.0" layoutY="374.0" prefHeight="254.0" prefWidth="248.0" style="-fx-background-color: #3c0485;">
+      <Pane layoutX="634.0" layoutY="374.0" prefHeight="254.0" prefWidth="248.0" style="-fx-background-color: #03befc;">
          <effect>
             <DropShadow />
          </effect>
          <children>
             <Line endX="100.0" layoutX="124.0" layoutY="160.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="3.0" />
-            <Label layoutX="23.0" layoutY="71.0" prefHeight="90.0" prefWidth="203.0" style="-fx-font-weight: bold;" text="Maintain Employees" textFill="#fdfcfc" wrapText="true" />
+            <Label alignment="CENTER" layoutX="23.0" layoutY="71.0" prefHeight="90.0" prefWidth="203.0" style="-fx-font-weight: bold;" text="Staff Management" textFill="#fdfcfc" wrapText="true">
+               <font>
+                  <Font size="20.0" />
+               </font></Label>
             <JFXButton fx:id="getStartedStaff" layoutX="71.0" layoutY="209.0" onAction="#HomeGetStarted" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 15px;" text="Get Started" />
+            <Line endX="100.0" layoutX="124.0" layoutY="71.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="3.0" />
          </children>
       </Pane>
-      <Pane layoutX="940.0" layoutY="374.0" prefHeight="254.0" prefWidth="248.0" style="-fx-background-color: #d007eb;">
+      <Pane layoutX="940.0" layoutY="374.0" prefHeight="254.0" prefWidth="248.0" style="-fx-background-color: #03befc;">
          <effect>
             <DropShadow />
          </effect>
          <children>
             <Line endX="100.0" layoutX="124.0" layoutY="162.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="3.0" />
-            <Label layoutX="23.0" layoutY="71.0" prefHeight="90.0" prefWidth="203.0" style="-fx-font-weight: bold;" text="Settings " textFill="#fdfcfc" wrapText="true" />
+            <Label alignment="CENTER" layoutX="23.0" layoutY="71.0" prefHeight="90.0" prefWidth="203.0" style="-fx-font-weight: bold;" text="Settings " textFill="#fdfcfc" wrapText="true">
+               <font>
+                  <Font size="20.0" />
+               </font></Label>
             <JFXButton fx:id="getStartedSettings" layoutX="71.0" layoutY="209.0" onAction="#HomeGetStarted" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 15px;" text="Get Started" />
+            <Line endX="100.0" layoutX="124.0" layoutY="72.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="3.0" />
          </children>
       </Pane>
-      <Circle fill="#03befc" layoutX="138.0" layoutY="374.0" opacity="0.8" radius="31.0" stroke="TRANSPARENT" strokeType="INSIDE">
+      <Circle fx:id="Here" layoutX="138.0" layoutY="374.0" opacity="0.8" radius="31.0" stroke="TRANSPARENT" strokeType="INSIDE">
          <effect>
             <DropShadow />
          </effect>
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="#6007fae4" />
+                  <Stop color="#07adfae6" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
       </Circle>
-      <Circle fill="#3c0485" layoutX="1064.0" layoutY="374.0" opacity="0.8" radius="31.0" stroke="TRANSPARENT" strokeType="INSIDE">
+      <Circle fx:id="HelpMeTOo" layoutX="1064.0" layoutY="374.0" opacity="0.8" radius="31.0" stroke="TRANSPARENT" strokeType="INSIDE">
          <effect>
             <DropShadow />
          </effect>
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="#6007fae4" />
+                  <Stop color="#07adfae6" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
       </Circle>
       <ImageView fitHeight="38.0" fitWidth="50.0" layoutX="119.0" layoutY="355.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Assets/Orders.png" />
          </image>
       </ImageView>
-      <Circle fill="#06d19b" layoutX="436.0" layoutY="374.0" opacity="0.8" radius="31.0" stroke="TRANSPARENT" strokeType="INSIDE">
+      <Circle fx:id="HereMe" layoutX="436.0" layoutY="374.0" opacity="0.8" radius="31.0" stroke="TRANSPARENT" strokeType="INSIDE">
          <effect>
             <DropShadow />
          </effect>
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="#6007fae4" />
+                  <Stop color="#07adfae6" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
       </Circle>
-      <Circle fill="#d007eb" layoutX="758.0" layoutY="374.0" opacity="0.8" radius="31.0" stroke="TRANSPARENT" strokeType="INSIDE">
+      <Circle fx:id="Help" layoutX="758.0" layoutY="374.0" opacity="0.8" radius="31.0" stroke="TRANSPARENT" strokeType="INSIDE">
          <effect>
             <DropShadow />
          </effect>
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="#6007fae4" />
+                  <Stop color="#07adfae6" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
       </Circle>
       <ImageView fitHeight="38.0" fitWidth="50.0" layoutX="417.0" layoutY="355.0" pickOnBounds="true" preserveRatio="true">
          <image>

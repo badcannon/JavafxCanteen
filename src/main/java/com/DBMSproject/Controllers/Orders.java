@@ -48,8 +48,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.StageStyle;
 import com.jfoenix.controls.JFXTabPane;
-import java.util.Observer;
-import java.util.Set;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 
 
@@ -423,6 +426,7 @@ public class Orders implements Initializable {
                         "  `creator` varchar(100) DEFAULT NULL,\n"+ 
                         "  PRIMARY KEY (`Itemname`)\n" +                                
                         ");");
+                        
                        
                         } catch (SQLException ex) {
                 Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
@@ -596,7 +600,7 @@ public class Orders implements Initializable {
     
     private String OrderId = String.valueOf(0);
     
-    ObservableList<SoldTable> SIlist = FXCollections.observableArrayList();
+    public static ObservableList<SoldTable> SIlist = FXCollections.observableArrayList();
     
    void  addToSoldTable(int index) throws SQLException, IOException{
        ModelTable x = table.getItems().get(index);
@@ -740,7 +744,7 @@ public class Orders implements Initializable {
     
     
     @FXML
-    void placeOrderNow(ActionEvent event) throws SQLException{
+    void placeOrderNow(ActionEvent event) throws SQLException, IOException{
     
         ObservableList<ModelSoldSave> orderedList = FXCollections.observableArrayList();
         ObservableList<SoldTable >x = ordersTable.getItems();
@@ -750,11 +754,23 @@ public class Orders implements Initializable {
         }
         PlaceOrderHelper.CreatePlaceDB();
         PlaceOrderHelper.PlaceInsertTOTable(orderedList);
-        popupAlert(true);
+        AppModel.setList(SIlist);
+        loadpopup();
         ordersTable.getItems().clear();
         TotalSum.setText("");
     }
-   
+
+
+    
+    @FXML
+    void loadpopup() throws IOException{
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("Views/ReciptMain.fxml"));
+         Stage SecondaryStage = new Stage();
+         Scene scene = new Scene(loader.load());
+         SecondaryStage.setScene(scene);
+         SecondaryStage.initStyle(StageStyle.UTILITY);
+         SecondaryStage.show();
+    }
     
     
     @FXML
@@ -1482,14 +1498,22 @@ public class Orders implements Initializable {
     JFXButton PrintSpecialTable;
     
     @FXML
-    void SpecialTablePrint(ActionEvent event) throws SQLException{
+    void SpecialTablePrint(ActionEvent event) throws SQLException, IOException{
         
-           SpObject.SaveTable();    
-           popupAlert(true);       
+           SpObject.SaveTable(); 
+           AppModel2.setList(SpecialTable.getItems());
+           PopupReciptSpecial();       
     
     }
-
- 
+@FXML
+    void PopupReciptSpecial() throws IOException{
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("Views/ReciptSpecial.fxml"));
+         Stage SecondaryStage = new Stage();
+         Scene scene = new Scene(loader.load());
+         SecondaryStage.setScene(scene);
+         SecondaryStage.initStyle(StageStyle.UTILITY);
+         SecondaryStage.show();
+    }
 
  
     

@@ -45,10 +45,10 @@ public class SpecialDets{
     String defaultStatementSpecial = "CREATE SCHEMA IF NOT EXISTS `canteenextras` ;";
     Class.forName("com.mysql.cj.jdbc.Driver");
     //Defined Earlier !
-    ConnectSpecial = DriverManager.getConnection("jdbc:mysql://localhost/","root","");
+    ConnectSpecial = DriverManager.getConnection("jdbc:mysql://localhost/?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
     Statement statement = ConnectSpecial.createStatement();
     statement.execute(defaultStatementSpecial);
-    ConnectSpecial = DriverManager.getConnection("jdbc:mysql://localhost/canteenextras","root","");
+    ConnectSpecial = DriverManager.getConnection("jdbc:mysql://localhost/canteenextras?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","");
         
 
     }

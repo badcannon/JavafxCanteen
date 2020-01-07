@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="400.0" stylesheets="@../Styles/Recipt.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.DBMSproject.rec">
+   <children>
+      <TableView fx:id="OrderedTable" layoutY="100.0" prefHeight="354.0" prefWidth="400.0">
+         <columns>
+            <TableColumn fx:id="Col_ItemName1" prefWidth="140.79998779296875" text="Item Name" />
+            <TableColumn fx:id="Col_Quantity1" prefWidth="81.60003662109375" text="Quantity" />
+            <TableColumn fx:id="Col_Price" prefWidth="88.79998779296875" text="Price" />
+            <TableColumn fx:id="Col_TotalPrice" prefWidth="88.00006103515625" text="Total Price" />
+         </columns>
+      </TableView>
+      <JFXButton fx:id="sav_PDF" layoutX="82.0" layoutY="513.0" onAction="#saveasPDF" prefHeight="54.0" prefWidth="236.0" text="Save as PDF" />
+      <Label fx:id="MainLabel" alignment="CENTER" prefHeight="43.0" prefWidth="400.0" text="Order Placed " />
+      <Label fx:id="l0" alignment="CENTER" layoutY="43.0" prefHeight="18.0" prefWidth="400.0" text="----------------------------------------------------------------------------" />
+      <Label fx:id="l1" alignment="CENTER" layoutY="83.0" prefHeight="18.0" prefWidth="400.0" text="---------------------------------------------------------------------------" />
+      <Label fx:id="l3" alignment="CENTER" layoutY="61.0" prefHeight="18.0" prefWidth="400.0" text="Ideal Homes Township, Mysore Rd, Aditya Layout, RR Nagar" />
+      <Label fx:id="l4" alignment="CENTER" layoutY="454.0" prefHeight="43.0" prefWidth="195.0" text="Total Price :" />
+      <Label fx:id="TotalPriceSum" alignment="CENTER" layoutX="195.0" layoutY="454.0" prefHeight="43.0" prefWidth="205.0" />
+   </children>
+</AnchorPane>
